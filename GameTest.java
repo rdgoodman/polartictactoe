@@ -19,22 +19,28 @@ public class GameTest {
 	Node[][] gameNodes = game.getNodes();
 	Node[][] gameNodes2 = game2.getNodes();
 
-//	@Test
-//	public void testNodeCreation() {
-//
-//		System.out.println();
-//		System.out.println("Circles: " + game.getNumX());
-//		System.out.println("Lines: " + game.getNumY());
-//
-//		System.out.println("Nodes:");
-//		for (int i = 0; i < game.getNumX(); i++) {
-//			for (int j = 0; j < game.getNumY(); j++) {
-//				System.out.print(gameNodes[i][j].toString() + "   ");
-//			}
-//			System.out.println();
-//		}
-//
-//	}
+	@Test
+	public void testNodeCreation() {
+
+		System.out.println();
+		System.out.println("Circles: " + game.getNumX());
+		System.out.println("Lines: " + game.getNumY());
+
+		System.out.println("Nodes:");
+		for (int i = 0; i < game.getNumX(); i++) {
+			for (int j = 0; j < game.getNumY(); j++) {
+				System.out.print(gameNodes[i][j].toString() + "   ");
+			}
+			System.out.println();
+		}
+
+	}
+	
+	@Test
+	public void testDiagonalCreation(){
+		
+	}
+	
 //
 //	@Test
 //	public void testSetNeighbors() {
@@ -156,46 +162,46 @@ public class GameTest {
 //
 //	}
 	
-	@Test
-	public void testGameTreeCreation2(){
-		
-		game.move(gameNodes[1][3], player1);
-		game.move(gameNodes[2][3], player2);
-		game.move(gameNodes[2][2], player1);
-		game.move(gameNodes[2][1], player2);
-		game.move(gameNodes[1][2], player1);
-		game.move(gameNodes[1][0], player2);
-		game.move(gameNodes[2][0], player1);
-		
-		//TODO: in game, I think we'll be passing in a hypothetical game state
-		// with a hypothetical move made by the player making a decision
-		// this example is evaluating p1's move (2,0)
-		
-		
-		System.out.println("Nodes:");
-		for (int i = 0; i < game.getNumX(); i++) {
-			for (int j = 0; j < game.getNumY(); j++) {
-				System.out.print(gameNodes[i][j].toString() + "   ");
-			}
-			System.out.println();
-		}
-		
-		System.out.println("\nPlayer 1's playernumber is " + player1.getPlayerNum());
-		System.out.println("Player 2's playernumber is " + player2.getPlayerNum() + "\n");
-		
-		GameTree tree1 = new GameTree(gameNodes, player1.getPlayerNum(), player2.getPlayerNum());
-		
-		System.out.println();
-		
-		Node[][] gameState = tree1.getRoot().getGameState();
-		System.out.println("Game State:");
-		for (int i = 0; i < game.getNumX(); i++) {
-			for (int j = 0; j < game.getNumY(); j++) {
-				System.out.print(gameState[i][j].toString() + "   ");
-			}
-			System.out.println();
-		}
-
-	}
+//	@Test
+//	public void testGameTreeCreation2(){
+//		
+//		game.move(gameNodes[1][3], player1);
+//		game.move(gameNodes[2][3], player2);
+//		game.move(gameNodes[2][2], player1);
+//		game.move(gameNodes[2][1], player2);
+//		game.move(gameNodes[1][2], player1);
+//		game.move(gameNodes[1][0], player2);
+//		game.move(gameNodes[2][0], player1);
+//		
+//		//TODO: in game, I think we'll be passing in a hypothetical game state
+//		// with a hypothetical move made by the player making a decision
+//		// this example is evaluating p1's move (2,0)
+//		
+//		
+//		System.out.println("Nodes:");
+//		for (int i = 0; i < game.getNumX(); i++) {
+//			for (int j = 0; j < game.getNumY(); j++) {
+//				System.out.print(gameNodes[i][j].toString() + "   ");
+//			}
+//			System.out.println();
+//		}
+//		
+//		System.out.println("\nPlayer 1's playernumber is " + player1.getPlayerNum());
+//		System.out.println("Player 2's playernumber is " + player2.getPlayerNum() + "\n");
+//		
+//		GameTree tree1 = new GameTree(gameNodes, player1.getPlayerNum(), player2.getPlayerNum());
+//		
+//		System.out.println();
+//		
+//		Node[][] gameState = tree1.getRoot().getGameState();
+//		System.out.println("Game State:");
+//		for (int i = 0; i < game.getNumX(); i++) {
+//			for (int j = 0; j < game.getNumY(); j++) {
+//				System.out.print(gameState[i][j].toString() + "   ");
+//			}
+//			System.out.println();
+//		}
+//
+//	}
 
 }
