@@ -16,8 +16,8 @@ public class GameTest {
 	
 	Game game = new Game(3, 4, player1, player2);
 	Game game2 = new Game(3, 4, player3, player4);
-	Node[][] gameNodes = game.getNodes();
-	Node[][] gameNodes2 = game2.getNodes();
+	Node[][] gameNodes = game.getGameState();
+	Node[][] gameNodes2 = game2.getGameState();
 
 	@Test
 	public void testNodeCreation() {
@@ -29,7 +29,7 @@ public class GameTest {
 		System.out.println("Nodes:");
 		for (int i = 0; i < game.getNumX(); i++) {
 			for (int j = 0; j < game.getNumY(); j++) {
-				System.out.print(gameNodes[i][j].toString() + "   ");
+				System.out.print(game.getGameState()[i][j].toString() + "   ");
 			}
 			System.out.println();
 		}

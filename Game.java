@@ -106,7 +106,7 @@ public class Game {
 		this.numY = numY;
 	}
 
-	public Node[][] getNodes() {
+	public Node[][] getGameState() {
 		return nodes.getNodes();
 	}
 	
