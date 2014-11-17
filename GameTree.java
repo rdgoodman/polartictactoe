@@ -7,31 +7,45 @@ public class GameTree {
 	int nodesEvaluated;
 	// TODO: maybe heuristic should be passed in here,
 	// and evaluation should happen in this class instead of TreeNode?
+	// also, will need a separate method to iterate back up the tree
+	// to assign values
 	
-	public GameTree(Node[][] currentGameState, int currentPlayer){
-		Node[][] passThisIn = new Node[currentGameState.length][currentGameState[0].length];
-		
-		// creates a copy of the game state passed in, without pointer issues
-		for (int circles = 0; circles < currentGameState.length; circles++) {
-			for (int lines = 0; lines < currentGameState[0].length; lines++) {
-				Node entry = new Node(currentGameState[circles][lines].getX(),currentGameState[circles][lines].getY());
-				entry.setPlayer(currentGameState[circles][lines].getPlayer());
-				passThisIn[circles][lines] = entry;
-			}
-		}
-		
-		
+	public GameTree(Node[][] currentGameState, int firstPlayer, int secondPlayer){
 		
 		// root has a null parent
-		root = new TreeNode(passThisIn, currentPlayer, null);
+		root = new TreeNode(currentGameState, firstPlayer, secondPlayer, null);
 		depthReached = 0;
 		nodesEvaluated = 0;
 		
-		root.createNextPly();
+		root.createNextBranch();
+		// TODO: maxDepth should be some sort of command line parameter, I think
+		createPlies(1, 4, root);
+		
 	}
 	
-	// TODO: need a method to continue building the tree (calling createNextPly)
-
+	/** Creates all the plies in a tree, up until the specified maximum depth */	
+	protected void createPlies(int currentDepth, int maxDepth, TreeNode current){
+		//TODO: testing, remove
+		System.out.println("\n\n\n************************ Branch In Ply " + currentDepth + " ************************\n\n");
+		
+		// base case
+		if (currentDepth == maxDepth){
+			System.out.println("We're at the maximum depth");
+			return;
+		} else {
+			// creates the branches for all of the current node's children
+			for (TreeNode i : current.getChildren()){
+				System.out.println("\n-----NEW BRANCH-----");
+				i.createNextBranch();
+			}
+			currentDepth++;
+			// TODO: Is this method call even the right thing to do here?
+			for (TreeNode i : current.getChildren()){
+				createPlies(currentDepth, maxDepth, i);
+			}
+		}
+	}
+	
 	public TreeNode getRoot() {
 		return root;
 	}

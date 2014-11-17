@@ -119,12 +119,57 @@ public class GameTest {
 //
 //	}
 	
+//	@Test
+//	public void testGameTreeCreation(){
+//		
+//		game.move(gameNodes[1][3], player1);
+//		game.move(gameNodes[2][3], player2);
+//		
+//		//TODO: in game, I think we'll be passing in a hypothetical game state
+//		// with a hypothetical move made by the player making a decision
+//		// this example is evaluating p2's move (2,3)
+//		
+//		
+//		System.out.println("Nodes:");
+//		for (int i = 0; i < game.getNumX(); i++) {
+//			for (int j = 0; j < game.getNumY(); j++) {
+//				System.out.print(gameNodes[i][j].toString() + "   ");
+//			}
+//			System.out.println();
+//		}
+//		
+//		System.out.println("\nPlayer 1's playernumber is " + player1.getPlayerNum());
+//		System.out.println("Player 2's playernumber is " + player2.getPlayerNum() + "\n");
+//		
+//		GameTree tree1 = new GameTree(gameNodes, player2.getPlayerNum(), player1.getPlayerNum());
+//		
+//		System.out.println();
+//		
+//		Node[][] gameState = tree1.getRoot().getGameState();
+//		System.out.println("Game State:");
+//		for (int i = 0; i < game.getNumX(); i++) {
+//			for (int j = 0; j < game.getNumY(); j++) {
+//				System.out.print(gameState[i][j].toString() + "   ");
+//			}
+//			System.out.println();
+//		}
+//
+//	}
+	
 	@Test
-	public void testGameTreeCreation(){
+	public void testGameTreeCreation2(){
 		
 		game.move(gameNodes[1][3], player1);
 		game.move(gameNodes[2][3], player2);
+		game.move(gameNodes[2][2], player1);
+		game.move(gameNodes[2][1], player2);
 		game.move(gameNodes[1][2], player1);
+		game.move(gameNodes[1][0], player2);
+		game.move(gameNodes[2][0], player1);
+		
+		//TODO: in game, I think we'll be passing in a hypothetical game state
+		// with a hypothetical move made by the player making a decision
+		// this example is evaluating p1's move (2,0)
 		
 		
 		System.out.println("Nodes:");
@@ -135,7 +180,10 @@ public class GameTest {
 			System.out.println();
 		}
 		
-		GameTree tree1 = new GameTree(gameNodes, player2.getPlayerNum());
+		System.out.println("\nPlayer 1's playernumber is " + player1.getPlayerNum());
+		System.out.println("Player 2's playernumber is " + player2.getPlayerNum() + "\n");
+		
+		GameTree tree1 = new GameTree(gameNodes, player1.getPlayerNum(), player2.getPlayerNum());
 		
 		System.out.println();
 		
@@ -147,9 +195,6 @@ public class GameTest {
 			}
 			System.out.println();
 		}
-		
-		//TODO: NOTE, the recreated nodes have not had their neighbors initialized, which is causing issues.
-		//TODO: BEST OPTION may be to create a separate game state object.
 
 	}
 

@@ -5,32 +5,43 @@ import java.util.LinkedList;
 
 public class TreeNode {
 
-	Node[][] gameState;
-	int numChildren;
-	LinkedList<Node> potentialMoves;
+	GameState gameState;
+	boolean maxNode;
+	// note: these refer to whose turn it is in the game
+	// not whose move generated the current ply
 	int currentPlayer;
+	int nextPlayer;
+	// used to generate children - 1:1 relationship
+	LinkedList<Node> potentialMoves;
+	int numChildren;
 	ArrayList<TreeNode> children = new ArrayList<TreeNode>();
-	// TODO: make doubly linked (sort of already is)
+	// doubly linked
 	TreeNode parent;
-	
+	// comes from heuristic
+	double value;
 
-	public TreeNode(Node[][] gameState, int currentPlayer, TreeNode parent) {
-		this.gameState = new Node[gameState.length][gameState[0].length];
+	/** For root */
+	public TreeNode(Node[][] currentState, int currentPlayer, int nextPlayer,
+			TreeNode parent) {
+		gameState = new GameState(currentState);
 		this.currentPlayer = currentPlayer;
+		this.nextPlayer = nextPlayer;
 		potentialMoves = new LinkedList<Node>();
 
-		// creates a copy of the game state passed in, without pointer issues
-		// TODO: this would probably be a good place to count nodes evaluated (# treenodes?)
-		for (int circles = 0; circles < gameState.length; circles++) {
-			for (int lines = 0; lines < gameState[0].length; lines++) {
-				Node entry = new Node(gameState[circles][lines].getX(),gameState[circles][lines].getY());
-				entry.setPlayer(gameState[circles][lines].getPlayer());
-				this.gameState[circles][lines] = entry;
-			}
-		}
+		// root is always a max node
+		maxNode = true;
 
-		//countChildren();
-		//createAllChildren();
+	}
+
+	/** For rest of game nodes - takes a game state rather than an array */
+	public TreeNode(GameState parentState, int currentPlayer, int nextPlayer,
+			boolean maxNode, TreeNode parent) {
+		gameState = parentState;
+		this.currentPlayer = currentPlayer;
+		this.nextPlayer = nextPlayer;
+		potentialMoves = new LinkedList<Node>();
+		this.maxNode = maxNode;
+
 	}
 
 	/**
@@ -39,13 +50,13 @@ public class TreeNode {
 	 */
 	private void countChildren() {
 		// iterates through each node in the game
-		for (int circles = 0; circles < gameState.length; circles++) {
-			for (int lines = 0; lines < gameState[0].length; lines++) {
+		for (int circles = 0; circles < gameState.getNumX(); circles++) {
+			for (int lines = 0; lines < gameState.getNumY(); lines++) {
 				// if a node is played by either player...
-				if (gameState[circles][lines].getPlayer() != 0) {
+				if (gameState.getNodes()[circles][lines].getPlayer() != 0) {
 					// it iterates through each of its nodes neighbors...
-					for (Node i : gameState[circles][lines].getNeighbors()) {
-						System.out.println("visited a neighbor");
+					for (Node i : gameState.getNodes()[circles][lines]
+							.getNeighbors()) {
 						// and adds them to the list of potential moves
 						// if they are unplayed and not already present
 						if ((!potentialMoves.contains(i))
@@ -59,16 +70,19 @@ public class TreeNode {
 			}
 		}
 	}
-	
-	protected void createNextPly(){
+
+	/** Calls countChildren() and createAllChildren() */
+	protected void createNextBranch() {
 		countChildren();
 		createAllChildren();
-		System.out.println("\nNumber of children: " + children.size());
+		// TODO: testing, remove
+		// System.out.println("\nNumber of children for this branch: " +
+		// children.size());
 	}
-	
+
 	/** Loops through all potential moves, calls child creation for each */
-	private void createAllChildren(){
-		for(Node i : potentialMoves){
+	private void createAllChildren() {
+		for (Node i : potentialMoves) {
 			children.add(createChildNode(i));
 		}
 	}
@@ -79,26 +93,52 @@ public class TreeNode {
 	 * player
 	 */
 	private TreeNode createChildNode(Node hypotheticalMove) {
-		Node[][] childState = new Node[gameState.length][gameState[0].length];
-
-		// creates a copy of the current game state
-		for (int circles = 0; circles < gameState.length; circles++) {
-			for (int lines = 0; lines < gameState[0].length; lines++) {
-				childState[circles][lines] = gameState[circles][lines];
-			}
+		// chooses player for next ply - if this is a max node, the next
+		// ply will be generated using the opponent's moves and vice versa
+		int player;
+		if (maxNode) {
+			player = nextPlayer;
+		} else {
+			player = currentPlayer;
 		}
-		
-		childState[hypotheticalMove.getX()][hypotheticalMove.getY()].setPlayer(currentPlayer);
-		int nextPlayer = 1 - currentPlayer;
-		
-		TreeNode childNode = new TreeNode(childState, nextPlayer, this);
+
+		// creates a child node with game state identical to the current game
+		// state
+		// except with one move made
+		GameState childState = new GameState(gameState.getNodes());
+		childState.getNodes()[hypotheticalMove.getX()][hypotheticalMove.getY()]
+				.setPlayer(player);
+		TreeNode childNode = new TreeNode(childState, currentPlayer,
+				nextPlayer, !maxNode, this);
+
+		// TODO: testing, remove
+		String max = "";
+		if (childNode.isMaxNode()) {
+			max = "MAX";
+		} else {
+			max = "MIN";
+		}
+		System.out
+				.println("\nChild State: "
+						+ max
+						+ " "
+						+ childState.getNodes()[hypotheticalMove.getX()][hypotheticalMove
+								.getY()].toString());
+		// for (int i = 0; i < childState.getNodes().length; i++) {
+		// for (int j = 0; j < childState.getNodes()[0].length; j++) {
+		// System.out.print(childState.getNodes()[i][j].toString() + "   ");
+		// }
+		// System.out.println();
+		// }
+
 		return childNode;
 	}
 
-	//TODO: make a method that will score each child node as it is created using heuristics
+	// TODO: make a method that will score a single child node w/heuristic
+	// call on an entire ply in GameTree
 
 	public Node[][] getGameState() {
-		return gameState;
+		return gameState.getNodes();
 	}
 
 	public int getNumChildren() {
@@ -120,7 +160,9 @@ public class TreeNode {
 	public TreeNode getParent() {
 		return parent;
 	}
-	
-	
-	
+
+	public boolean isMaxNode() {
+		return maxNode;
+	}
+
 }

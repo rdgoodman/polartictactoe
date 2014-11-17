@@ -6,6 +6,38 @@ public class GameState {
 	int numX;
 	int numY;
 	
+	/** Default constructor for game */
+	public GameState(int circles, int lines){
+		this.numX = circles;
+		this.numY = lines;
+		
+		nodes = new Node[numX][numY];
+	}
+	
+	/** Constructor to be used with an existing game state */
+	public GameState(Node[][] currentState){
+		numX = currentState.length;
+		numY = currentState[0].length;
+		
+		nodes = new Node[numX][numY];
+		
+		// clones the existing state
+		for (int circles = 0; circles < numX; circles++) {
+			for (int lines = 0; lines < numY; lines++) {
+				Node entry = new Node(currentState[circles][lines].getX(), currentState[circles][lines].getY());
+				entry.setPlayer(currentState[circles][lines].getPlayer());
+				nodes[circles][lines] = entry;
+			}
+		}
+		
+		// sets all neighbors
+		for (int i = 0; i < numX; i++){
+			for(int j = 0; j < numY; j++){
+				setNeighbors(nodes[i][j]);
+			}
+		}
+	}
+
 	public Node[][] getNodes() {
 		return nodes;
 	}
@@ -18,13 +50,6 @@ public class GameState {
 		return numY;
 	}
 
-	public GameState(int circles, int lines){
-		this.numX = circles;
-		this.numY = lines;
-		
-		nodes = new Node[circles][lines];
-	}
-	
 	/** Creates Nodes for the graph, all initialized to empty */
 	public void createNodesAndNeighbors() {
 		// create edge nodes
