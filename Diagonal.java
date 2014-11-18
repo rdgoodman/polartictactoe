@@ -34,15 +34,7 @@ public class Diagonal {
 		return count;
 	}
 	
-	/** Returns the end of the linked list of nodes */
-	protected Node getEnd(){
-		return nodesOnDiagonal.getLast();
-	}
-	
-	public boolean isClockwise(){
-		return clockwise;
-	}
-	
+	/** Returns the number of nodes in this diagonal, marked and unmarked */
 	public int length(){
 		return nodesOnDiagonal.size();
 	}
@@ -53,6 +45,17 @@ public class Diagonal {
 			nodes += i.toString();
 		}
 		return nodes;
+	}
+
+
+	public boolean isClockwise(){
+		return clockwise;
+	}
+
+
+	/** Returns the end of the linked list of nodes */
+	protected Node getEnd(){
+		return nodesOnDiagonal.getLast();
 	}
 	
 }

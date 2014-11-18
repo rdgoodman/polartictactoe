@@ -24,6 +24,7 @@ public class Node {
 		neighbors.add(n);
 	}
 
+	/** Returns all neighbors for this node */
 	public LinkedList<Node> getNeighbors() {
 		return neighbors;
 	}

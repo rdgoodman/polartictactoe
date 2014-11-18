@@ -124,12 +124,6 @@ public class TreeNode {
 						+ " "
 						+ childState.getNodes()[hypotheticalMove.getX()][hypotheticalMove
 								.getY()].toString());
-		// for (int i = 0; i < childState.getNodes().length; i++) {
-		// for (int j = 0; j < childState.getNodes()[0].length; j++) {
-		// System.out.print(childState.getNodes()[i][j].toString() + "   ");
-		// }
-		// System.out.println();
-		// }
 
 		return childNode;
 	}

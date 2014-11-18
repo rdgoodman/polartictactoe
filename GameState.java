@@ -18,7 +18,6 @@ public class GameState {
 
 		createNodesAndNeighbors();
 		createDiagonals();
-		//setDiagonals();
 
 	}
 
@@ -67,7 +66,8 @@ public class GameState {
 			diagonals[1][j] = new Diagonal(j, true);
 		}
 
-		// add all nodes on the "zeroth" circle
+		// adds all nodes on the "zeroth" circle
+		// and sets each of their diagonals as they're created
 		for (int i = 0; i < numY; i++){
 			diagonals[0][i].add(nodes[0][i]);
 			setDiagonal(diagonals[0][i]);
@@ -93,20 +93,20 @@ public class GameState {
 		// always increment X
 		circle = endOfList.getX() + 1;
 		
-		// increment y
 		if (a.isClockwise()){
 			if (endOfList.getY() == (numY - 1)){
 				// wrap around
 				line = 0;
 			} else {
+				// increment y
 				line = endOfList.getY() + 1;
 			}
-		// decrement y
 		} else {
 			if (endOfList.getY() == 0){
 				//wrap around
 				line = numY - 1;
 			} else {
+				// decrement y
 				line = endOfList.getY() - 1;
 			}
 		}
@@ -118,19 +118,7 @@ public class GameState {
 		setDiagonal(a);
 	}
 
-	public Node[][] getNodes() {
-		return nodes;
-	}
-
-	public int getNumX() {
-		return numX;
-	}
-
-	public int getNumY() {
-		return numY;
-	}
-
-	/** Creates Nodes for the graph, all initialized to empty */
+	/** Creates Nodes for the game, all initialized to empty */
 	private void createNodesAndNeighbors() {
 		// create edge nodes
 		for (int y = 0; y < numY; y++) {
@@ -144,7 +132,7 @@ public class GameState {
 			}
 		}
 
-		// sets all neighbors
+		// set all neighbors
 		for (int i = 0; i < numX; i++) {
 			for (int j = 0; j < numY; j++) {
 				setNeighbors(nodes[i][j]);
@@ -187,6 +175,18 @@ public class GameState {
 
 	public Diagonal[][] getDiagonals() {
 		return diagonals;
+	}
+
+	public Node[][] getNodes() {
+		return nodes;
+	}
+
+	public int getNumX() {
+		return numX;
+	}
+
+	public int getNumY() {
+		return numY;
 	}
 
 }

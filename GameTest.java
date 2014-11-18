@@ -41,14 +41,32 @@ public class GameTest {
 		Diagonal[][] gameDiagonals = game.getDiagonals();
 		int counter = 1;
 
-		
-		//TODO: dis broken
 		for (int i = 0; i < gameDiagonals.length; i++){
 			for(int j = 0; j < gameDiagonals[0].length; j++){
 				System.out.println("Diagonal " + counter + ": " + gameDiagonals[i][j]. toString());
 				counter++;
 			}
 		}
+		
+		game.move(gameNodes[0][3], player1);
+		game.move(gameNodes[1][0], player2);
+		game.move(gameNodes[2][1], player1);
+		
+		game.move(gameNodes[0][1], player2);
+		game.move(gameNodes[0][0], player1);
+		game.move(gameNodes[2][3], player2);
+		
+		assertEquals(2, game.getDiagonals()[1][3].getNumberBelongingToPlayer(player1));
+		assertEquals(2, gameDiagonals[1][3].getNumberBelongingToPlayer(player1));
+		
+		assertEquals(1, game.getDiagonals()[1][3].getNumberBelongingToPlayer(player2));
+		assertEquals(1, gameDiagonals[1][3].getNumberBelongingToPlayer(player2));
+		
+		assertEquals(3, game.getDiagonals()[0][1].getNumberBelongingToPlayer(player2));
+		assertEquals(3, gameDiagonals[0][1].getNumberBelongingToPlayer(player2));
+		
+		assertEquals(0, game.getDiagonals()[1][2].getNumberBelongingToPlayer(player2));
+		assertEquals(0, game.getDiagonals()[1][2].getNumberBelongingToPlayer(player1));
 	}
 	
 

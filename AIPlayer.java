@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class AIPlayer implements Player {
 	
 	int maxSearchDepth;
-	//TODO: mayhaps the next two should be parameters reported by reportMove() and its delegates?
+	//TODO:the next two should be parameters reported by reportMove() and its delegates (minimax, etc)?
 	int numNodesEvaluated;
 	int timeToSelect;
 	

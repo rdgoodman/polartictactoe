@@ -19,6 +19,7 @@ public class Edge {
 		setType();
 	}
 
+	/** Determines and assigns the type of this Edge (radial, arc, spiral) */
 	private void setType() {
 		if (((start.getX() == end.getX() + 1) || (start.getX() == end.getX() - 1))
 				&& (start.getY() == end.getY())) {

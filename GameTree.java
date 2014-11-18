@@ -23,7 +23,9 @@ public class GameTree {
 		
 	}
 	
-	/** Creates all the plies in a tree, up until the specified maximum depth */	
+	/** Creates all the plies in a tree, up until the specified maximum depth 
+	 * NOTE: currently, the root is NOT considered its own ply. 
+	 * TODO: This ^ may need to change!*/	
 	protected void createPlies(int currentDepth, int maxDepth, TreeNode current){
 		//TODO: testing, remove
 		System.out.println("\n\n\n************************ Branch In Ply " + currentDepth + " ************************\n\n");
