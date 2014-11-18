@@ -34,6 +34,19 @@ public class Diagonal {
 		return count;
 	}
 	
+	/** Returns the end of the linked list of nodes */
+	protected Node getEnd(){
+		return nodesOnDiagonal.getLast();
+	}
+	
+	public boolean isClockwise(){
+		return clockwise;
+	}
+	
+	public int length(){
+		return nodesOnDiagonal.size();
+	}
+	
 	public String toString(){
 		String nodes = "";
 		for (Node i : nodesOnDiagonal){

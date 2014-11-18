@@ -36,21 +36,20 @@ public class GameTest {
 
 	}
 	
-//	@Test
-//	public void testDiagonalCreation(){
-//		Diagonal[][] gameDiagonals = game.getDiagonals();
-//		int counter = 1;
-//		
-//		System.out.println("Sample diagonal: " + gameDiagonals[0][1].toString() + "\n");
-//		
-//		//TODO: dis broken
-//		for (int i = 0; i < gameDiagonals.length; i++){
-//			for(int j = 0; j < gameDiagonals[0].length; j++){
-//				System.out.println("Diagonal " + counter + ": " + gameDiagonals[i][j]. toString());
-//				counter++;
-//			}
-//		}
-//	}
+	@Test
+	public void testDiagonalCreation(){
+		Diagonal[][] gameDiagonals = game.getDiagonals();
+		int counter = 1;
+
+		
+		//TODO: dis broken
+		for (int i = 0; i < gameDiagonals.length; i++){
+			for(int j = 0; j < gameDiagonals[0].length; j++){
+				System.out.println("Diagonal " + counter + ": " + gameDiagonals[i][j]. toString());
+				counter++;
+			}
+		}
+	}
 	
 
 //	@Test
