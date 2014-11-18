@@ -24,8 +24,6 @@ public class Game {
 		firstMove = true;
 		nodes = new GameState(numX, numY);
 		
-		nodes.createNodesAndNeighbors();
-		
 	}
 
 
@@ -112,6 +110,10 @@ public class Game {
 	
 	public boolean isFirstMove(){
 		return firstMove;
+	}
+	
+	public Diagonal[][] getDiagonals(){
+		return nodes.getDiagonals();
 	}
 
 }

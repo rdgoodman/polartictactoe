@@ -34,4 +34,12 @@ public class Diagonal {
 		return count;
 	}
 	
+	public String toString(){
+		String nodes = "";
+		for (Node i : nodesOnDiagonal){
+			nodes += i.toString();
+		}
+		return nodes;
+	}
+	
 }

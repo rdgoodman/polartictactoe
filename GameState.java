@@ -14,9 +14,12 @@ public class GameState {
 		this.numX = circles;
 		this.numY = lines;
 		
-		createDiagonals();
-
 		nodes = new Node[numX][numY];
+		
+		createNodesAndNeighbors();
+		createDiagonals();
+		setDiagonals();
+
 	}
 
 	/** Constructor to be used with an existing game state */
@@ -53,13 +56,11 @@ public class GameState {
 		diagonals = new Diagonal[2][numY];
 		// create counterclockwise diagonals
 		for (int j = 0; j < numY; j++) {
-			System.out.println("made new counterclockwise");
 			diagonals[0][j] = new Diagonal(j, false);
 		}
 		// create clockwise diagonals
 		for (int j = 0; j < numY; j++) {
 			diagonals[1][j] = new Diagonal(j, true);
-			System.out.println("made new clockwise");
 		}
 	}
 
@@ -76,7 +77,7 @@ public class GameState {
 	}
 
 	/** Creates Nodes for the graph, all initialized to empty */
-	public void createNodesAndNeighbors() {
+	private void createNodesAndNeighbors() {
 		// create edge nodes
 		for (int y = 0; y < numY; y++) {
 			nodes[numX - 1][y] = new Node(numX - 1, y);
@@ -98,7 +99,7 @@ public class GameState {
 	}
 
 	/** Sets neighbors for a node in the graph */
-	public void setNeighbors(Node a) {
+	private void setNeighbors(Node a) {
 		int counterclockwise = a.getY() - 1;
 		int clockwise = a.getY() + 1;
 
@@ -121,10 +122,11 @@ public class GameState {
 			a.addNeighbor(nodes[a.getX() + 1][counterclockwise]);
 			a.addNeighbor(nodes[a.getX() + 1][clockwise]);
 			// TODO: diagonals
-			diagonals[0][a.getY()].add(a);
-			diagonals[0][a.getY()].add(nodes[a.getX() + 1][counterclockwise]);
-			diagonals[1][a.getY()].add(a);
-			diagonals[1][a.getY()].add(nodes[a.getX() + 1][clockwise]);
+			//I think the origins (the Ys) are the problem
+//			diagonals[0][a.getY()].add(a);
+//			diagonals[0][a.getY()].add(nodes[a.getX() + 1][counterclockwise]);
+//			diagonals[1][a.getY()].add(a);
+//			diagonals[1][a.getY()].add(nodes[a.getX() + 1][clockwise]);
 
 		}
 		// for those not on innermost arc
@@ -133,12 +135,21 @@ public class GameState {
 			a.addNeighbor(nodes[a.getX() - 1][counterclockwise]);
 			a.addNeighbor(nodes[a.getX() - 1][clockwise]);
 			// TODO: diagonals
-			diagonals[0][a.getY()].add(a);
-			diagonals[0][a.getY()].add(nodes[a.getX() - 1][counterclockwise]);
-			diagonals[1][a.getY()].add(a);
-			diagonals[1][a.getY()].add(nodes[a.getX() - 1][clockwise]);
+//			diagonals[0][a.getY()].add(a);
+//			diagonals[0][a.getY()].add(nodes[a.getX() - 1][counterclockwise]);
+//			diagonals[1][a.getY()].add(a);
+//			diagonals[1][a.getY()].add(nodes[a.getX() - 1][clockwise]);
 		}
 
+	}
+	
+	private void setDiagonals(){
+		
+	}
+	
+	
+	public Diagonal[][] getDiagonals(){
+		return diagonals;
 	}
 
 }
