@@ -175,26 +175,12 @@ public class GameState {
 			a.addNeighbor(nodes[a.getX() + 1][a.getY()]);
 			a.addNeighbor(nodes[a.getX() + 1][counterclockwise]);
 			a.addNeighbor(nodes[a.getX() + 1][clockwise]);
-			// TODO: diagonals
-			// I think the origins (the Ys) are the problem
-			// diagonals[0][a.getY()].add(a);
-			// diagonals[0][a.getY()].add(nodes[a.getX() +
-			// 1][counterclockwise]);
-			// diagonals[1][a.getY()].add(a);
-			// diagonals[1][a.getY()].add(nodes[a.getX() + 1][clockwise]);
-
 		}
 		// for those not on innermost arc
 		if (a.getX() != 0) {
 			a.addNeighbor(nodes[a.getX() - 1][a.getY()]);
 			a.addNeighbor(nodes[a.getX() - 1][counterclockwise]);
 			a.addNeighbor(nodes[a.getX() - 1][clockwise]);
-			// TODO: diagonals
-			// diagonals[0][a.getY()].add(a);
-			// diagonals[0][a.getY()].add(nodes[a.getX() -
-			// 1][counterclockwise]);
-			// diagonals[1][a.getY()].add(a);
-			// diagonals[1][a.getY()].add(nodes[a.getX() - 1][clockwise]);
 		}
 
 	}

@@ -2,7 +2,7 @@ package polartictactoe;
 
 public class Game {
 
-	// TODO: both should be gotten through command-line input
+	//  circles, lines gotten through command-line input
 	// number of circles
 	private int numX;
 	// number of radial lines
@@ -68,7 +68,7 @@ public class Game {
 	}
 
 	public boolean checkIfWin() {
-		// TODO: all this
+		// TODO: calls winChecker object (yet to be implemented)
 		return false;
 	}
 
