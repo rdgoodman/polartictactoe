@@ -5,7 +5,7 @@ public class Endpoints implements Axiom {
 	String startNodeName;
 	String endNodeName;
 	String edgeName;
-	Boolean isTrue;
+	Boolean isTrue = true;
 	
 	
 	public Endpoints(String startNodeName, String endNodeName, String edgeName) {
@@ -21,7 +21,7 @@ public class Endpoints implements Axiom {
 	}
 
 	@Override
-	public boolean substitute() {
+	public boolean unify(Axiom toBeUnified) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -14,4 +14,13 @@ public class Statement {
 		statement.add(a);
 	}
 
+	public String toString(){
+		String statementString = "";
+		
+		for (Axiom a : statement){
+			statementString += a.toString();
+		}
+		
+		return statementString;
+	}
 }

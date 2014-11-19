@@ -17,7 +17,7 @@ public class LogicalOperator implements Axiom {
 	}
 
 	@Override
-	public boolean substitute() {
+	public boolean unify(Axiom toBeUnified) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -27,7 +27,7 @@ public class LogicalOperator implements Axiom {
 		if (and) {
 			return " AND ";
 		} else {
-			return "OR";
+			return " OR ";
 		}
 	}
 

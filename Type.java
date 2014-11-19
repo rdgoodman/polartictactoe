@@ -4,7 +4,7 @@ public class Type implements Axiom {
 	
 	String type;
 	String edgeName;
-	Boolean isTrue;
+	Boolean isTrue = true;
 	
 	public Type(String type, String name){
 		this.type = type;
@@ -18,7 +18,7 @@ public class Type implements Axiom {
 	}
 
 	@Override
-	public boolean substitute() {
+	public boolean unify(Axiom toBeUnified) {
 		// TODO Auto-generated method stub
 		return false;
 	}
