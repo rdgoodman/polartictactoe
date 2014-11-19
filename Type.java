@@ -1,10 +1,19 @@
 package polartictactoe;
 
 public class Type implements Axiom {
+	
+	String type;
+	String edgeName;
+	Boolean isTrue;
+	
+	public Type(String type, String name){
+		this.type = type;
+		this.edgeName = name;
+	}
 
 	@Override
 	public void negate() {
-		// TODO Auto-generated method stub
+		isTrue = !isTrue;
 
 	}
 
@@ -12,6 +21,16 @@ public class Type implements Axiom {
 	public boolean substitute() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public String toString(){
+		String not = " ";
+		if(!isTrue){
+			not = "~";
+		}
+		
+		return not + "Type(" + type + ", " + edgeName+")";
 	}
 
 }
