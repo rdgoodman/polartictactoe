@@ -53,33 +53,60 @@ public class WinChecker {
 
 	public void addToKnowledgeBase(Axiom a) {
 		KB.add(a);
-	}
-	
-	private void resolve(){
-		while (!KB.isEmpty()){
-			
-			// unify statement with some axiom
-			
-			if (negatedGoal.isEmpty()){
-				// TODO: will need to find which player has the win and pass in
-				reportWin();
-			}
+		System.out.println(a.getClass().toString());
+
+		// resolves once there are three or more edges per player
+		if (KB.size() >= 12) {
+			 resolve();
 		}
-		
-		// note: if we reach this code, no win found
-		reportWin();
 	}
 
+	private void resolve() {
+		while (!KB.isEmpty()) {
+			boolean unifies = false;
+
+			// empty clause -> win !
+			if (negatedGoal.isEmpty()) {
+				// TODO: will need to find which player has the win and pass
+				// in
+				reportWin();
+			}
+
+			// attempts to unify goal with every axiom in KB
+			// TODO: how are you going to do the deletion along with the unification?
+			for (Axiom a : KB) {
+				
+				// don't try to unify operators, obviously
+				if (!(a instanceof LogicalOperator)) {
+					negatedGoal.unify(a);
+				}
+
+			}
+
+			// note: if we reach this code, no win found
+			// if unification fails, break
+			if (!unifies) {
+				reportNoWin();
+			}
+		}
+
+	}
+
+	// TODO: reportWin() and NoWin are stubs still
 	private int reportWin() {
 		return -1;
+	}
+
+	private int reportNoWin() {
+		return -5;
 	}
 
 	public Statement getNegatedGoal() {
 		return negatedGoal;
 	}
-	
-	public void printKB(){
-		for (Axiom a : KB){
+
+	public void printKB() {
+		for (Axiom a : KB) {
 			System.out.println(a.toString());
 		}
 	}

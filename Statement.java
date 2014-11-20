@@ -10,8 +10,13 @@ public class Statement {
 		statement = new LinkedList<Axiom>();
 	}
 	
-	public void unify(Axiom a){
-		// TODO: stub
+	public boolean unify(Axiom a){
+		if(a instanceof Endpoints){
+			// call an endpoint resolver
+		} else if (a instanceof Type){
+			// call a type resolver
+		}
+		return false;
 	}
 	
 	public void add(Axiom a){
