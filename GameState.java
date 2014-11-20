@@ -28,8 +28,6 @@ public class GameState {
 
 		nodes = new Node[numX][numY];
 
-		//createDiagonals();
-
 		// clones the existing state
 		for (int circles = 0; circles < numX; circles++) {
 			for (int lines = 0; lines < numY; lines++) {
@@ -39,6 +37,9 @@ public class GameState {
 				nodes[circles][lines] = entry;
 			}
 		}
+		
+		createDiagonals();
+		
 
 		// sets all neighbors
 		for (int i = 0; i < numX; i++) {
