@@ -5,8 +5,11 @@ public class GameState {
 	Node[][] nodes;
 	// diagonals for this game
 	Diagonal[][] diagonals;
+<<<<<<< HEAD
 	// win-checker for this game
 	WinChecker winchecker;
+=======
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 	int numX;
 	int numY;
@@ -20,7 +23,10 @@ public class GameState {
 
 		createNodesAndNeighbors();
 		createDiagonals();
+<<<<<<< HEAD
 		winchecker = new WinChecker();
+=======
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 	}
 
@@ -31,6 +37,11 @@ public class GameState {
 
 		nodes = new Node[numX][numY];
 
+<<<<<<< HEAD
+=======
+		createDiagonals();
+
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 		// clones the existing state
 		for (int circles = 0; circles < numX; circles++) {
 			for (int lines = 0; lines < numY; lines++) {
@@ -40,13 +51,18 @@ public class GameState {
 				nodes[circles][lines] = entry;
 			}
 		}
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 		// sets all neighbors
 		for (int i = 0; i < numX; i++) {
 			for (int j = 0; j < numY; j++) {
 				setNeighbors(nodes[i][j]);
 			}
 		}
+<<<<<<< HEAD
 		
 		createDiagonals();
 		winchecker = new WinChecker();
@@ -56,6 +72,8 @@ public class GameState {
 
 	public void addToKB(Axiom a) {
 		winchecker.addToKnowledgeBase(a);
+=======
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 	}
 
 	/**
@@ -182,11 +200,14 @@ public class GameState {
 		}
 
 	}
+<<<<<<< HEAD
 	
 	/** Reports output of win-checker. Should be called after each successful move */
 	public boolean checkIfWin(Player player) {
 		return false;
 	}
+=======
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 	public Diagonal[][] getDiagonals() {
 		return diagonals;
@@ -204,9 +225,12 @@ public class GameState {
 		return numY;
 	}
 
+<<<<<<< HEAD
 	
 	public WinChecker getWinChecker(){
 		return winchecker;
 	}
 
+=======
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 }

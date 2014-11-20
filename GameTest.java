@@ -41,12 +41,18 @@ public class GameTest {
 		Diagonal[][] gameDiagonals = game.getDiagonals();
 		int counter = 1;
 
+<<<<<<< HEAD
+=======
+		
+		//TODO: dis broken
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 		for (int i = 0; i < gameDiagonals.length; i++){
 			for(int j = 0; j < gameDiagonals[0].length; j++){
 				System.out.println("Diagonal " + counter + ": " + gameDiagonals[i][j]. toString());
 				counter++;
 			}
 		}
+<<<<<<< HEAD
 		
 		game.move(gameNodes[0][3], player1);
 		game.move(gameNodes[1][0], player2);
@@ -231,5 +237,171 @@ public class GameTest {
 		}
 
 	}
+=======
+	}
+	
+
+//	@Test
+//	public void testSetNeighbors() {
+//		
+//		
+//		LinkedList<Node> neighbors1 = gameNodes[1][game.getNumY() - 1]
+//				.getNeighbors();
+//		System.out.println();
+//		System.out.println("Neighbors for (1, 3):");
+//		for (Node i : neighbors1) {
+//			System.out.print(i.toString() + "  ");
+//		}
+//		
+//		System.out.println();
+//		LinkedList<Node> neighbors2 = gameNodes[1][0]
+//				.getNeighbors();
+//		System.out.println();
+//		System.out.println("Neighbors for (1, 0):");
+//		for (Node i : neighbors2) {
+//			System.out.print(i.toString() + "  ");
+//		}
+//		
+//		System.out.println();
+//		LinkedList<Node> neighbors3 = gameNodes[1][1]
+//				.getNeighbors();
+//		System.out.println();
+//		System.out.println("Neighbors for (1, 1):");
+//		for (Node i : neighbors3) {
+//			System.out.print(i.toString() + "  ");
+//		}
+//		
+//		System.out.println();
+//		LinkedList<Node> neighbors4 = gameNodes[0][3]
+//				.getNeighbors();
+//		System.out.println();
+//		System.out.println("Neighbors for (0, 3):");
+//		for (Node i : neighbors4) {
+//			System.out.print(i.toString() + "  ");
+//		}
+//		
+//		System.out.println();
+//		LinkedList<Node> neighbors5 = gameNodes[2][0]
+//				.getNeighbors();
+//		System.out.println();
+//		System.out.println("Neighbors for (2, 0):");
+//		for (Node i : neighbors5) {
+//			System.out.print(i.toString() + "  ");
+//		}
+//		
+//		System.out.println();
+//	}
+//	
+//	@Test
+//	public void testEdgeCreation(){
+//		
+//		game.move(gameNodes[2][0], player1);
+//		game.move(gameNodes[1][3], player1);
+//		game.move(gameNodes[2][1], player1);
+//
+//		
+//		assertTrue(player1.getPlayerNum() == 1);
+//		assertTrue(gameNodes[2][0].getNeighbors().contains(gameNodes[2][1]));
+//		assertTrue(gameNodes[2][0].getPlayer() == gameNodes[2][1].getPlayer());
+//		
+//		
+//		System.out.println(player1.getEdges().size());
+//		
+//		for (Edge i : player1.getEdges()){
+//			System.out.println(i.toString() + " is of type " + i.getType());
+//		}	
+//	}
+//	
+//	@Test
+//	public void testMoveValidity(){
+//		
+//		game2.move(gameNodes2[1][3], player3);
+//		assertTrue(game2.isValidMove(gameNodes2[1][2]));
+//		assertFalse(game2.isFirstMove());
+//		assertFalse(game2.isValidMove(gameNodes2[2][1]));
+//		game2.move(gameNodes2[1][0], player4);
+//		assertTrue(game2.isValidMove(gameNodes2[2][1]));
+//
+//	}
+	
+//	@Test
+//	public void testGameTreeCreation(){
+//		
+//		game.move(gameNodes[1][3], player1);
+//		game.move(gameNodes[2][3], player2);
+//		
+//		//TODO: in game, I think we'll be passing in a hypothetical game state
+//		// with a hypothetical move made by the player making a decision
+//		// this example is evaluating p2's move (2,3)
+//		
+//		
+//		System.out.println("Nodes:");
+//		for (int i = 0; i < game.getNumX(); i++) {
+//			for (int j = 0; j < game.getNumY(); j++) {
+//				System.out.print(gameNodes[i][j].toString() + "   ");
+//			}
+//			System.out.println();
+//		}
+//		
+//		System.out.println("\nPlayer 1's playernumber is " + player1.getPlayerNum());
+//		System.out.println("Player 2's playernumber is " + player2.getPlayerNum() + "\n");
+//		
+//		GameTree tree1 = new GameTree(gameNodes, player2.getPlayerNum(), player1.getPlayerNum());
+//		
+//		System.out.println();
+//		
+//		Node[][] gameState = tree1.getRoot().getGameState();
+//		System.out.println("Game State:");
+//		for (int i = 0; i < game.getNumX(); i++) {
+//			for (int j = 0; j < game.getNumY(); j++) {
+//				System.out.print(gameState[i][j].toString() + "   ");
+//			}
+//			System.out.println();
+//		}
+//
+//	}
+	
+//	@Test
+//	public void testGameTreeCreation2(){
+//		
+//		game.move(gameNodes[1][3], player1);
+//		game.move(gameNodes[2][3], player2);
+//		game.move(gameNodes[2][2], player1);
+//		game.move(gameNodes[2][1], player2);
+//		game.move(gameNodes[1][2], player1);
+//		game.move(gameNodes[1][0], player2);
+//		game.move(gameNodes[2][0], player1);
+//		
+//		//TODO: in game, I think we'll be passing in a hypothetical game state
+//		// with a hypothetical move made by the player making a decision
+//		// this example is evaluating p1's move (2,0)
+//		
+//		
+//		System.out.println("Nodes:");
+//		for (int i = 0; i < game.getNumX(); i++) {
+//			for (int j = 0; j < game.getNumY(); j++) {
+//				System.out.print(gameNodes[i][j].toString() + "   ");
+//			}
+//			System.out.println();
+//		}
+//		
+//		System.out.println("\nPlayer 1's playernumber is " + player1.getPlayerNum());
+//		System.out.println("Player 2's playernumber is " + player2.getPlayerNum() + "\n");
+//		
+//		GameTree tree1 = new GameTree(gameNodes, player1.getPlayerNum(), player2.getPlayerNum());
+//		
+//		System.out.println();
+//		
+//		Node[][] gameState = tree1.getRoot().getGameState();
+//		System.out.println("Game State:");
+//		for (int i = 0; i < game.getNumX(); i++) {
+//			for (int j = 0; j < game.getNumY(); j++) {
+//				System.out.print(gameState[i][j].toString() + "   ");
+//			}
+//			System.out.println();
+//		}
+//
+//	}
+>>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 }
