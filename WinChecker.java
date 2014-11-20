@@ -3,26 +3,26 @@ package polartictactoe;
 import java.util.ArrayList;
 
 public class WinChecker {
-	
+
 	ArrayList<Axiom> KB;
 	static Statement negatedGoal;
-	
+
 	/** Note: the negated goal is hard-coded in for this game */
-	public WinChecker(){
+	public WinChecker() {
 		negatedGoal = new Statement();
-		
-		// builds axioms with **empty names** - TODO: fix this!!!
-		Axiom endpts1 = new Endpoints("", " ", " ");
+
+		// builds axioms
+		Axiom endpts1 = new Endpoints("n1", "n2", "e1");
 		endpts1.negate();
-		Axiom endpts2 = new Endpoints("", " ", " ");
+		Axiom endpts2 = new Endpoints("n2", "n3", "e2");
 		endpts2.negate();
-		Axiom endpts3 = new Endpoints("", " ", " ");
+		Axiom endpts3 = new Endpoints("n3", "n4", "e3");
 		endpts3.negate();
-		Axiom type1 = new Type("", " ");
+		Axiom type1 = new Type("a", "e1");
 		type1.negate();
-		Axiom type2 = new Type("", " ");
+		Axiom type2 = new Type("a", "e2");
 		type2.negate();
-		Axiom type3 = new Type("", " ");
+		Axiom type3 = new Type("a", "e3");
 		type3.negate();
 		Axiom connector1 = new LogicalOperator(true);
 		connector1.negate();
@@ -34,8 +34,8 @@ public class WinChecker {
 		connector4.negate();
 		Axiom connector5 = new LogicalOperator(true);
 		connector5.negate();
-		
-		// adds axioms
+
+		// adds axioms to negated goal
 		negatedGoal.add(endpts1);
 		negatedGoal.add(connector1);
 		negatedGoal.add(endpts2);
@@ -47,16 +47,35 @@ public class WinChecker {
 		negatedGoal.add(type2);
 		negatedGoal.add(connector5);
 		negatedGoal.add(type3);
-		
-		
-	}
-	
-	public void addToKnowledgeBase(Axiom a){
-		// TODO: "a" should be created in the GameState class and passed to the winchecker
-		KB.add(a);
+
 	}
 
-	public Statement getNegatedGoal(){
+	public void addToKnowledgeBase(Axiom a) {
+		// TODO: "a" should be created in the GameState and Edge classes and passed to the
+		// winchecker
+		KB.add(a);
+	}
+	
+	private void resolve(){
+		while (!KB.isEmpty()){
+			
+			// unify statement with some axiom
+			
+			if (negatedGoal.isEmpty()){
+				// TODO: will need to find which player has the win and pass in
+				reportWin();
+			}
+		}
+		
+		// note: if we reach this code, no win found
+		reportWin();
+	}
+
+	private int reportWin() {
+		return -1;
+	}
+
+	public Statement getNegatedGoal() {
 		return negatedGoal;
 	}
 }

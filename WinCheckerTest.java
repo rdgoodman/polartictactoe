@@ -13,5 +13,10 @@ public class WinCheckerTest {
 		System.out.println("Negated goal: " );
 		System.out.println(testwc1.getNegatedGoal().toString() + "\n");
 	}
+	
+	@Test
+	public void testKBBuilding(){
+		
+	}
 
 }
