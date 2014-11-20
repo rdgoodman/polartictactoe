@@ -9,6 +9,7 @@ public class WinChecker {
 
 	/** Note: the negated goal is hard-coded in for this game */
 	public WinChecker() {
+		KB = new ArrayList<Axiom>();
 		negatedGoal = new Statement();
 
 		// builds axioms
@@ -51,8 +52,6 @@ public class WinChecker {
 	}
 
 	public void addToKnowledgeBase(Axiom a) {
-		// TODO: "a" should be created in the GameState and Edge classes and passed to the
-		// winchecker
 		KB.add(a);
 	}
 	
@@ -77,5 +76,11 @@ public class WinChecker {
 
 	public Statement getNegatedGoal() {
 		return negatedGoal;
+	}
+	
+	public void printKB(){
+		for (Axiom a : KB){
+			System.out.println(a.toString());
+		}
 	}
 }

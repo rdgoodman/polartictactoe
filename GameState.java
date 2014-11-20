@@ -5,6 +5,8 @@ public class GameState {
 	Node[][] nodes;
 	// diagonals for this game
 	Diagonal[][] diagonals;
+	// win-checker for this game
+	WinChecker winchecker;
 
 	int numX;
 	int numY;
@@ -18,6 +20,7 @@ public class GameState {
 
 		createNodesAndNeighbors();
 		createDiagonals();
+		winchecker = new WinChecker();
 
 	}
 
@@ -38,15 +41,21 @@ public class GameState {
 			}
 		}
 		
-		createDiagonals();
-		
-
 		// sets all neighbors
 		for (int i = 0; i < numX; i++) {
 			for (int j = 0; j < numY; j++) {
 				setNeighbors(nodes[i][j]);
 			}
 		}
+		
+		createDiagonals();
+		winchecker = new WinChecker();
+		
+
+	}
+
+	public void addToKB(Axiom a) {
+		winchecker.addToKnowledgeBase(a);
 	}
 
 	/**
@@ -173,6 +182,11 @@ public class GameState {
 		}
 
 	}
+	
+	/** Reports output of win-checker. Should be called after each successful move */
+	public boolean checkIfWin(Player player) {
+		return false;
+	}
 
 	public Diagonal[][] getDiagonals() {
 		return diagonals;
@@ -188,6 +202,11 @@ public class GameState {
 
 	public int getNumY() {
 		return numY;
+	}
+
+	
+	public WinChecker getWinChecker(){
+		return winchecker;
 	}
 
 }

@@ -11,7 +11,7 @@ public class Game {
 	Player pX;
 	Player pO;
 	boolean firstMove;
-	GameState nodes;
+	GameState gameState;
 
 	public Game(int numX, int numY, Player pX, Player pO) {
 		this.numX = numX;
@@ -20,7 +20,7 @@ public class Game {
 		this.pO = pO;
 
 		firstMove = true;
-		nodes = new GameState(numX, numY);
+		gameState = new GameState(numX, numY);
 
 	}
 
@@ -61,16 +61,16 @@ public class Game {
 				Edge possibleNewEdge = new Edge(changed, i, changed.getPlayer());
 				if (!currentPlayer.hasEdge(possibleNewEdge)) {
 					currentPlayer.addEdge(possibleNewEdge);
+					// add to knowledge base
+					gameState.addToKB(possibleNewEdge.getEndpointsAxiom());
+					gameState.addToKB(possibleNewEdge.getTypeAxiom());
 				}
 			}
 		}
+		
+		gameState.checkIfWin(pX);
+		gameState.checkIfWin(pO);
 
-	}
-
-	/** Reports output of win-checker. Should be called after each successful move */
-	public boolean checkIfWin() {
-		// TODO: calls winChecker object (yet to be implemented)
-		return false;
 	}
 
 	public void draw() {
@@ -106,7 +106,7 @@ public class Game {
 	}
 
 	public Node[][] getGameState() {
-		return nodes.getNodes();
+		return gameState.getNodes();
 	}
 
 	public boolean isFirstMove() {
@@ -114,7 +114,11 @@ public class Game {
 	}
 
 	public Diagonal[][] getDiagonals() {
-		return nodes.getDiagonals();
+		return gameState.getDiagonals();
+	}
+	
+	public WinChecker getWinChecker(){
+		return gameState.getWinChecker();
 	}
 
 }

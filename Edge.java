@@ -10,6 +10,11 @@ public class Edge {
 	Node start;
 	Node end;
 	// order is arbitrary as to which is start and end
+	// below here are strings used for building axioms
+	String startString;
+	String endString;
+	String edgeName;
+	String edgeType;
 
 	public Edge(Node start, Node end, int color) {
 		this.start = start;
@@ -17,7 +22,33 @@ public class Edge {
 		this.color = color;
 
 		setType();
+
+		startString = Integer.toString(start.getX())
+				+ Integer.toString(start.getY());
+		endString = Integer.toString(end.getX())
+				+ Integer.toString(end.getY());
+		edgeName = startString + "-" + endString;
+		edgeType = "S";
+		if (type == RADIAL) {
+			edgeType = "R";
+		} else if (type == ARC) {
+			edgeType = "A";
+		}
+		
 	}
+	
+	/** Creates the Endpoints axiom to add to KB */
+	public Endpoints getEndpointsAxiom(){
+		Endpoints endpts = new Endpoints(startString, endString, edgeName);
+		return endpts;
+	}
+	
+	/** Creates the Type axiom to add to KB */
+	public Type getTypeAxiom(){
+		Type type = new Type(edgeType, edgeName);
+		return type;
+	}
+	
 
 	/** Determines and assigns the type of this Edge (radial, arc, spiral) */
 	private void setType() {

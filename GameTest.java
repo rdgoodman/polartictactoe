@@ -19,23 +19,23 @@ public class GameTest {
 	Node[][] gameNodes = game.getGameState();
 	Node[][] gameNodes2 = game2.getGameState();
 
-//	@Test
-//	public void testNodeCreation() {
-//
-//		System.out.println();
-//		System.out.println("Circles: " + game.getNumX());
-//		System.out.println("Lines: " + game.getNumY());
-//
-//		System.out.println("Nodes:");
-//		for (int i = 0; i < game.getNumX(); i++) {
-//			for (int j = 0; j < game.getNumY(); j++) {
-//				System.out.print(game.getGameState()[i][j].toString() + "   ");
-//			}
-//			System.out.println();
-//		}
-//
-//	}
-//	
+	@Test
+	public void testNodeCreation() {
+
+		System.out.println();
+		System.out.println("Circles: " + game.getNumX());
+		System.out.println("Lines: " + game.getNumY());
+
+		System.out.println("Nodes:");
+		for (int i = 0; i < game.getNumX(); i++) {
+			for (int j = 0; j < game.getNumY(); j++) {
+				System.out.print(game.getGameState()[i][j].toString() + "   ");
+			}
+			System.out.println();
+		}
+
+	}
+	
 	@Test
 	public void testDiagonalCreation(){
 		Diagonal[][] gameDiagonals = game.getDiagonals();
