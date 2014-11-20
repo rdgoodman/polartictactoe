@@ -28,7 +28,7 @@ public class GameState {
 
 		nodes = new Node[numX][numY];
 
-		createDiagonals();
+		//createDiagonals();
 
 		// clones the existing state
 		for (int circles = 0; circles < numX; circles++) {
