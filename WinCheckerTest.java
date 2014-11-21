@@ -29,7 +29,8 @@ public class WinCheckerTest {
 		game.move(gameNodes[1][3], player1);
 		game.move(gameNodes[2][3], player2);
 
-		game.getWinChecker().printKB();
+		game.getWinChecker().printp1KB();
+		game.getWinChecker().printp2KB();
 	}
 
 //	@Test

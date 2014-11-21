@@ -41,18 +41,14 @@ public class GameTest {
 		Diagonal[][] gameDiagonals = game.getDiagonals();
 		int counter = 1;
 
-<<<<<<< HEAD
-=======
-		
+
 		//TODO: dis broken
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 		for (int i = 0; i < gameDiagonals.length; i++){
 			for(int j = 0; j < gameDiagonals[0].length; j++){
 				System.out.println("Diagonal " + counter + ": " + gameDiagonals[i][j]. toString());
 				counter++;
 			}
 		}
-<<<<<<< HEAD
 		
 		game.move(gameNodes[0][3], player1);
 		game.move(gameNodes[1][0], player2);
@@ -237,8 +233,6 @@ public class GameTest {
 		}
 
 	}
-=======
-	}
 	
 
 //	@Test
@@ -402,6 +396,5 @@ public class GameTest {
 //		}
 //
 //	}
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 }

@@ -11,11 +11,8 @@ public class Game {
 	Player pX;
 	Player pO;
 	boolean firstMove;
-<<<<<<< HEAD
 	GameState gameState;
-=======
 	GameState nodes;
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 	public Game(int numX, int numY, Player pX, Player pO) {
 		this.numX = numX;
@@ -24,11 +21,8 @@ public class Game {
 		this.pO = pO;
 
 		firstMove = true;
-<<<<<<< HEAD
 		gameState = new GameState(numX, numY);
-=======
 		nodes = new GameState(numX, numY);
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 	}
 
@@ -69,33 +63,35 @@ public class Game {
 				Edge possibleNewEdge = new Edge(changed, i, changed.getPlayer());
 				if (!currentPlayer.hasEdge(possibleNewEdge)) {
 					currentPlayer.addEdge(possibleNewEdge);
-<<<<<<< HEAD
 					// add to knowledge base
-					gameState.addToKB(possibleNewEdge.getEndpointsAxiom());
-					gameState.addToKB(possibleNewEdge.getTypeAxiom());
+					// TODO: this might not play nicely with player numbers?
+					if (possibleNewEdge.getColor() == pX.getPlayerNum()) {
+						gameState
+								.addToP1KB(possibleNewEdge.getEndpointsAxiom());
+						gameState.addToP1KB(possibleNewEdge.getTypeAxiom());
+					} else {
+						gameState
+								.addToP2KB(possibleNewEdge.getEndpointsAxiom());
+						gameState.addToP2KB(possibleNewEdge.getTypeAxiom());
+					}
 				}
 			}
 		}
-		
+
 		gameState.checkIfWin(pX);
 		gameState.checkIfWin(pO);
 
 	}
 
-=======
-				}
-			}
-		}
-
-	}
-
-	/** Reports output of win-checker. Should be called after each successful move */
+	/**
+	 * Reports output of win-checker. Should be called after each successful
+	 * move
+	 */
 	public boolean checkIfWin() {
 		// TODO: calls winChecker object (yet to be implemented)
 		return false;
 	}
 
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 	public void draw() {
 		// does nothing I'm involved with
 	}
@@ -129,11 +125,7 @@ public class Game {
 	}
 
 	public Node[][] getGameState() {
-<<<<<<< HEAD
 		return gameState.getNodes();
-=======
-		return nodes.getNodes();
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 	}
 
 	public boolean isFirstMove() {
@@ -141,15 +133,12 @@ public class Game {
 	}
 
 	public Diagonal[][] getDiagonals() {
-<<<<<<< HEAD
 		return gameState.getDiagonals();
 	}
-	
-	public WinChecker getWinChecker(){
+
+	public WinChecker getWinChecker() {
 		return gameState.getWinChecker();
-=======
-		return nodes.getDiagonals();
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
+
 	}
 
 }

@@ -10,14 +10,11 @@ public class Edge {
 	Node start;
 	Node end;
 	// order is arbitrary as to which is start and end
-<<<<<<< HEAD
 	// below here are strings used for building axioms
 	String startString;
 	String endString;
 	String edgeName;
 	String edgeType;
-=======
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 	public Edge(Node start, Node end, int color) {
 		this.start = start;
@@ -25,7 +22,6 @@ public class Edge {
 		this.color = color;
 
 		setType();
-<<<<<<< HEAD
 
 		startString = Integer.toString(start.getX())
 				+ Integer.toString(start.getY());
@@ -53,9 +49,6 @@ public class Edge {
 		return type;
 	}
 	
-=======
-	}
->>>>>>> 1fef8a5b609010e7aed065e5d0de9d130e3e840e
 
 	/** Determines and assigns the type of this Edge (radial, arc, spiral) */
 	private void setType() {
