@@ -97,9 +97,9 @@ public class TreeNode {
 		// ply will be generated using the opponent's moves and vice versa
 		int player;
 		if (maxNode) {
-			player = nextPlayer;
-		} else {
 			player = currentPlayer;
+		} else {
+			player = nextPlayer;
 		}
 
 		// creates a child node with game state identical to the current game

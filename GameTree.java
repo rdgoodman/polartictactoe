@@ -2,6 +2,8 @@ package polartictactoe;
 
 public class GameTree {
 	
+	//TODO: do we want this maxdepth?
+	int evaluationDepth;
 	TreeNode root;
 	int depthReached;
 	int nodesEvaluated;
@@ -10,7 +12,7 @@ public class GameTree {
 	// also, will need a separate method to iterate back up the tree
 	// to assign values
 	
-	public GameTree(Node[][] currentGameState, int firstPlayer, int secondPlayer){
+	public GameTree(Node[][] currentGameState, int firstPlayer, int secondPlayer, int evaluationDepth){
 		
 		// root has a null parent
 		root = new TreeNode(currentGameState, firstPlayer, secondPlayer, null);
@@ -19,7 +21,7 @@ public class GameTree {
 		
 		root.createNextBranch();
 		// TODO: maxDepth should be some sort of command line parameter, I think
-		createPlies(1, 4, root);
+		createPlies(1, evaluationDepth, root);
 		
 	}
 	

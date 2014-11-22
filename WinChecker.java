@@ -7,7 +7,8 @@ public class WinChecker {
 	// separate KB for each player's edges
 	ArrayList<Axiom> p1KB;
 	ArrayList<Axiom> p2KB;
-	static Statement negatedGoal;
+	// todo: do we need to duplicate the goal?
+	Statement negatedGoal;
 
 	/** Note: the negated goal is hard-coded in for this game */
 	public WinChecker() {
@@ -61,7 +62,7 @@ public class WinChecker {
 		p1KB.add(a);
 
 		// resolves once there are three or more edges per player
-		if (p1KB.size() >= 12) {
+		if (p1KB.size() >= 6) {
 			// resolve(p1KB);
 		}
 	}
@@ -70,12 +71,12 @@ public class WinChecker {
 		p2KB.add(a);
 
 		// resolves once there are three or more edges per player
-		if (p2KB.size() >= 12) {
+		if (p2KB.size() >= 6) {
 			// resolve(p2KB);
 		}
 	}
 
-	// TODO: need to specify whose win we're checking
+	// TODO: need to specify whose win we're checking via which KB is passed in
 	private void resolve(ArrayList<Axiom> KB) {
 		boolean unifies = false;
 		while (!KB.isEmpty()) {
