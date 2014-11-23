@@ -32,11 +32,12 @@ public class TreeNode {
 	public TreeNode(Node[][] currentState, Node moveToEvaluate, int currentPlayer, int nextPlayer,
 			TreeNode parent, int depth) {
 		
-		// TODO: modify currentState with moveToEvaluate
-		currentState[moveToEvaluate.getX()][moveToEvaluate.getY()].setPlayer(currentPlayer);
 		
+		// modifies current state with moveToEvaluate (the hypothetical move)
 		gameState = new GameState(currentState);
 		this.currentPlayer = currentPlayer;
+		gameState.getNodes()[moveToEvaluate.getX()][moveToEvaluate.getY()].setPlayer(currentPlayer);
+		
 		this.nextPlayer = nextPlayer;
 		potentialMoves = new LinkedList<Node>();
 		this.parent = parent;
