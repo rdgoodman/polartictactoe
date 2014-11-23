@@ -7,8 +7,8 @@ public class TreeNode {
 
 	GameState gameState;
 	boolean maxNode;
-	// note: these refer to whose turn it is in the game
-	// not whose move generated the current ply
+	// note: these refer to whose turn it is in the game,
+	// NOT whose move generated the current ply
 	int currentPlayer;
 	int nextPlayer;
 	// used to generate children - 1:1 relationship
@@ -19,6 +19,9 @@ public class TreeNode {
 	TreeNode parent;
 	// comes from heuristic
 	double value;
+	// TODO: this is just for testing
+	Node hypotheticalMoveAttribute;
+	
 
 	/** For root */
 	public TreeNode(Node[][] currentState, int currentPlayer, int nextPlayer,
@@ -27,6 +30,7 @@ public class TreeNode {
 		this.currentPlayer = currentPlayer;
 		this.nextPlayer = nextPlayer;
 		potentialMoves = new LinkedList<Node>();
+		this.parent = parent;
 
 		// root is always a max node
 		maxNode = true;
@@ -41,6 +45,10 @@ public class TreeNode {
 		this.nextPlayer = nextPlayer;
 		potentialMoves = new LinkedList<Node>();
 		this.maxNode = maxNode;
+		this.parent = parent;
+		
+//		System.out.println("------------------------THIS SHOULD DO A THING-----------------------------");
+//		System.out.println(this.getParent().getChildren());
 
 	}
 
@@ -75,9 +83,14 @@ public class TreeNode {
 	protected void createNextBranch() {
 		countChildren();
 		createAllChildren();
-		// TODO: testing, remove
-		// System.out.println("\nNumber of children for this branch: " +
-		// children.size());
+	}
+	
+	/** Evaluates children using heuristic */
+	protected void evaluateChildren(){
+		for (TreeNode i : children){
+			System.out.println("\nEvaluated " + i.toString());
+			i.evaluate();
+		}
 	}
 
 	/** Loops through all potential moves, calls child creation for each */
@@ -124,12 +137,33 @@ public class TreeNode {
 						+ " "
 						+ childState.getNodes()[hypotheticalMove.getX()][hypotheticalMove
 								.getY()].toString());
+		childNode.setHypotheticalMove(hypotheticalMove);
 
 		return childNode;
 	}
 
-	// TODO: make a method that will score a single child node w/heuristic
-	// call on an entire ply in GameTree
+	/** TODO: MUST USE HEURISTIC*/
+	public void evaluate(){
+		value = Math.random();
+		System.out.println("Set value of this node to " + value);
+	}
+	
+	/** 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * Just getters and setters below here
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * */
 
 	public Node[][] getGameState() {
 		return gameState.getNodes();
@@ -157,6 +191,15 @@ public class TreeNode {
 
 	public boolean isMaxNode() {
 		return maxNode;
+	}
+	
+	//TODO: again, just testing
+	public void setHypotheticalMove(Node hypothetical){
+		this.hypotheticalMoveAttribute = hypothetical;
+	}
+	
+	public String toString(){
+		return this.hypotheticalMoveAttribute.toString();
 	}
 
 }
