@@ -19,18 +19,23 @@ public class TreeNode {
 	TreeNode parent;
 	// comes from heuristic
 	double value;
+	double alpha;
+	double beta;
+	// TODO: may not need depth if we can get a traversal right
+	int depth;
 	// TODO: this is just for testing
 	Node hypotheticalMoveAttribute;
 	
 
 	/** For root */
 	public TreeNode(Node[][] currentState, int currentPlayer, int nextPlayer,
-			TreeNode parent) {
+			TreeNode parent, int depth) {
 		gameState = new GameState(currentState);
 		this.currentPlayer = currentPlayer;
 		this.nextPlayer = nextPlayer;
 		potentialMoves = new LinkedList<Node>();
 		this.parent = parent;
+		this.depth = depth;
 
 		// root is always a max node
 		maxNode = true;
@@ -39,24 +44,25 @@ public class TreeNode {
 
 	/** For rest of game nodes - takes a game state rather than an array */
 	public TreeNode(GameState parentState, int currentPlayer, int nextPlayer,
-			boolean maxNode, TreeNode parent) {
+			boolean maxNode, TreeNode parent, int depth) {
 		gameState = parentState;
 		this.currentPlayer = currentPlayer;
 		this.nextPlayer = nextPlayer;
 		potentialMoves = new LinkedList<Node>();
 		this.maxNode = maxNode;
 		this.parent = parent;
-		
-//		System.out.println("------------------------THIS SHOULD DO A THING-----------------------------");
-//		System.out.println(this.getParent().getChildren());
-
+		this.depth = depth;
 	}
 
+	
+	/** TODO: will need to win-check */
+	
+	
 	/**
 	 * Counts the number of child nodes this node will have, and adds the
 	 * potential moves to represent to a Linked List
 	 */
-	private void countChildren() {
+	protected void countChildren() {
 		// iterates through each node in the game
 		for (int circles = 0; circles < gameState.getNumX(); circles++) {
 			for (int lines = 0; lines < gameState.getNumY(); lines++) {
@@ -84,6 +90,7 @@ public class TreeNode {
 		countChildren();
 		createAllChildren();
 	}
+
 	
 	/** Evaluates children using heuristic */
 	protected void evaluateChildren(){
@@ -122,7 +129,7 @@ public class TreeNode {
 		childState.getNodes()[hypotheticalMove.getX()][hypotheticalMove.getY()]
 				.setPlayer(player);
 		TreeNode childNode = new TreeNode(childState, currentPlayer,
-				nextPlayer, !maxNode, this);
+				nextPlayer, !maxNode, this, this.depth + 1);
 
 		// TODO: testing, remove
 		String max = "";
@@ -199,7 +206,13 @@ public class TreeNode {
 	}
 	
 	public String toString(){
-		return this.hypotheticalMoveAttribute.toString();
+		String max = "";
+		if (maxNode) {
+			max = "MAX";
+		} else {
+			max = "MIN";
+		}
+		return (maxNode + this.hypotheticalMoveAttribute.toString() + " at depth " + depth);
 	}
 
 }

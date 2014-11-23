@@ -410,6 +410,7 @@ public class GameTest {
 		// TODO: I think the player numbers are weird here
 		game.move(gameNodes[0][0], player2);
 		
+		// new tree with max depth of three
 		GameTree tree = new GameTree(gameNodes, player1.getPlayerNum(), player2.getPlayerNum(), 3);
 	}
 	

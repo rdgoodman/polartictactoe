@@ -17,7 +17,7 @@ public class GameTree {
 			int secondPlayer, int evaluationDepth) {
 
 		// root has a null parent
-		root = new TreeNode(currentGameState, firstPlayer, secondPlayer, null);
+		root = new TreeNode(currentGameState, firstPlayer, secondPlayer, null, 1);
 		depthReached = 0;
 		nodesEvaluated = 0;
 
@@ -26,7 +26,7 @@ public class GameTree {
 		// I think
 
 		// root is ply 1 - starts at ply 2
-		createPlies(2, evaluationDepth, root);
+		levelOrderCreatePlies(2, evaluationDepth, root);
 
 	}
 
@@ -34,42 +34,10 @@ public class GameTree {
 	 * Creates all the plies in a tree, up until the specified maximum depth
 	 * TODO: This builds in level-order, which may need to change...
 	 */
-	protected void createPlies(int currentDepth, int maxDepth, TreeNode current) {
+	protected void levelOrderCreatePlies(int currentDepth, int maxDepth, TreeNode current) {
 		// TODO: testing, remove
 		System.out.println("\n\n\n************************ Branch In Ply "
 				+ currentDepth + " ************************\n\n");
-
-//		if (currentDepth == maxDepth) {
-//			// base case
-//			System.out.println("Heuristic evaluation");
-//		} else {
-//			for (TreeNode i : current.getChildren()) {
-//				// create children
-//				i.createNextBranch();
-//				createPlies(currentDepth++, maxDepth, i);
-//			}
-//			// currentDepth++;
-//		}
-
-//		// base case
-//		if (currentDepth == maxDepth) {
-//			System.out
-//					.println("We're at the maximum depth and should be using our heuristic");
-//			current.evaluate();
-//			// TODO: is current the right thing? I think we're going a step too
-//			return;
-//		} else {
-//			// creates the branches for all of the current node's children
-//			for (TreeNode i : current.getChildren()) {
-//				System.out.println("\n-----NEW BRANCH-----");
-//				i.createNextBranch();
-//			}
-//			currentDepth++;
-//			// TODO: Is this method call even the right thing to do here?
-//			for (TreeNode i : current.getChildren()) {
-//				createPlies(currentDepth, maxDepth, i);
-//			}
-//		}
 		
 		if (currentDepth < (maxDepth - 1)){
 			// creates the branches for all of the current node's children
@@ -80,7 +48,7 @@ public class GameTree {
 			currentDepth++;
 			// recursively creates next branch
 			for (TreeNode i : current.getChildren()) {
-				createPlies(currentDepth, maxDepth, i);
+				levelOrderCreatePlies(currentDepth, maxDepth, i);
 			}
 		} else {
 			// creates AND EVALUATES children
@@ -96,6 +64,16 @@ public class GameTree {
 
 	}
 
+	protected void minimaxCreatePlies(TreeNode current){
+		// finds number of children and what specific moves correspond (builds potentialmoves)
+		current.countChildren();
+		// creates next child
+		for (TreeNode i : current.getChildren()) {
+			
+		}
+	}
+	
+	
 	public TreeNode getRoot() {
 		return root;
 	}
