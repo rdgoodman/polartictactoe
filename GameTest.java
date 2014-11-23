@@ -399,6 +399,7 @@ public class GameTest {
 	
 	@Test
 	public void testHeuristicEvaluation(){
+		
 		game.move(gameNodes[1][3], player1);
 		game.move(gameNodes[2][3], player2);
 		game.move(gameNodes[2][2], player1);
@@ -406,12 +407,33 @@ public class GameTest {
 		game.move(gameNodes[1][2], player1);
 		game.move(gameNodes[1][0], player2);
 		game.move(gameNodes[2][0], player1);
-		// TODO: change input for hypothetical moves
-		// TODO: I think the player numbers are weird here
-		game.move(gameNodes[0][0], player2);
+		
+		Node[][] gameState1 = game.getGameState();
+		System.out.println("Game State:");
+		for (int i = 0; i < game.getNumX(); i++) {
+			for (int j = 0; j < game.getNumY(); j++) {
+				System.out.print(gameState1[i][j].toString() + "   ");
+			}
+			System.out.println("");
+		}
+		System.out.println("\n\n\n\n");
+		
+		// TODO: changed input for hypothetical moves
+		Node hypotheticalMove = gameNodes[0][0].cloneNodeButNotNeighbors();
+		hypotheticalMove.setPlayer(player2.getPlayerNum());
 		
 		// new tree with max depth of three
-		GameTree tree = new GameTree(gameNodes, player1.getPlayerNum(), player2.getPlayerNum(), 3);
+		GameTree tree = new GameTree(gameNodes, hypotheticalMove, player1.getPlayerNum(), player2.getPlayerNum(), 3);
+		
+		// checking that nothing untoward happened
+		Node[][] gameState2 = game.getGameState();
+		System.out.println("\n\n\n\nGame State:");
+		for (int i = 0; i < game.getNumX(); i++) {
+			for (int j = 0; j < game.getNumY(); j++) {
+				System.out.print(gameState2[i][j].toString() + "   ");
+			}
+			System.out.println();
+		}
 	}
 	
 	@Test

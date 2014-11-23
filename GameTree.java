@@ -13,11 +13,11 @@ public class GameTree {
 	// also, will need a separate method to iterate back up the tree
 	// to assign values
 
-	public GameTree(Node[][] currentGameState, int firstPlayer,
+	public GameTree(Node[][] currentGameState, Node moveToEvaluate, int firstPlayer,
 			int secondPlayer, int evaluationDepth) {
 
 		// root has a null parent
-		root = new TreeNode(currentGameState, firstPlayer, secondPlayer, null,
+		root = new TreeNode(currentGameState, moveToEvaluate, firstPlayer, secondPlayer, null,
 				1);
 		depthReached = 0;
 		nodesEvaluated = 0;
@@ -31,21 +31,26 @@ public class GameTree {
 		// base case
 		if (current.getDepth() == maxDepth) {
 			current.evaluate();
-			
-			// TODO: modify parent's alpha/beta value
-			if (current.getParent().isMaxNode()){
+
+			// TODO: pruning, iterating values up
+			if (current.getParent().isMaxNode()) {
 				// change alpha
-				if (current.getValue() > current.getParent().getAlpha()){
-					System.out.println("Parent's alpha changed to " + current.getValue());
+				if (current.getValue() > current.getParent().getAlpha()) {
+					System.out.println("Parent's alpha changed to "
+							+ current.getValue());
 					current.getParent().setAlpha(current.getValue());
 				}
 			} else {
-				//change beta
-				if (current.getValue() < current.getParent().getBeta()){
-					System.out.println("Parent's beta changed to " + current.getValue());
+				// change beta
+				if (current.getValue() < current.getParent().getBeta()) {
+					System.out.println("Parent's beta changed to "
+							+ current.getValue());
 					current.getParent().setBeta(current.getValue());
 				}
 			}
+
+			// TODO: method calls or something in here? update grandparent when
+			// you finish a branch!!!
 
 		} else {
 			System.out.println("-------------------------------------");
@@ -53,6 +58,9 @@ public class GameTree {
 				TreeNode next = current.createNextChild();
 				minimaxBuildTree(next, maxDepth);
 			}
+			System.out.println("Update grandparent?!?!?!?!?!");
+			System.out.println("\n" + current.toString());
+			// TODO: include an if-else in case this is the root
 		}
 	}
 

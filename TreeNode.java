@@ -29,8 +29,12 @@ public class TreeNode {
 	
 
 	/** For root */
-	public TreeNode(Node[][] currentState, int currentPlayer, int nextPlayer,
+	public TreeNode(Node[][] currentState, Node moveToEvaluate, int currentPlayer, int nextPlayer,
 			TreeNode parent, int depth) {
+		
+		// TODO: modify currentState with moveToEvaluate
+		currentState[moveToEvaluate.getX()][moveToEvaluate.getY()].setPlayer(currentPlayer);
+		
 		gameState = new GameState(currentState);
 		this.currentPlayer = currentPlayer;
 		this.nextPlayer = nextPlayer;
@@ -40,6 +44,9 @@ public class TreeNode {
 
 		// root is always a max node
 		maxNode = true;
+		
+		setHypotheticalMove(currentState[moveToEvaluate.getX()][moveToEvaluate.getY()]);
+		
 		countChildren();
 
 	}

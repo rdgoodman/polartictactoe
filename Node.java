@@ -64,4 +64,12 @@ public class Node {
 	public int getPlayer() {
 		return player;
 	}
+
+	// TODO: this may give us some problems with neighbors
+	public Node cloneNodeButNotNeighbors() {
+		Node nodeClone = new Node(x, y);
+		nodeClone.setPlayer(player);
+		
+		return nodeClone;
+	}
 }
