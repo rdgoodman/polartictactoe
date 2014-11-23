@@ -17,16 +17,12 @@ public class GameTree {
 			int secondPlayer, int evaluationDepth) {
 
 		// root has a null parent
-		root = new TreeNode(currentGameState, firstPlayer, secondPlayer, null, 1);
+		root = new TreeNode(currentGameState, firstPlayer, secondPlayer, null,
+				1);
 		depthReached = 0;
 		nodesEvaluated = 0;
 
-		root.createNextBranch();
-		// TODO: evaluationDepth should be some sort of command line parameter,
-		// I think
-
-		// root is ply 1 - starts at ply 2
-		levelOrderCreatePlies(2, evaluationDepth, root);
+		minimaxBuildTree(root, 3);
 
 	}
 
@@ -34,12 +30,13 @@ public class GameTree {
 	 * Creates all the plies in a tree, up until the specified maximum depth
 	 * TODO: This builds in level-order, which may need to change...
 	 */
-	protected void levelOrderCreatePlies(int currentDepth, int maxDepth, TreeNode current) {
+	protected void levelOrderCreatePlies(int currentDepth, int maxDepth,
+			TreeNode current) {
 		// TODO: testing, remove
 		System.out.println("\n\n\n************************ Branch In Ply "
 				+ currentDepth + " ************************\n\n");
-		
-		if (currentDepth < (maxDepth - 1)){
+
+		if (currentDepth < (maxDepth - 1)) {
 			// creates the branches for all of the current node's children
 			for (TreeNode i : current.getChildren()) {
 				System.out.println("\n-----NEW BRANCH-----");
@@ -52,28 +49,31 @@ public class GameTree {
 			}
 		} else {
 			// creates AND EVALUATES children
-			
+
 			// creates the branches for all of the current node's children
 			for (TreeNode i : current.getChildren()) {
 				System.out.println("\n-----NEW BRANCH-----");
 				i.createNextBranch();
 				i.evaluateChildren();
 			}
-			
+
 		}
 
 	}
 
-	protected void minimaxCreatePlies(TreeNode current){
-		// finds number of children and what specific moves correspond (builds potentialmoves)
-		current.countChildren();
-		// creates next child
-		for (TreeNode i : current.getChildren()) {
-			
+	/** TODO: maxDepth probably won't be a thing later on */
+	protected void minimaxBuildTree(TreeNode current, int maxDepth) {
+		// base case
+		if (current.getDepth() == maxDepth) {
+			// do nothing
+		} else {
+			while (current.hasNextChild()) {
+				TreeNode next = current.createNextChild();
+				minimaxBuildTree(next, maxDepth);
+			}
 		}
 	}
-	
-	
+
 	public TreeNode getRoot() {
 		return root;
 	}

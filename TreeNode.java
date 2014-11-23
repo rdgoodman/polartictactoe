@@ -39,6 +39,7 @@ public class TreeNode {
 
 		// root is always a max node
 		maxNode = true;
+		countChildren();
 
 	}
 
@@ -52,6 +53,8 @@ public class TreeNode {
 		this.maxNode = maxNode;
 		this.parent = parent;
 		this.depth = depth;
+		
+		countChildren();
 	}
 
 	
@@ -84,6 +87,10 @@ public class TreeNode {
 			}
 		}
 	}
+	
+	protected boolean hasNextChild(){
+		return !potentialMoves.isEmpty();
+	}
 
 	/** Calls countChildren() and createAllChildren() */
 	protected void createNextBranch() {
@@ -105,6 +112,56 @@ public class TreeNode {
 		for (Node i : potentialMoves) {
 			children.add(createChildNode(i));
 		}
+	}
+	
+	/** Creates the next child in the next ply */
+	protected TreeNode createNextChild(){
+		
+		System.out.println("\ncreated a child");
+		System.out.println("moves left: " + potentialMoves.size());
+		
+		TreeNode childNode;
+		// identical gamestate at first
+		GameState childState = new GameState(gameState.getNodes());
+		
+		// TODO: will need some other way to determine if min or max node
+		int player = nextPlayer;
+		if (maxNode) {
+			player = currentPlayer;
+		} 
+		
+		if (potentialMoves.isEmpty()){
+			System.out.println("no moves");
+			// TODO: need a more sophisticated way to check for missing child nodes
+			childNode = null;
+			
+		} else {
+			Node nextMove = potentialMoves.getFirst();
+			// changes the single Node in GameState to reflect potential move
+			childState.getNodes()[nextMove.getX()][nextMove.getY()]
+					.setPlayer(player);
+			childNode = new TreeNode(childState, currentPlayer,
+					nextPlayer, !maxNode, this, this.depth + 1);
+			// removes that potential move from the list
+			potentialMoves.removeFirst();
+			
+			// TODO: testing, remove
+			String max = "";
+			if (childNode.isMaxNode()) {
+				max = "MAX";
+			} else {
+				max = "MIN";
+			}
+			System.out
+					.println("\nChild State: "
+							+ max
+							+ " "
+							+ childState.getNodes()[nextMove.getX()][nextMove
+									.getY()].toString());
+			childNode.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove.getY()]);
+
+		}
+		return childNode;
 	}
 
 	/**
@@ -200,6 +257,10 @@ public class TreeNode {
 		return maxNode;
 	}
 	
+	public int getDepth(){
+		return depth;
+	}
+	
 	//TODO: again, just testing
 	public void setHypotheticalMove(Node hypothetical){
 		this.hypotheticalMoveAttribute = hypothetical;
@@ -212,7 +273,7 @@ public class TreeNode {
 		} else {
 			max = "MIN";
 		}
-		return (maxNode + this.hypotheticalMoveAttribute.toString() + " at depth " + depth);
+		return (max + " " + this.hypotheticalMoveAttribute.toString() + " at depth " + depth);
 	}
 
 }
