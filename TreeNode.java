@@ -24,7 +24,7 @@ public class TreeNode {
 	double beta = Integer.MAX_VALUE;
 	// TODO: may not need depth if we can get a traversal right
 	int depth;
-	// TODO: this is just for testing
+	// this is just for testing
 	Node hypotheticalMoveAttribute;
 	
 
@@ -152,7 +152,7 @@ public class TreeNode {
 
 	/** TODO: MUST USE HEURISTIC*/
 	public void evaluate(){
-		value = (int)(Math.random() * 100);
+		value = (int)(Math.random() * 100) ;
 		System.out.println("Set value of this node to " + value);
 	}
 	
@@ -205,7 +205,7 @@ public class TreeNode {
 		return depth;
 	}
 	
-	//TODO: again, just testing
+	// again, just testing
 	public void setHypotheticalMove(Node hypothetical){
 		this.hypotheticalMoveAttribute = hypothetical;
 	}
