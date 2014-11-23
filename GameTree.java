@@ -26,45 +26,11 @@ public class GameTree {
 
 	}
 
-	/**
-	 * Creates all the plies in a tree, up until the specified maximum depth
-	 * TODO: This builds in level-order, which may need to change...
-	 */
-	protected void levelOrderCreatePlies(int currentDepth, int maxDepth,
-			TreeNode current) {
-		// TODO: testing, remove
-		System.out.println("\n\n\n************************ Branch In Ply "
-				+ currentDepth + " ************************\n\n");
-
-		if (currentDepth < (maxDepth - 1)) {
-			// creates the branches for all of the current node's children
-			for (TreeNode i : current.getChildren()) {
-				System.out.println("\n-----NEW BRANCH-----");
-				i.createNextBranch();
-			}
-			currentDepth++;
-			// recursively creates next branch
-			for (TreeNode i : current.getChildren()) {
-				levelOrderCreatePlies(currentDepth, maxDepth, i);
-			}
-		} else {
-			// creates AND EVALUATES children
-
-			// creates the branches for all of the current node's children
-			for (TreeNode i : current.getChildren()) {
-				System.out.println("\n-----NEW BRANCH-----");
-				i.createNextBranch();
-				i.evaluateChildren();
-			}
-
-		}
-
-	}
-
 	/** TODO: maxDepth probably won't be a thing later on */
 	protected void minimaxBuildTree(TreeNode current, int maxDepth) {
 		// base case
 		if (current.getDepth() == maxDepth) {
+			current.evaluate();
 			// do nothing
 		} else {
 			while (current.hasNextChild()) {

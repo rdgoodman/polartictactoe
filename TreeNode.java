@@ -91,28 +91,6 @@ public class TreeNode {
 	protected boolean hasNextChild(){
 		return !potentialMoves.isEmpty();
 	}
-
-	/** Calls countChildren() and createAllChildren() */
-	protected void createNextBranch() {
-		countChildren();
-		createAllChildren();
-	}
-
-	
-	/** Evaluates children using heuristic */
-	protected void evaluateChildren(){
-		for (TreeNode i : children){
-			System.out.println("\nEvaluated " + i.toString());
-			i.evaluate();
-		}
-	}
-
-	/** Loops through all potential moves, calls child creation for each */
-	private void createAllChildren() {
-		for (Node i : potentialMoves) {
-			children.add(createChildNode(i));
-		}
-	}
 	
 	/** Creates the next child in the next ply */
 	protected TreeNode createNextChild(){
@@ -164,47 +142,6 @@ public class TreeNode {
 		return childNode;
 	}
 
-	/**
-	 * Creates a child node with the hypotheticalMove node played by the current
-	 * player - also ensures that the player on the child node is the other
-	 * player
-	 */
-	private TreeNode createChildNode(Node hypotheticalMove) {
-		// chooses player for next ply - if this is a max node, the next
-		// ply will be generated using the opponent's moves and vice versa
-		int player;
-		if (maxNode) {
-			player = currentPlayer;
-		} else {
-			player = nextPlayer;
-		}
-
-		// creates a child node with game state identical to the current game
-		// state
-		// except with one move made
-		GameState childState = new GameState(gameState.getNodes());
-		childState.getNodes()[hypotheticalMove.getX()][hypotheticalMove.getY()]
-				.setPlayer(player);
-		TreeNode childNode = new TreeNode(childState, currentPlayer,
-				nextPlayer, !maxNode, this, this.depth + 1);
-
-		// TODO: testing, remove
-		String max = "";
-		if (childNode.isMaxNode()) {
-			max = "MAX";
-		} else {
-			max = "MIN";
-		}
-		System.out
-				.println("\nChild State: "
-						+ max
-						+ " "
-						+ childState.getNodes()[hypotheticalMove.getX()][hypotheticalMove
-								.getY()].toString());
-		childNode.setHypotheticalMove(hypotheticalMove);
-
-		return childNode;
-	}
 
 	/** TODO: MUST USE HEURISTIC*/
 	public void evaluate(){
