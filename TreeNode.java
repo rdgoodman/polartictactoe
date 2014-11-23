@@ -142,7 +142,7 @@ public class TreeNode {
 							+ max
 							+ " "
 							+ childState.getNodes()[nextMove.getX()][nextMove
-									.getY()].toString());
+									.getY()].toString() + " at depth " + childNode.getDepth());
 			childNode.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove.getY()]);
 
 		}

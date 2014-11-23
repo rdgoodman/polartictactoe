@@ -264,7 +264,7 @@ public class GameTest {
 		hypotheticalMove.setPlayer(player2.getPlayerNum());
 		
 		// new tree with max depth of three
-		GameTree tree = new GameTree(gameNodes, hypotheticalMove, player1.getPlayerNum(), player2.getPlayerNum(), 3);
+		GameTree tree = new GameTree(gameNodes, hypotheticalMove, player1.getPlayerNum(), player2.getPlayerNum(), 4);
 		
 		// checking that nothing untoward happened
 		// TODO: the gamestate should NOT have been actually changed.
@@ -277,10 +277,5 @@ public class GameTest {
 			System.out.println();
 		}
 	}
-	
-//	@Test
-//	public void testMinimax(){
-//		
-//	}
 
 }
