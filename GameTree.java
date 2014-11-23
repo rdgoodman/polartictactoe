@@ -31,8 +31,24 @@ public class GameTree {
 		// base case
 		if (current.getDepth() == maxDepth) {
 			current.evaluate();
-			// do nothing
+			
+			// TODO: modify parent's alpha/beta value
+			if (current.getParent().isMaxNode()){
+				// change alpha
+				if (current.getValue() > current.getParent().getAlpha()){
+					System.out.println("Parent's alpha changed to " + current.getValue());
+					current.getParent().setAlpha(current.getValue());
+				}
+			} else {
+				//change beta
+				if (current.getValue() < current.getParent().getBeta()){
+					System.out.println("Parent's beta changed to " + current.getValue());
+					current.getParent().setBeta(current.getValue());
+				}
+			}
+
 		} else {
+			System.out.println("-------------------------------------");
 			while (current.hasNextChild()) {
 				TreeNode next = current.createNextChild();
 				minimaxBuildTree(next, maxDepth);

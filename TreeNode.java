@@ -19,8 +19,9 @@ public class TreeNode {
 	TreeNode parent;
 	// comes from heuristic
 	double value;
-	double alpha;
-	double beta;
+	// initialized to values larger than the heuristic will ever return
+	double alpha = Integer.MIN_VALUE;
+	double beta = Integer.MAX_VALUE;
 	// TODO: may not need depth if we can get a traversal right
 	int depth;
 	// TODO: this is just for testing
@@ -95,9 +96,6 @@ public class TreeNode {
 	/** Creates the next child in the next ply */
 	protected TreeNode createNextChild(){
 		
-		System.out.println("\ncreated a child");
-		System.out.println("moves left: " + potentialMoves.size());
-		
 		TreeNode childNode;
 		// identical gamestate at first
 		GameState childState = new GameState(gameState.getNodes());
@@ -111,6 +109,7 @@ public class TreeNode {
 		if (potentialMoves.isEmpty()){
 			System.out.println("no moves");
 			// TODO: need a more sophisticated way to check for missing child nodes
+			// this might not even be necessary given the way we did the tree building
 			childNode = null;
 			
 		} else {
@@ -145,7 +144,7 @@ public class TreeNode {
 
 	/** TODO: MUST USE HEURISTIC*/
 	public void evaluate(){
-		value = Math.random();
+		value = (int)(Math.random() * 100);
 		System.out.println("Set value of this node to " + value);
 	}
 	
@@ -201,6 +200,28 @@ public class TreeNode {
 	//TODO: again, just testing
 	public void setHypotheticalMove(Node hypothetical){
 		this.hypotheticalMoveAttribute = hypothetical;
+	}
+	
+	// TODO: can make these a lot smarter
+	
+	public void setAlpha(double alpha){
+		this.alpha = alpha;
+	}
+	
+	public double getAlpha(){
+		return alpha;
+	}
+	
+	public double getBeta(){
+		return beta;
+	}
+	
+	public void setBeta(double beta){
+		this.beta = beta;
+	}
+	
+	public double getValue(){
+		return value;
 	}
 	
 	public String toString(){
