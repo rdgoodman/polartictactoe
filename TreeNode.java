@@ -22,7 +22,6 @@ public class TreeNode {
 	// initialized to values larger than the heuristic will ever return
 	double alpha = Integer.MIN_VALUE;
 	double beta = Integer.MAX_VALUE;
-	// TODO: may not need depth if we can get a traversal right
 	int depth;
 	// this is just for testing
 	Node hypotheticalMoveAttribute;
@@ -116,7 +115,7 @@ public class TreeNode {
 		
 		if (potentialMoves.isEmpty()){
 			System.out.println("no moves");
-			// TODO: need a more sophisticated way to check for missing child nodes
+			// need a more sophisticated way to check for missing child nodes
 			// this might not even be necessary given the way we did the tree building
 			childNode = null;
 			
@@ -230,6 +229,10 @@ public class TreeNode {
 	
 	public double getValue(){
 		return value;
+	}
+	
+	public void setValue(double value){
+		this.value = value;
 	}
 	
 	public String toString(){

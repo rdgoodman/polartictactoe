@@ -7,7 +7,7 @@ public class Endpoints implements Axiom {
 	String edgeName;
 	Boolean isTrue = true;
 	
-	
+
 	public Endpoints(String startNodeName, String endNodeName, String edgeName) {
 		this.startNodeName = startNodeName;
 		this.endNodeName = endNodeName;

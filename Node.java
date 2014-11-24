@@ -9,6 +9,11 @@ public class Node {
 	int x;
 	int y;
 
+	/**
+	 * 
+	 * @param x the circle this Node is on
+	 * @param y the line this Node is on
+	 */
 	public Node(int x, int y) {
 		// node initialized to "open/no player"
 		player = 0;
@@ -65,6 +70,7 @@ public class Node {
 		return player;
 	}
 
+	/** Makes a copy of this node (in terms of location and player) but does not link it to its neighbors*/
 	public Node cloneNodeButNotNeighbors() {
 		Node nodeClone = new Node(x, y);
 		nodeClone.setPlayer(player);
