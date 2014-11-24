@@ -42,7 +42,6 @@ public class GameTest {
 //		int counter = 1;
 //
 //
-//		//TODO: dis broken
 //		for (int i = 0; i < gameDiagonals.length; i++){
 //			for(int j = 0; j < gameDiagonals[0].length; j++){
 //				System.out.println("Diagonal " + counter + ": " + gameDiagonals[i][j]. toString());
@@ -264,18 +263,19 @@ public class GameTest {
 		hypotheticalMove.setPlayer(player2.getPlayerNum());
 		
 		// new tree with max depth of three
-		GameTree tree = new GameTree(gameNodes, hypotheticalMove, player1.getPlayerNum(), player2.getPlayerNum(), 4);
+		GameTree tree = new GameTree(gameNodes, hypotheticalMove, player1.getPlayerNum(), player2.getPlayerNum(), 3);
 		
 		// checking that nothing untoward happened
-		// TODO: the gamestate should NOT have been actually changed.
+		// the gamestate should NOT have been actually changed.
 		Node[][] gameState2 = game.getGameState();
 		System.out.println("\n\n\n\nGame State:");
 		for (int i = 0; i < game.getNumX(); i++) {
 			for (int j = 0; j < game.getNumY(); j++) {
-				System.out.print(gameState2[i][j].toString() + "   ");
+				System.out.print(gameState2[i][j].toString() + gameState2[i][j].getNeighbors().size() + "   ");
 			}
 			System.out.println();
 		}
+
 	}
 
 }

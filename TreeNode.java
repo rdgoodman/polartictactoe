@@ -46,7 +46,8 @@ public class TreeNode {
 		// root is always a max node
 		maxNode = true;
 		
-		setHypotheticalMove(currentState[moveToEvaluate.getX()][moveToEvaluate.getY()]);
+		setHypotheticalMove(gameState.getNodes()[moveToEvaluate.getX()][moveToEvaluate.getY()]);
+		System.out.println(this.toString());
 		
 		countChildren();
 
@@ -108,7 +109,6 @@ public class TreeNode {
 		// identical gamestate at first
 		GameState childState = new GameState(gameState.getNodes());
 		
-		// TODO: will need some other way to determine if min or max node
 		int player = nextPlayer;
 		if (maxNode) {
 			player = currentPlayer;

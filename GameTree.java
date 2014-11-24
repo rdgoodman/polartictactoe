@@ -2,16 +2,12 @@ package polartictactoe;
 
 public class GameTree {
 
-	// TODO: do we want this maxdepth?
 	int evaluationDepth;
 	TreeNode root;
 	int depthReached;
 	int nodesEvaluated;
 
-	// TODO: maybe heuristic should be passed in here,
-	// and evaluation should happen in this class instead of TreeNode?
-	// also, will need a separate method to iterate back up the tree
-	// to assign values
+	// TODO: get heuristic
 
 	public GameTree(Node[][] currentGameState, Node moveToEvaluate,
 			int firstPlayer, int secondPlayer, int evaluationDepth) {
@@ -22,25 +18,26 @@ public class GameTree {
 		depthReached = 0;
 		nodesEvaluated = 0;
 
-		minimaxBuildTree(root, evaluationDepth);
-
+		buildABTree(root, evaluationDepth);
+		
+		reportDepthAndNodes();
 	}
 
 	/** TODO: maxDepth probably won't be a thing later on */
-	protected void minimaxBuildTree(TreeNode current, int maxDepth) {
+	protected void buildABTree(TreeNode current, int maxDepth) {
 		// base case
 		if (current.getDepth() == maxDepth) {
 			current.evaluate();
-			
 			updateABFromHeuristicEvaluatedLevel(current);
 
 		} else {
 			System.out.println("-------------------------------------");
 			while (current.hasNextChild()) {
 				TreeNode next = current.createNextChild();
-				minimaxBuildTree(next, maxDepth);
+				nodesEvaluated++;
+				buildABTree(next, maxDepth);
 			}
-			updateABFromOtherAB(current);
+			updateABToRoot(current);
 		}
 	}
 	
@@ -62,7 +59,7 @@ public class GameTree {
 		}
 	}
 	
-	private void updateABFromOtherAB(TreeNode current){
+	private void updateABToRoot(TreeNode current){
 		if (current.getDepth() != 1){
 			System.out.println("grandparent: " + current.getParent().toString());
 			if (current.getParent().isMaxNode()) {
@@ -86,6 +83,12 @@ public class GameTree {
 			System.out.println("ROOT");
 			System.out.println("Alpha is " + current.getAlpha());
 		}
+	}
+
+	private void reportDepthAndNodes() {
+		System.out.println("\n\n\n\n\nNot sure of depth yet [given maxdepth], but that'll be easy to check");
+		System.out.println("Nodes evaluated: " + nodesEvaluated);
+		
 	}
 
 	public TreeNode getRoot() {
