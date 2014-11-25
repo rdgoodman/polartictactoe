@@ -18,12 +18,12 @@ public class TreeNode {
 	// doubly linked
 	TreeNode parent;
 	// comes from heuristic
-	double value;
+	// TODO: need a different default depending on the heuristic used!!!!
+	double value = -5;
 	// initialized to values larger than the heuristic will ever return
 	double alpha = Integer.MIN_VALUE;
 	double beta = Integer.MAX_VALUE;
 	int depth;
-	// this is just for testing
 	Node hypotheticalMoveAttribute;
 	
 
@@ -203,10 +203,13 @@ public class TreeNode {
 	public int getDepth(){
 		return depth;
 	}
-	
-	// again, just testing
+
 	public void setHypotheticalMove(Node hypothetical){
 		this.hypotheticalMoveAttribute = hypothetical;
+	}
+	
+	public Node getHypotheticalMove(){
+		return hypotheticalMoveAttribute;
 	}
 	
 	// TODO: can make these a lot smarter

@@ -1,23 +1,33 @@
 package polartictactoe;
 
+import java.util.Vector;
+
 public class GameTree {
 
 	int evaluationDepth;
 	TreeNode root;
 	int depthReached;
 	int nodesEvaluated;
+	Vector<Node> moveSequence;
 
 	// TODO: get heuristic
 	// TODO: return sequence of moves
 
 	/**
 	 * Builds game tree given a hypothetical move to evaluate
-	 * @param currentGameState the current game state with only concrete moves made
-	 * @param moveToEvaluate the hypothetical move to evaluate
-	 * @param firstPlayer the player who would be playing the hypothetical move
-	 * @param secondPlayer the opposing player
-	 * @param evaluationDepth max depth for evaluation
-	 * @param AB will this tree be using alpha-beta pruning?
+	 * 
+	 * @param currentGameState
+	 *            the current game state with only concrete moves made
+	 * @param moveToEvaluate
+	 *            the hypothetical move to evaluate
+	 * @param firstPlayer
+	 *            the player who would be playing the hypothetical move
+	 * @param secondPlayer
+	 *            the opposing player
+	 * @param evaluationDepth
+	 *            max depth for evaluation
+	 * @param AB
+	 *            will this tree be using alpha-beta pruning?
 	 */
 	public GameTree(Node[][] currentGameState, Node moveToEvaluate,
 			int firstPlayer, int secondPlayer, int evaluationDepth, boolean AB) {
@@ -27,7 +37,8 @@ public class GameTree {
 				secondPlayer, null, 1);
 		depthReached = 0;
 		nodesEvaluated = 0;
-		
+		moveSequence = new Vector<Node>(2, 1);
+
 		if (AB) {
 			buildABTree(root, evaluationDepth);
 		} else {
@@ -35,6 +46,9 @@ public class GameTree {
 		}
 
 		reportDepthAndNodes();
+
+		System.out.println("\n\nVector of moves is of size "
+				+ moveSequence.size());
 	}
 
 	/** Builds a tree without performing alpha-beta pruning */
@@ -42,7 +56,7 @@ public class GameTree {
 		// base case
 		if (current.getDepth() == maxDepth) {
 			current.evaluate();
-			
+
 			updateFromHeuristicEvaluatedLevel(current);
 
 		} else {
@@ -50,60 +64,100 @@ public class GameTree {
 			while (current.hasNextChild()) {
 				TreeNode next = current.createNextChild();
 				nodesEvaluated++;
-				buildABTree(next, maxDepth);
+				buildMinimaxTree(next, maxDepth);
 			}
 			updateToRoot(current);
 		}
-		
+
 	}
 
+	/** Takes values from max-depth level and populates them back up the tree */
 	private void updateFromHeuristicEvaluatedLevel(TreeNode current) {
-		// TODO Also stub
+		// changes value of parent if still at default (i.e. this is current's first child)
+		if (current.getParent().getValue() == -5) {
+			current.getParent().setValue(current.getValue());
+			System.out.println("Parent's value changed to "
+					+ current.getValue());
+		}
+
 		if (current.getParent().isMaxNode()) {
-			// change alpha
+			// change value of max parent
+
 			if (current.getValue() > current.getParent().getValue()) {
 				System.out.println("Parent's value changed to "
 						+ current.getValue());
 				current.getParent().setValue(current.getValue());
+
+				// TODO: add to vector
+				if (moveSequence.size() < current.getDepth()) {
+					moveSequence.add(current.getHypotheticalMove());
+				} else {
+					moveSequence.add(current.getDepth(),
+							current.getHypotheticalMove());
+				}
 			}
 		} else {
-			// change beta
+			// change value of min parent
 			if (current.getValue() < current.getParent().getValue()) {
 				System.out.println("Parent's value changed to "
 						+ current.getValue());
 				current.getParent().setValue(current.getValue());
+
+				// TODO: add to vector
+				if (moveSequence.size() < current.getDepth()) {
+					moveSequence.add(current.getHypotheticalMove());
+				} else {
+					moveSequence.add(current.getDepth(),
+							current.getHypotheticalMove());
+				}
 			}
 		}
-		
+
 	}
 
+	/** Populates value up to root (hypothetical move) */
 	private void updateToRoot(TreeNode current) {
-		// TODO Auto-generated method stub
 		if (current.getDepth() != 1) {
 			System.out
 					.println("grandparent: " + current.getParent().toString());
 			if (current.getParent().isMaxNode()) {
-				// change alpha
+				// change value of max parent
 				if (current.getValue() > current.getParent().getValue()) {
-					System.out.println("Grandparent's alpha changed to "
+					System.out.println("Grandparent's value changed to "
 							+ current.getValue());
 					current.getParent().setValue(current.getValue());
+
+					// TODO: add to vector
+					if (moveSequence.size() < current.getDepth()) {
+						moveSequence.add(current.getHypotheticalMove());
+					} else {
+						moveSequence.add(current.getDepth(),
+								current.getHypotheticalMove());
+					}
 				}
 			} else {
-				// change beta
+				// change value of min parent
 				if (current.getValue() < current.getParent().getValue()) {
-					System.out.println("Grandparent's beta changed to "
+					System.out.println("Grandparent's value changed to "
 							+ current.getValue());
 					current.getParent().setValue(current.getValue());
+
+					// TODO: add to vector
+					if (moveSequence.size() < current.getDepth()) {
+						moveSequence.add(current.getHypotheticalMove());
+					} else {
+						moveSequence.add(current.getDepth(),
+								current.getHypotheticalMove());
+					}
 				}
 			}
 			System.out.println();
 		} else {
 			// at root - do nothing
 			System.out.println("ROOT");
-			System.out.println("Value is " + current.getAlpha());
+			System.out.println("Value is " + current.getValue());
 		}
-		
+
 	}
 
 	/** Builds a tree while performing alpha-beta pruning */
