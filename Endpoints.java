@@ -1,6 +1,6 @@
 package polartictactoe;
 
-public class Endpoints implements Axiom {
+public class Endpoints implements LogicalFunction {
 	
 	String startNodeName;
 	String endNodeName;
@@ -21,7 +21,7 @@ public class Endpoints implements Axiom {
 	}
 
 	@Override
-	public boolean unify(Axiom toBeUnified) {
+	public boolean unify(LogicalFunction toBeUnified) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -66,6 +66,34 @@ public class Endpoints implements Axiom {
 
 	public void setIsTrue(Boolean isTrue) {
 		this.isTrue = isTrue;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if (o.equals(null)){
+			return false;
+		}else if (!(o instanceof Endpoints)){
+			return false;
+		} else if (!this.startNodeName.equals(((Endpoints)o).startNodeName)){
+			return false;
+		} else if (!this.endNodeName.equals(((Endpoints)o).endNodeName)){
+			return false;
+		} else if (!this.edgeName.equals(((Endpoints)o).edgeName)){
+			return false;
+		} else if (!this.isTrue == ((Endpoints)o).isTrue){
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public LogicalFunction cloneFunction() {
+		Endpoints cloned = new Endpoints(this.startNodeName, this.endNodeName, this.edgeName);
+		if (this.isTrue == false){
+			cloned.negate();
+		}
+		
+		return cloned;
 	}
 
 }

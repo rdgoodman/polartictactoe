@@ -1,6 +1,6 @@
 package polartictactoe;
 
-public class LogicalOperator implements Axiom {
+public class LogicalOperator implements LogicalFunction {
 
 	Boolean and;
 
@@ -17,8 +17,9 @@ public class LogicalOperator implements Axiom {
 	}
 
 	@Override
-	public boolean unify(Axiom toBeUnified) {
+	public boolean unify(LogicalFunction toBeUnified) {
 		// TODO Auto-generated method stub
+		// should probably just remove these honestly
 		return false;
 	}
 
@@ -29,6 +30,24 @@ public class LogicalOperator implements Axiom {
 		} else {
 			return " OR ";
 		}
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if (o.equals(null)){
+			return false;
+		} else if (!(o instanceof LogicalOperator)){
+			return false;
+		} else if (this.and != ((LogicalOperator)o).and){
+			return false;
+		}
+		
+		return true;
+	}
+
+	@Override
+	public LogicalFunction cloneFunction() {
+		return new LogicalOperator(this.and);
 	}
 
 }

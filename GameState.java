@@ -55,11 +55,11 @@ public class GameState {
 
 	}
 
-	public void addToP1KB(Axiom a) {
+	public void addToP1KB(LogicalFunction a) {
 		winchecker.addToP1KnowledgeBase(a);
 	}
 	
-	public void addToP2KB(Axiom a) {
+	public void addToP2KB(LogicalFunction a) {
 		winchecker.addToP2KnowledgeBase(a);
 	}
 
