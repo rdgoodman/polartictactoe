@@ -1,10 +1,13 @@
 package polartictactoe;
 
+import java.util.LinkedList;
+
 public class Type implements Axiom {
 	
 	String type;
 	String edgeName;
 	Boolean isTrue = true;
+
 	
 	public Type(String type, String name){
 		this.type = type;

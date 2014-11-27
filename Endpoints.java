@@ -36,4 +36,36 @@ public class Endpoints implements Axiom {
 		return not + "Endpoints(" + startNodeName + ", " + endNodeName + ", " + edgeName+")";
 	}
 
+	public String getStartNodeName() {
+		return startNodeName;
+	}
+
+	public void setStartNodeName(String startNodeName) {
+		this.startNodeName = startNodeName;
+	}
+
+	public String getEndNodeName() {
+		return endNodeName;
+	}
+
+	public void setEndNodeName(String endNodeName) {
+		this.endNodeName = endNodeName;
+	}
+
+	public String getEdgeName() {
+		return edgeName;
+	}
+
+	public void setEdgeName(String edgeName) {
+		this.edgeName = edgeName;
+	}
+
+	public Boolean getIsTrue() {
+		return isTrue;
+	}
+
+	public void setIsTrue(Boolean isTrue) {
+		this.isTrue = isTrue;
+	}
+
 }

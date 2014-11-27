@@ -317,6 +317,8 @@ public class GameTest {
 			}
 			System.out.println();
 		}
+		
+		System.out.println("\n\n\nMoves: " + tree.toString());
 
 	}
 

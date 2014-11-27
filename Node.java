@@ -8,6 +8,8 @@ public class Node {
 	int player;
 	int x;
 	int y;
+	int xlocOnBoard;
+	int ylocOnBoard;
 
 	/**
 	 * 
@@ -76,5 +78,21 @@ public class Node {
 		nodeClone.setPlayer(player);
 		
 		return nodeClone;
+	}
+	
+	public void setxlocOnBoard(int xLocation){
+		this.xlocOnBoard = xLocation;
+	}
+	
+	public int getxlocOnBoard(){
+		return xlocOnBoard;
+	}
+	
+	public void setylocOnBoard(int yLocation){
+		this.ylocOnBoard = yLocation;
+	}
+	
+	public int getylocOnBoard(){
+		return ylocOnBoard;
 	}
 }

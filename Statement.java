@@ -12,8 +12,16 @@ public class Statement {
 	
 	public boolean unify(Axiom a, String substitution){
 		if(a instanceof Endpoints){
-			// call an endpoint resolver
-			// TODO: for all Endpoints in
+			// 1. Pull out the information from the statement
+			String start = ((Endpoints) a).getStartNodeName();
+			String end = ((Endpoints) a).getEndNodeName();
+			String edge = ((Endpoints)a).getEdgeName();
+			for (Axiom s : statement){
+				if(s instanceof Endpoints){
+					// attempt to substitute
+					
+				}
+			}
 		} else if (a instanceof Type){
 			// call a type resolver
 		}

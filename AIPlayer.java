@@ -28,6 +28,8 @@ public class AIPlayer implements Player {
 	public void reportMove() {
 		reportNumEvaluated();
 		reportTimetoSelect();
+		reportDepthReached();
+		// TODO: also report which move was selected here
 		
 	}
 
@@ -41,6 +43,11 @@ public class AIPlayer implements Player {
 		// TODO stub
 		return -1;
 		
+	}
+	
+	private int reportDepthReached(){
+		//TODO stub
+		return -1;
 	}
 	
 	@Override
