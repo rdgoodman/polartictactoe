@@ -70,7 +70,7 @@ public class Endpoints implements LogicalFunction {
 	
 	@Override
 	public boolean equals(Object o){
-		if (o.equals(null)){
+		if (o == null){
 			return false;
 		}else if (!(o instanceof Endpoints)){
 			return false;

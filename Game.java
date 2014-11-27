@@ -31,9 +31,15 @@ public class Game {
 	 * node) call this before move() using user/AI input
 	 */
 	public boolean isValidMove(Node chosen) {
+		// can move anywhere if it's the first move
 		if (firstMove == true) {
 			System.out.println("It's the first move");
 			return true;
+		}
+		
+		// checks that you're not trying to play on top of a previous move
+		if (chosen.getPlayer() != 0){
+			return false;
 		}
 
 		for (Node i : chosen.getNeighbors()) {

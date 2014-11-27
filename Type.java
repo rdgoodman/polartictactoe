@@ -38,7 +38,7 @@ public class Type implements LogicalFunction {
 	
 	@Override
 	public boolean equals(Object o){
-		if (o.equals(null)){
+		if (o == null){
 			return false;
 		}else if (!(o instanceof Type)){
 			return false;
