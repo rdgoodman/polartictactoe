@@ -12,7 +12,7 @@ public class Game {
 	Player pO;
 	boolean firstMove;
 	GameState gameState;
-	GameState nodes;
+	//GameState nodes;
 
 	public Game(int numX, int numY, Player pX, Player pO) {
 		this.numX = numX;
@@ -22,7 +22,7 @@ public class Game {
 
 		firstMove = true;
 		gameState = new GameState(numX, numY);
-		nodes = new GameState(numX, numY);
+		//nodes = new GameState(numX, numY);
 
 	}
 
@@ -31,25 +31,28 @@ public class Game {
 	 * node) call this before move() using user/AI input
 	 */
 	public boolean isValidMove(Node chosen) {
-		// can move anywhere if it's the first move
-		if (firstMove == true) {
-			System.out.println("It's the first move");
-			return true;
-		}
-		
-		// checks that you're not trying to play on top of a previous move
-		if (chosen.getPlayer() != 0){
-			return false;
-		}
-
-		for (Node i : chosen.getNeighbors()) {
-			if (i.getPlayer() != 0) {
-				// returns true if the node has a neighbor that is played
-				return true;
-			}
-		}
-		// all neighbors are blank/unplayed
-		return false;
+	       if (firstMove == true) {
+	           System.out.println("It's the first move");
+	           return true;
+	       }
+	      
+	       // /see if node already played
+	       if (chosen.player == 0) {
+	           for (Node i : chosen.getNeighbors()) {
+	              if (i.player != 0) {
+	                  // returns true if the node has a neighbor that is played
+	                  return true;
+	              }
+	           }
+	       }
+	       // all neighbors are blank/unplayed
+	       // TODO: Kevin's, uncomment once you integrate
+//	       else if (allMovesNodes.size() >= numX * numY) {
+//	           // for testing until a winchecker is implemented
+//	           isActive = false;
+//	       }
+	       // checkIfWin()
+	       return false;
 	}
 
 	/**

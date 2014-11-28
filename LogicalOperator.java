@@ -50,4 +50,16 @@ public class LogicalOperator implements LogicalFunction {
 		return new LogicalOperator(this.and);
 	}
 
+	@Override
+	public boolean equalsNegated(LogicalFunction f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean passesOccursCheck(String o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

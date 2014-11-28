@@ -54,7 +54,10 @@ public class WinChecker {
 		negatedGoal.add(type3);
 
 		// adds negated goal to each player's knowledge base
-		addGoalToKnowledgeBases();
+		// TODO: put this back depending on implementation
+		// make a copy of this for resolution as well
+		
+		//addGoalToKnowledgeBases();
 	}
 
 	public void addToP1KnowledgeBase(LogicalFunction a) {
@@ -111,7 +114,7 @@ public class WinChecker {
 				for (Axiom a : clauses){
 					if (!a.equals(c)){
 						System.out.println(counter + ": resolve these");
-						ArrayList<Axiom> newAxioms = c.unify(a);
+						//ArrayList<Axiom> newAxioms = c.unify(a);
 						// TODO: if empty clause, break and report a win
 						// if something unifies, set unified to true
 						// TODO: unify should probably return a new clause, actually

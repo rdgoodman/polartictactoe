@@ -11,31 +11,31 @@ public class Axiom {
 		statement = new LinkedList<LogicalFunction>();
 	}
 	
-	/** Helper function for unifying two variables - returns end result */
-	public ArrayList<Axiom> unify(Axiom a){
-		return null;
-	}
-	
-	private Axiom unify(Axiom a, String substitution){
-		if (substitution.equals("FAIL")){
-			// TODO: a NULL result means that the unification failed
-			return null;
-		} else if (this.equals(a)){
-			// TODO: return the resulting axiom - we may need to pass in copies for this?
-			// TODO: also, check if it is equal to the negated version!!!
-			System.out.println("Unification worked");
-		} else {
-			// recursively unify components
-			// TODO: this is the hard part
-			
-		}
-		
-		return null;
-	}
-	
-	private Axiom unifyVar(LogicalFunction f1, LogicalFunction f2, String substitution){
-		return null;
-	}
+//	/** Helper function for unifying two variables - returns end result */
+//	public ArrayList<Axiom> unify(Axiom a){
+//		return null;
+//	}
+//	
+//	private Axiom unify(Axiom a, String substitution){
+//		if (substitution.equals("FAIL")){
+//			// TODO: a NULL result means that the unification failed
+//			return null;
+//		} else if (this.equals(a)){
+//			// TODO: return the resulting axiom - we may need to pass in copies for this?
+//			// TODO: also, check if it is equal to the negated version!!!
+//			System.out.println("Unification worked");
+//		} else {
+//			// recursively unify components
+//			// TODO: this is the hard part
+//			
+//		}
+//		
+//		return null;
+//	}
+//	
+//	private Axiom unifyVar(LogicalFunction f1, LogicalFunction f2, String substitution){
+//		return null;
+//	}
 	
 	public void add(LogicalFunction a){
 		statement.add(a);
@@ -89,4 +89,5 @@ public class Axiom {
 		
 		return true;
 	}
+
 }
