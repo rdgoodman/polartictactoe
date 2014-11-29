@@ -12,7 +12,6 @@ public class Game {
 	Player pO;
 	boolean firstMove;
 	GameState gameState;
-	//GameState nodes;
 
 	public Game(int numX, int numY, Player pX, Player pO) {
 		this.numX = numX;
@@ -22,7 +21,6 @@ public class Game {
 
 		firstMove = true;
 		gameState = new GameState(numX, numY);
-		//nodes = new GameState(numX, numY);
 
 	}
 
@@ -31,28 +29,28 @@ public class Game {
 	 * node) call this before move() using user/AI input
 	 */
 	public boolean isValidMove(Node chosen) {
-	       if (firstMove == true) {
-	           System.out.println("It's the first move");
-	           return true;
-	       }
-	      
-	       // /see if node already played
-	       if (chosen.player == 0) {
-	           for (Node i : chosen.getNeighbors()) {
-	              if (i.player != 0) {
-	                  // returns true if the node has a neighbor that is played
-	                  return true;
-	              }
-	           }
-	       }
-	       // all neighbors are blank/unplayed
-	       // TODO: Kevin's, uncomment once you integrate
-//	       else if (allMovesNodes.size() >= numX * numY) {
-//	           // for testing until a winchecker is implemented
-//	           isActive = false;
-//	       }
-	       // checkIfWin()
-	       return false;
+		if (firstMove == true) {
+			System.out.println("It's the first move");
+			return true;
+		}
+
+		// /see if node already played
+		if (chosen.player == 0) {
+			for (Node i : chosen.getNeighbors()) {
+				if (i.player != 0) {
+					// returns true if the node has a neighbor that is played
+					return true;
+				}
+			}
+		}
+		// all neighbors are blank/unplayed
+		// TODO: Kevin's, uncomment once you integrate
+		// else if (allMovesNodes.size() >= numX * numY) {
+		// // for testing until a winchecker is implemented
+		// isActive = false;
+		// }
+		// checkIfWin()
+		return false;
 	}
 
 	/**
@@ -69,41 +67,20 @@ public class Game {
 		// create and add any new edges as applicable
 		for (Node i : changed.getNeighbors()) {
 			if (i.getPlayer() == currentPlayer.getPlayerNum()) {
-				Edge possibleNewEdge = new Edge(changed, i, changed.getPlayer());
+				Edge possibleNewEdge = new Edge(changed, i, changed.getPlayer(), numY-1);
 				if (!currentPlayer.hasEdge(possibleNewEdge)) {
 					currentPlayer.addEdge(possibleNewEdge);
 					// add to knowledge base
-					// TODO: this might not play nicely with player numbers?
 					if (possibleNewEdge.getColor() == pX.getPlayerNum()) {
-						gameState
-								.addToP1KB(possibleNewEdge.getEndpointsAxiom());
-						gameState.addToP1KB(possibleNewEdge.getTypeAxiom());
+						gameState.addToP1KB(possibleNewEdge.getEdgeAxiom());
 					} else {
-						gameState
-								.addToP2KB(possibleNewEdge.getEndpointsAxiom());
-						gameState.addToP2KB(possibleNewEdge.getTypeAxiom());
+						gameState.addToP2KB(possibleNewEdge.getEdgeAxiom());
 					}
 				}
 			}
 		}
-
-		gameState.checkIfWin(pX);
-		gameState.checkIfWin(pO);
-
 	}
 
-	/**
-	 * Reports output of win-checker. Should be called after each successful
-	 * move
-	 */
-	public boolean checkIfWin() {
-		// TODO: calls winChecker object (yet to be implemented)
-		return false;
-	}
-
-	public void draw() {
-		// does nothing I'm involved with
-	}
 
 	/**
 	 * 

@@ -1,157 +1,157 @@
 package polartictactoe;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class WinChecker {
 
 	// separate KB for each player's edges
-	ArrayList<Axiom> p1KB;
-	ArrayList<Axiom> p2KB;
-	// todo: do we need to duplicate the goal?
-	Axiom negatedGoal;
+	LinkedList<EdgeAxiom> p1KB;
+	LinkedList<EdgeAxiom> p2KB;
+	// this is a separate object so that new versions can quickly and easily be made
+	NegatedGoal goal;
+	
+	// TODO: testing
+	boolean winForPlayer1 = false;
+	boolean winForPlayer2 = false;
 
 	/** Note: the negated goal is hard-coded in for this game */
 	public WinChecker() {
-		p1KB = new ArrayList<Axiom>();
-		p2KB = new ArrayList<Axiom>();
-		negatedGoal = new Axiom();
-
-		// builds axioms
-		LogicalFunction endpts1 = new Endpoints("n1", "n2", "e1");
-		endpts1.negate();
-		LogicalFunction endpts2 = new Endpoints("n2", "n3", "e2");
-		endpts2.negate();
-		LogicalFunction endpts3 = new Endpoints("n3", "n4", "e3");
-		endpts3.negate();
-		LogicalFunction type1 = new Type("a", "e1");
-		type1.negate();
-		LogicalFunction type2 = new Type("a", "e2");
-		type2.negate();
-		LogicalFunction type3 = new Type("a", "e3");
-		type3.negate();
-//		LogicalFunction connector1 = new LogicalOperator(true);
-//		connector1.negate();
-//		LogicalFunction connector2 = new LogicalOperator(true);
-//		connector2.negate();
-//		LogicalFunction connector3 = new LogicalOperator(true);
-//		connector3.negate();
-//		LogicalFunction connector4 = new LogicalOperator(true);
-//		connector4.negate();
-//		LogicalFunction connector5 = new LogicalOperator(true);
-//		connector5.negate();
-
-		// adds axioms to negated goal
-		negatedGoal.add(endpts1);
-		//negatedGoal.add(connector1);
-		negatedGoal.add(endpts2);
-		//negatedGoal.add(connector2);
-		negatedGoal.add(endpts3);
-		//negatedGoal.add(connector3);
-		negatedGoal.add(type1);
-		//negatedGoal.add(connector4);
-		negatedGoal.add(type2);
-		//negatedGoal.add(connector5);
-		negatedGoal.add(type3);
-
-		// adds negated goal to each player's knowledge base
-		// TODO: put this back depending on implementation
-		// make a copy of this for resolution as well
-		
-		//addGoalToKnowledgeBases();
+		p1KB = new LinkedList<EdgeAxiom>();
+		p2KB = new LinkedList<EdgeAxiom>();
+		goal = new NegatedGoal();
 	}
 
-	public void addToP1KnowledgeBase(LogicalFunction a) {
-		// Transforms a into a Statement, then adds it to the KB
-		Axiom newAxiom = new Axiom();
-		newAxiom.add(a);
-		p1KB.add(newAxiom);
+	/** Adds this EdgeAxiom to player 1's KB */
+	public void addToP1KnowledgeBase(EdgeAxiom a) {
+		p1KB.add(a);
 
 		// resolves once there are three or more edges per player
-		if (p1KB.size() >= 7) {
+		if (p1KB.size() >= 3) {
 			 resolve(p1KB);
 		}
 	}
 
-	public void addToP2KnowledgeBase(LogicalFunction a) {
-		// Transforms a into a Statement, then adds it to the KB
-		Axiom newAxiom = new Axiom();
-		newAxiom.add(a);
-		p2KB.add(newAxiom);
+	/** Adds this EdgeAxiom to player 2's KB */
+	public void addToP2KnowledgeBase(EdgeAxiom a) {;
+		p2KB.add(a);
 
 		// resolves once there are three or more edges per player
-		if (p2KB.size() >= 7) {
-			 resolve(p2KB);
+		if (p2KB.size() >= 3) {
+			resolve(p2KB);
 		}
 	}
 
-	private void addGoalToKnowledgeBases() {
-		p1KB.add(negatedGoal);
-		p2KB.add(negatedGoal);
 
-	}
-
-	// TODO: need to specify whose win we're checking via which KB is passed in
-	private void resolve(ArrayList<Axiom> KB) {
+	/** Checks for a win, but only for the player whose KB is passed in as an argument */
+	private void resolve(LinkedList<EdgeAxiom> KB) {
+		int counter = 0;
 		
-		// makes a new version of the knowledge base that can be modified without changing the original
-		ArrayList<Axiom> clauses = new ArrayList<Axiom>();
-		for (Axiom a : KB) {
-			clauses.add(a.cloneAxiom());
-		}
-		
-		System.out.println("\n*****Cloned version: *****");
-		if (KB.equals(p1KB)){
-			printp1KB();
-		} else {
-			printp2KB();
-		}
-		
-		boolean unified = false;
-		
-		while(true){
-			int counter = 0;
-			for (Axiom c : clauses){
-				for (Axiom a : clauses){
-					if (!a.equals(c)){
-						System.out.println(counter + ": resolve these");
-						//ArrayList<Axiom> newAxioms = c.unify(a);
-						// TODO: if empty clause, break and report a win
-						// if something unifies, set unified to true
-						// TODO: unify should probably return a new clause, actually
-						counter++;
-					}
+		// tries to resolve once with each arrangement of the KB
+		while (counter < KB.size()){
+			// starts with a new negated goal, since those from previous loops will be modified
+			goal = new NegatedGoal();
+			
+			// attempts to unify each axiom with the negated goal
+			for (EdgeAxiom e: KB){
+				e.unify(goal.getGoal());
+				
+				// returns a win if the unification makes the goal an empty clause
+				if(goal.getGoal().isEmpty()){
+					reportWin(KB);
+					return;
 				}
 			}
-			// TODO: if unified is still false here, report no win
-			// add new stuff to clauses
-			break;
+			
+			// increments counter
+			counter++;
+			//takes the first axiom in the knowledge base and moves it to the end
+			rotateKB(KB);
 		}
+		
+		// if we reach this code, no win was found
+		reportNoWin(KB);
+
 	}
 
-	// TODO: reportWin() and NoWin are stubs still
-	private int reportWin() {
+
+	/** If a win was found, reports which player it belongs to */
+	private int reportWin(LinkedList<EdgeAxiom> KB) {
+		int player = 1;
+		if (KB.equals(p2KB)){
+			player = 2;
+		}
+		
+		// TODO: still testing
+		if (player == 1){
+			winForPlayer1 = true;
+		} else {
+			winForPlayer2 = true;
+		}
+		
+		System.out.println("\n\n**********WIN FOR PLAYER " + player + "**********\n\n");
+		return player;
+	}
+
+	/** Returns -1 if no win was found */
+	private int reportNoWin(LinkedList<EdgeAxiom> KB) {
 		return -1;
 	}
 
-	private int reportNoWin() {
-		return -5;
+	/** Removes the first element and adds it to the end */
+	public void rotateKB(LinkedList<EdgeAxiom> KB){
+		EdgeAxiom oldStart = KB.remove(0);
+		KB.add(oldStart);
+		
 	}
 
-	public Axiom getNegatedGoal() {
-		return negatedGoal;
+	public NegatedGoal getNegatedGoal() {
+		return goal;
 	}
 
 	public void printp1KB() {
 		System.out.println("\nPlayer 1's KB:");
-		for (Axiom a : p1KB) {
+		for (EdgeAxiom a : p1KB) {
 			System.out.println(a.toString());
 		}
 	}
 
 	public void printp2KB() {
 		System.out.println("\nPlayer 2's KB:");
-		for (Axiom a : p2KB) {
+		for (EdgeAxiom a : p2KB) {
 			System.out.println(a.toString());
 		}
+	}
+	
+	public LinkedList<EdgeAxiom> getP1KB() {
+		return p1KB;
+	}
+
+	public void setP1KB(LinkedList<EdgeAxiom> p1kb) {
+		p1KB = p1kb;
+	}
+
+	public LinkedList<EdgeAxiom> getP2KB() {
+		return p2KB;
+	}
+
+	public void setP2KB(LinkedList<EdgeAxiom> p2kb) {
+		p2KB = p2kb;
+	}
+
+	public NegatedGoal getGoal() {
+		return goal;
+	}
+
+	public void setGoal(NegatedGoal goal) {
+		this.goal = goal;
+	}
+	
+	public boolean getWinForPlayer1(){
+		return winForPlayer1;
+	}
+	
+	public boolean getWinForPlayer2(){
+		return winForPlayer2;
 	}
 }

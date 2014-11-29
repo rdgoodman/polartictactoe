@@ -55,11 +55,11 @@ public class GameState {
 
 	}
 
-	public void addToP1KB(LogicalFunction a) {
+	public void addToP1KB(EdgeAxiom a) {
 		winchecker.addToP1KnowledgeBase(a);
 	}
 	
-	public void addToP2KB(LogicalFunction a) {
+	public void addToP2KB(EdgeAxiom a) {
 		winchecker.addToP2KnowledgeBase(a);
 	}
 
@@ -186,11 +186,6 @@ public class GameState {
 			a.addNeighbor(nodes[a.getX() - 1][clockwise]);
 		}
 
-	}
-	
-	/** Reports output of win-checker. Should be called after each successful move */
-	public boolean checkIfWin(Player player) {
-		return false;
 	}
 
 	public Diagonal[][] getDiagonals() {
