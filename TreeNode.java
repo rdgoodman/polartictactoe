@@ -25,18 +25,15 @@ public class TreeNode {
 	double beta = Integer.MAX_VALUE;
 	int depth;
 	Node hypotheticalMoveAttribute;
-	
 
 	/** For root */
-	public TreeNode(Node[][] currentState, Node moveToEvaluate, int currentPlayer, int nextPlayer,
+	public TreeNode(Node[][] currentState, int currentPlayer, int nextPlayer,
 			TreeNode parent, int depth) {
-		
-		
+
 		// modifies current state with moveToEvaluate (the hypothetical move)
 		gameState = new GameState(currentState);
+
 		this.currentPlayer = currentPlayer;
-		gameState.getNodes()[moveToEvaluate.getX()][moveToEvaluate.getY()].setPlayer(currentPlayer);
-		
 		this.nextPlayer = nextPlayer;
 		potentialMoves = new LinkedList<Node>();
 		this.parent = parent;
@@ -44,10 +41,11 @@ public class TreeNode {
 
 		// root is always a max node
 		maxNode = true;
-		
-		setHypotheticalMove(gameState.getNodes()[moveToEvaluate.getX()][moveToEvaluate.getY()]);
+
+		// TODO: root has no hypothetical move
+		setHypotheticalMove(null);
 		System.out.println(this.toString());
-		
+
 		countChildren();
 
 	}
@@ -62,14 +60,12 @@ public class TreeNode {
 		this.maxNode = maxNode;
 		this.parent = parent;
 		this.depth = depth;
-		
+
 		countChildren();
 	}
 
-	
 	/** TODO: will need to win-check */
-	
-	
+
 	/**
 	 * Counts the number of child nodes this node will have, and adds the
 	 * potential moves to represent to a Linked List
@@ -96,39 +92,40 @@ public class TreeNode {
 			}
 		}
 	}
-	
-	protected boolean hasNextChild(){
+
+	protected boolean hasNextChild() {
 		return !potentialMoves.isEmpty();
 	}
-	
+
 	/** Creates the next child in the next ply */
-	protected TreeNode createNextChild(){
-		
+	protected TreeNode createNextChild() {
+
 		TreeNode childNode;
 		// identical gamestate at first
 		GameState childState = new GameState(gameState.getNodes());
-		
+
 		int player = nextPlayer;
 		if (maxNode) {
 			player = currentPlayer;
-		} 
-		
-		if (potentialMoves.isEmpty()){
+		}
+
+		if (potentialMoves.isEmpty()) {
 			System.out.println("no moves");
 			// need a more sophisticated way to check for missing child nodes
-			// this might not even be necessary given the way we did the tree building
+			// this might not even be necessary given the way we did the tree
+			// building
 			childNode = null;
-			
+
 		} else {
 			Node nextMove = potentialMoves.getFirst();
 			// changes the single Node in GameState to reflect potential move
 			childState.getNodes()[nextMove.getX()][nextMove.getY()]
 					.setPlayer(player);
-			childNode = new TreeNode(childState, currentPlayer,
-					nextPlayer, !maxNode, this, this.depth + 1);
+			childNode = new TreeNode(childState, currentPlayer, nextPlayer,
+					!maxNode, this, this.depth + 1);
 			// removes that potential move from the list
 			potentialMoves.removeFirst();
-			
+
 			// TODO: testing, remove
 			String max = "";
 			if (childNode.isMaxNode()) {
@@ -136,26 +133,26 @@ public class TreeNode {
 			} else {
 				max = "MIN";
 			}
-			System.out
-					.println("\nChild State: "
-							+ max
-							+ " "
-							+ childState.getNodes()[nextMove.getX()][nextMove
-									.getY()].toString() + " at depth " + childNode.getDepth());
-			childNode.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove.getY()]);
+			System.out.println("\nChild State: "
+					+ max
+					+ " "
+					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
+							.toString() + " at depth " + childNode.getDepth());
+			childNode
+					.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove
+							.getY()]);
 
 		}
 		return childNode;
 	}
 
-
-	/** TODO: MUST USE HEURISTIC*/
-	public void evaluate(){
-		value = (int)(Math.random() * 100) ;
+	/** TODO: MUST USE HEURISTIC */
+	public void evaluate() {
+		value = (int) (Math.random() * 100);
 		System.out.println("Set value of this node to " + value);
 	}
-	
-	/** 
+
+	/**
 	 * 
 	 * 
 	 * 
@@ -199,53 +196,59 @@ public class TreeNode {
 	public boolean isMaxNode() {
 		return maxNode;
 	}
-	
-	public int getDepth(){
+
+	public int getDepth() {
 		return depth;
 	}
 
-	public void setHypotheticalMove(Node hypothetical){
+	public void setHypotheticalMove(Node hypothetical) {
 		this.hypotheticalMoveAttribute = hypothetical;
 	}
-	
-	public Node getHypotheticalMove(){
+
+	public Node getHypotheticalMove() {
 		return hypotheticalMoveAttribute;
 	}
-	
+
 	// TODO: can make these a lot smarter
-	
-	public void setAlpha(double alpha){
+
+	public void setAlpha(double alpha) {
 		this.alpha = alpha;
 	}
-	
-	public double getAlpha(){
+
+	public double getAlpha() {
 		return alpha;
 	}
-	
-	public double getBeta(){
+
+	public double getBeta() {
 		return beta;
 	}
-	
-	public void setBeta(double beta){
+
+	public void setBeta(double beta) {
 		this.beta = beta;
 	}
-	
-	public double getValue(){
+
+	public double getValue() {
 		return value;
 	}
-	
-	public void setValue(double value){
+
+	public void setValue(double value) {
 		this.value = value;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		String max = "";
 		if (maxNode) {
 			max = "MAX";
 		} else {
 			max = "MIN";
 		}
-		return (max + " " + this.hypotheticalMoveAttribute.toString() + " at depth " + depth);
+
+		if (this.hypotheticalMoveAttribute == null) {
+			return "~~~~~ROOT NODE~~~~~";
+		} else {
+			return (max + " " + this.hypotheticalMoveAttribute.toString()
+					+ " at depth " + depth);
+		}
 	}
 
 }

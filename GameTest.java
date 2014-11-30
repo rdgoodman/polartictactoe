@@ -296,49 +296,49 @@ public class GameTest {
 	//
 	// }
 
-	 @Test
-	 public void testMinimax(){
-	 game.move(gameNodes[1][3], player1);
-	 game.move(gameNodes[2][3], player2);
-	 game.move(gameNodes[2][2], player1);
-	 game.move(gameNodes[2][1], player2);
-	 game.move(gameNodes[1][2], player1);
-	 game.move(gameNodes[1][0], player2);
-	 game.move(gameNodes[2][0], player1);
-	
-	 Node[][] gameState1 = game.getGameState();
-	 System.out.println("Game State:");
-	 for (int i = 0; i < game.getNumX(); i++) {
-	 for (int j = 0; j < game.getNumY(); j++) {
-	 System.out.print(gameState1[i][j].toString() + "   ");
-	 }
-	 System.out.println("");
-	 }
-	 System.out.println("\n\n\n\n");
-	
-	 // TODO: changed input for hypothetical moves
-	 Node hypotheticalMove = gameNodes[0][0].cloneNodeButNotNeighbors();
-	 hypotheticalMove.setPlayer(player2.getPlayerNum());
-	
-	 // new tree with max depth of three
-	 @SuppressWarnings("unused")
-	 GameTree tree = new GameTree(gameNodes, hypotheticalMove,
-	 player1.getPlayerNum(), player2.getPlayerNum(), 3, false);
-	
-	 // checking that nothing untoward happened
-	 // the gamestate should NOT have been actually changed.
-	 Node[][] gameState2 = game.getGameState();
-	 System.out.println("\n\n\n\nGame State:");
-	 for (int i = 0; i < game.getNumX(); i++) {
-	 for (int j = 0; j < game.getNumY(); j++) {
-	 System.out.print(gameState2[i][j].toString() +
-	 gameState2[i][j].getNeighbors().size() + "   ");
-	 }
-	 System.out.println();
-	 }
-	
-	 System.out.println("\n\n\nMoves: " + tree.toString());
-	
-	 }
+//	 @Test
+//	 public void testMinimax(){
+//	 game.move(gameNodes[1][3], player1);
+//	 game.move(gameNodes[2][3], player2);
+//	 game.move(gameNodes[2][2], player1);
+//	 game.move(gameNodes[2][1], player2);
+//	 game.move(gameNodes[1][2], player1);
+//	 game.move(gameNodes[1][0], player2);
+//	 game.move(gameNodes[2][0], player1);
+//	
+//	 Node[][] gameState1 = game.getGameState();
+//	 System.out.println("Game State:");
+//	 for (int i = 0; i < game.getNumX(); i++) {
+//	 for (int j = 0; j < game.getNumY(); j++) {
+//	 System.out.print(gameState1[i][j].toString() + "   ");
+//	 }
+//	 System.out.println("");
+//	 }
+//	 System.out.println("\n\n\n\n");
+//	
+//	 // TODO: changed input for hypothetical moves
+//	 Node hypotheticalMove = gameNodes[0][0].cloneNodeButNotNeighbors();
+//	 hypotheticalMove.setPlayer(player2.getPlayerNum());
+//	
+//	 // new tree with max depth of three
+//	 @SuppressWarnings("unused")
+//	 GameTree tree = new GameTree(gameNodes, hypotheticalMove,
+//	 player1.getPlayerNum(), player2.getPlayerNum(), 3, false);
+//	
+//	 // checking that nothing untoward happened
+//	 // the gamestate should NOT have been actually changed.
+//	 Node[][] gameState2 = game.getGameState();
+//	 System.out.println("\n\n\n\nGame State:");
+//	 for (int i = 0; i < game.getNumX(); i++) {
+//	 for (int j = 0; j < game.getNumY(); j++) {
+//	 System.out.print(gameState2[i][j].toString() +
+//	 gameState2[i][j].getNeighbors().size() + "   ");
+//	 }
+//	 System.out.println();
+//	 }
+//	
+//	 System.out.println("\n\n\nMoves: " + tree.toString());
+//	
+//	 }
 
 }

@@ -13,27 +13,19 @@ public class GameTree {
 	// TODO: get heuristic
 
 	/**
-	 * Builds game tree given a hypothetical move to evaluate
-	 * 
-	 * @param currentGameState
-	 *            the current game state with only concrete moves made
-	 * @param moveToEvaluate
-	 *            the hypothetical move to evaluate
-	 * @param firstPlayer
-	 *            the player who would be playing the hypothetical move
-	 * @param secondPlayer
-	 *            the opposing player
-	 * @param evaluationDepth
-	 *            max depth for evaluation
-	 * @param AB
-	 *            will this tree be using alpha-beta pruning?
+	 * Builds a game tree to evaluate max player's best move
+	 * @param currentGameState the state of the game - MIN player has just moved, MAX player is deciding on a move
+	 * @param MAXPlayer the player deciding on a move. Tree is built using MAXplayer's rewards.
+	 * @param MINPlayer the opposing player.
+	 * @param evaluationDepth the depth at which the tree will be cut off for heuristic evaluation.
+	 * @param AB boolean - true if the tree will be using alpha-beta pruning
 	 */
-	public GameTree(Node[][] currentGameState, Node moveToEvaluate,
-			int firstPlayer, int secondPlayer, int evaluationDepth, boolean AB) {
+	public GameTree(Node[][] currentGameState,
+			int MAXPlayer, int MINPlayer, int evaluationDepth, boolean AB) {
 
 		// root has a null parent
-		root = new TreeNode(currentGameState, moveToEvaluate, firstPlayer,
-				secondPlayer, null, 1);
+		root = new TreeNode(currentGameState, MAXPlayer,
+				MINPlayer, null, 1);
 		// TODO: set depthReached
 		depthReached = 0;
 		nodesEvaluated = 0;
@@ -78,7 +70,6 @@ public class GameTree {
 
 		if (current.getParent().isMaxNode()) {
 			// change value of max parent
-
 			if (current.getValue() > current.getParent().getValue()) {
 				System.out.println("Parent's value changed to "
 						+ current.getValue());
@@ -192,6 +183,7 @@ public class GameTree {
 					System.out.println("Grandparent's alpha changed to "
 							+ current.getBeta());
 					current.getParent().setAlpha(current.getBeta());
+					maximin = current.getHypotheticalMove();
 				}
 			} else {
 				// change beta
@@ -199,6 +191,7 @@ public class GameTree {
 					System.out.println("Grandparent's beta changed to "
 							+ current.getAlpha());
 					current.getParent().setBeta(current.getAlpha());
+					maximin = current.getHypotheticalMove();
 				}
 			}
 			System.out.println();
