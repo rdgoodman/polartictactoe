@@ -11,6 +11,8 @@ public class TreeNode {
 	// NOT whose move generated the current ply
 	int currentPlayer;
 	int nextPlayer;
+	// this is the player who played first in this game
+	int player1;
 	// used to generate children - 1:1 relationship
 	LinkedList<Node> potentialMoves;
 	int numChildren;
@@ -26,15 +28,29 @@ public class TreeNode {
 	int depth;
 	Node hypotheticalMoveAttribute;
 
-	/** For root */
-	public TreeNode(Node[][] currentState, int currentPlayer, int nextPlayer,
+	/** 
+	 * For root only
+	 * @param currentState
+	 * @param maxPlayer
+	 * @param minPlayer
+	 * @param parent
+	 * @param depth
+	 */
+	public TreeNode(GameState currentState, int maxPlayer, int minPlayer, int player1,
 			TreeNode parent, int depth) {
 
-		// modifies current state with moveToEvaluate (the hypothetical move)
-		gameState = new GameState(currentState);
+		// sets game state nodes to a copy of current game state's nodes
+		gameState = new GameState(currentState.getNodes());
+		// TODO: clone both KBs here as well - this only works because
+		// resolution does not change the KB!!!
+		gameState.getWinChecker().setP1KB(
+				currentState.getWinChecker().getP1KB());
+		gameState.getWinChecker().setP2KB(
+				currentState.getWinChecker().getP2KB());
 
-		this.currentPlayer = currentPlayer;
-		this.nextPlayer = nextPlayer;
+		this.currentPlayer = maxPlayer;
+		this.nextPlayer = minPlayer;
+		this.player1 = player1;
 		potentialMoves = new LinkedList<Node>();
 		this.parent = parent;
 		this.depth = depth;
@@ -42,7 +58,7 @@ public class TreeNode {
 		// root is always a max node
 		maxNode = true;
 
-		// TODO: root has no hypothetical move
+		// root has no hypothetical move
 		setHypotheticalMove(null);
 		System.out.println(this.toString());
 
@@ -63,8 +79,6 @@ public class TreeNode {
 
 		countChildren();
 	}
-
-	/** TODO: will need to win-check */
 
 	/**
 	 * Counts the number of child nodes this node will have, and adds the
@@ -104,13 +118,17 @@ public class TreeNode {
 		// identical gamestate at first
 		GameState childState = new GameState(gameState.getNodes());
 
+		// TODO: clone both KBs here as well - this only works because
+		// resolution does not change the KB!!!
+		childState.getWinChecker().setP1KB(gameState.getWinChecker().getP1KB());
+		childState.getWinChecker().setP2KB(gameState.getWinChecker().getP2KB());
+
 		int player = nextPlayer;
 		if (maxNode) {
 			player = currentPlayer;
 		}
 
 		if (potentialMoves.isEmpty()) {
-			System.out.println("no moves");
 			// need a more sophisticated way to check for missing child nodes
 			// this might not even be necessary given the way we did the tree
 			// building
@@ -118,36 +136,79 @@ public class TreeNode {
 
 		} else {
 			Node nextMove = potentialMoves.getFirst();
-			// changes the single Node in GameState to reflect potential move
+			// changes the single Node in GameState to reflect move being
+			// evaluated
 			childState.getNodes()[nextMove.getX()][nextMove.getY()]
 					.setPlayer(player);
+
+
+
+
 			childNode = new TreeNode(childState, currentPlayer, nextPlayer,
 					!maxNode, this, this.depth + 1);
 			// removes that potential move from the list
 			potentialMoves.removeFirst();
 
 			childNode
-			.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove
-			                                                            .getY()]);
+					.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove
+							.getY()]);
+
+			addAxiomsToKB(childState.getNodes()[nextMove.getX()][nextMove
+			                                                     .getY()]);
+			// TODO: testing,remove
+//			System.out.println("\n\nT E S T I N G KB BUILDING: "
+//					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
+//							.getNeighbors().toString());
+//			System.out.println(" P1 Knowledge Base: ");
+//			childState.getWinChecker().printp1KB();
+//			System.out.println("\n");
+//
+//			System.out.println(" P2 Knowledge Base: ");
+//			childState.getWinChecker().printp2KB();
+//			System.out.println("\n");
+
 			// TODO: testing, remove
+			@SuppressWarnings("unused")
 			String max = "";
 			if (childNode.isMaxNode()) {
 				max = "MAX";
 			} else {
 				max = "MIN";
-			} 
-//			System.out.println("\nChild State: "
-//					+ max
-//					+ " "
-//					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
-//							.toString() + " at depth " + childNode.getDepth());
+			}
+			 System.out.println("\nChild State: "
+			 + max
+			 + " "
+			 + childState.getNodes()[nextMove.getX()][nextMove.getY()]
+			 .toString() + " at depth " + childNode.getDepth());
 
 		}
-		
-		// TODO: adds childNode to Children
-		
+
+		// adds childNode to Children
+
 		children.add(childNode);
 		return childNode;
+	}
+
+	private void addAxiomsToKB(Node node) {
+		int numY = gameState.getNodes()[0].length;
+		
+		// adds new things to KB, but does not create edges
+		for (Node i : node.getNeighbors()) {
+			if (i.getPlayer() == node.getPlayer()){
+				
+				// add to knowledge base
+				// TODO: get player numbers!!!
+				// also, create entirely new edge axiom, instead of relying on the edge
+				Edge possibleNewEdge = new Edge(node, i, node.getPlayer(), numY-1);
+				
+				if (node.getPlayer() == player1) {
+					gameState.addToP1KB(possibleNewEdge.getEdgeAxiom());
+				} else {
+					gameState.addToP2KB(possibleNewEdge.getEdgeAxiom());
+				}
+			}
+		}
+
 	}
 
 	/** TODO: MUST USE HEURISTIC */
@@ -155,21 +216,10 @@ public class TreeNode {
 		value = (int) (Math.random() * 100);
 		System.out.println("Set value of this node to " + value);
 	}
-	
-	// TODO: work in progress
-	protected void prune(){
-		System.out.println("Parent's current list of children: " + parent.getChildren().toString());
-		System.out.println("Parent's current list of potential moves: " + parent.getPotentialMoves().toString());
-		
-		
-//		// int numCurrentChildren = parent.getChildren().size();
-//		int lastChildBeforePruning = parent.getChildren().indexOf(this);
-//		for (int i = lastChildBeforePruning; i < parent.getPotentialMoves().size(); i++){
-//			System.out.println("Supposedly removed a potential move");
-//			parent.getPotentialMoves().remove(i);
-//		}
 
-			parent.getPotentialMoves().clear();
+	/** Prunes the game tree below this node */
+	protected void prune() {
+		parent.getPotentialMoves().clear();
 	}
 
 	/**
@@ -229,8 +279,6 @@ public class TreeNode {
 		return hypotheticalMoveAttribute;
 	}
 
-	// TODO: can make these a lot smarter
-
 	public void setAlpha(double alpha) {
 		this.alpha = alpha;
 	}
@@ -254,6 +302,10 @@ public class TreeNode {
 	public void setValue(double value) {
 		this.value = value;
 	}
+	
+	private void setPlayer1(int player1){
+		this.player1 = player1;
+	}
 
 	public String toString() {
 		String max = "";
@@ -270,20 +322,20 @@ public class TreeNode {
 					+ " at depth " + depth);
 		}
 	}
-	
-	public void printAB(){
+
+	public void printAB() {
 		String alph = String.valueOf(alpha);
 		String bet = String.valueOf(beta);
-		
-		if (alpha == Integer.MIN_VALUE){
+
+		if (alpha == Integer.MIN_VALUE) {
 			alph = "-inf";
-		} 
-		if (beta == Integer.MAX_VALUE){
+		}
+		if (beta == Integer.MAX_VALUE) {
 			bet = "inf";
 		}
-		
-		
-		System.out.println("    " + this.toString() + " Alpha: " + alph + " Beta: " + bet);
+
+		System.out.println("    " + this.toString() + " Alpha: " + alph
+				+ " Beta: " + bet);
 	}
 
 }

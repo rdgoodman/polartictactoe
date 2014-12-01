@@ -16,8 +16,8 @@ public class GameTest {
 
 	Game game = new Game(3, 4, player1, player2);
 	Game game2 = new Game(3, 4, player3, player4);
-	Node[][] gameNodes = game.getGameState();
-	Node[][] gameNodes2 = game2.getGameState();
+	Node[][] gameNodes = game.getGameNodes();
+	Node[][] gameNodes2 = game2.getGameNodes();
 
 //	 @Test
 //	 public void testNodeCreation() {

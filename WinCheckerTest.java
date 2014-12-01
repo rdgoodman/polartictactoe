@@ -113,7 +113,7 @@ public class WinCheckerTest {
 		Player player2 = new HumanPlayer(2);
 		Game game = new Game(5, 5, player1, player2);
 
-		Node[][] gameNodes = game.getGameState();
+		Node[][] gameNodes = game.getGameNodes();
 
 		game.move(gameNodes[0][0], player1);
 		game.move(gameNodes[2][0], player1);
@@ -134,7 +134,7 @@ public class WinCheckerTest {
 		Player player2 = new HumanPlayer(2);
 		Game game = new Game(5, 5, player1, player2);
 
-		Node[][] gameNodes = game.getGameState();
+		Node[][] gameNodes = game.getGameNodes();
 
 		game.move(gameNodes[0][0], player1);
 		game.move(gameNodes[0][1], player2);
@@ -155,7 +155,7 @@ public class WinCheckerTest {
 		Player player2 = new HumanPlayer(2);
 		Game game = new Game(5, 5, player1, player2);
 
-		Node[][] gameNodes = game.getGameState();
+		Node[][] gameNodes = game.getGameNodes();
 
 		game.move(gameNodes[0][0], player1);
 		game.move(gameNodes[0][1], player2);
@@ -181,7 +181,7 @@ public class WinCheckerTest {
 		Player player2 = new HumanPlayer(2);
 		Game game = new Game(5, 5, player1, player2);
 
-		Node[][] gameNodes = game.getGameState();
+		Node[][] gameNodes = game.getGameNodes();
 
 		game.move(gameNodes[0][0], player1);
 		game.move(gameNodes[0][1], player2);
@@ -209,7 +209,7 @@ public class WinCheckerTest {
 		Player player2 = new HumanPlayer(2);
 		Game game = new Game(5, 5, player1, player2);
 
-		Node[][] gameNodes = game.getGameState();
+		Node[][] gameNodes = game.getGameNodes();
 
 		game.move(gameNodes[0][0], player1);
 		game.move(gameNodes[0][1], player2);
@@ -240,7 +240,7 @@ public class WinCheckerTest {
 		Player player2 = new HumanPlayer(2);
 		Game game = new Game(5, 5, player1, player2);
 
-		Node[][] gameNodes = game.getGameState();
+		Node[][] gameNodes = game.getGameNodes();
 
 		game.move(gameNodes[0][0], player1);
 		game.move(gameNodes[0][1], player2);
@@ -272,7 +272,7 @@ public class WinCheckerTest {
 		Player player2 = new HumanPlayer(2);
 		Game game = new Game(4, 12, player1, player2);
 
-		Node[][] gameNodes = game.getGameState();
+		Node[][] gameNodes = game.getGameNodes();
 
 
 		game.move(gameNodes[1][9], player1);
@@ -303,7 +303,7 @@ public class WinCheckerTest {
 		Player player2 = new HumanPlayer(2);
 		Game game = new Game(4, 12, player1, player2);
 
-		Node[][] gameNodes = game.getGameState();
+		Node[][] gameNodes = game.getGameNodes();
 
 
 		game.move(gameNodes[1][6], player1);

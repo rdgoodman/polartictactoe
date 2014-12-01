@@ -110,8 +110,12 @@ public class Game {
 		this.numY = numY;
 	}
 
-	public Node[][] getGameState() {
+	public Node[][] getGameNodes() {
 		return gameState.getNodes();
+	}
+	
+	public GameState getGameState(){
+		return gameState;
 	}
 
 	public boolean isFirstMove() {

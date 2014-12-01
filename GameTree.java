@@ -1,6 +1,5 @@
 package polartictactoe;
 
-import java.util.Vector;
 
 public class GameTree {
 
@@ -11,7 +10,6 @@ public class GameTree {
 	TreeNode maximin;
 	int maxEvalDepth;
 
-	// TODO: get heuristic
 
 	/**
 	 * Builds a game tree to evaluate max player's best move
@@ -24,22 +22,25 @@ public class GameTree {
 	 *            rewards.
 	 * @param MINPlayer
 	 *            the opposing player.
+	 *            
+	 * @param player1 the player who moved first in this game - important for KB building
+	 *            
 	 * @param evaluationDepth
 	 *            the depth at which the tree will be cut off for heuristic
 	 *            evaluation.
 	 * @param AB
 	 *            boolean - true if the tree will be using alpha-beta pruning
 	 */
-	public GameTree(Node[][] currentGameState, int MAXPlayer, int MINPlayer,
+	public GameTree(GameState currentGameState, int MAXPlayer, int MINPlayer, int player1, 
 			int evaluationDepth, boolean AB) {
 
 		// root has a null parent
-		root = new TreeNode(currentGameState, MAXPlayer, MINPlayer, null, 1);
+		root = new TreeNode(currentGameState, MAXPlayer, MINPlayer, player1, null, 1);
 		// TODO: set depthReached
 		depthReached = 0;
 		nodesEvaluated = 0;
 		maxEvalDepth = evaluationDepth;
-
+		
 		if (AB) {
 			buildABTree(root, evaluationDepth);
 		} else {
@@ -155,20 +156,7 @@ public class GameTree {
 
 	/** Takes values from max-depth level and populates them back up the tree */
 	private void updateABFromHeuristicEvaluatedLevel(TreeNode current) {
-//		
-//		if (current.getBeta() < current.getAlpha()){
-//			System.out.println("########PRUNE HERE: ########");
-//			System.out.println("THE NODE TO PRUNE BELOW IS " + current.toString());
-//			
-//			// TODO: when pruning, remove the rest of the node's children
-//			current.prune();
-//			
-//		}
-		
-		
-		
-		
-		if (current.getDepth() == maxEvalDepth) { // TODO: this "if" should also
+	if (current.getDepth() == maxEvalDepth) { // TODO: this "if" should also
 													// cover wins, etc
 			if (current.getParent().isMaxNode()) {
 				// change alpha
@@ -230,17 +218,15 @@ public class GameTree {
 	}
 	
 	/** Checks if we should prune below this node */
-	public boolean checkIfPrune(TreeNode current){
+	public void checkIfPrune(TreeNode current){
 		if (current.getParent().getBeta() < current.getParent().getAlpha()){
 			System.out.println("########PRUNE HERE: ########");
 			System.out.println("THE NODE TO PRUNE BELOW IS " + current.toString());
 			
-			// TODO: when pruning, remove the rest of the node's children
+			// pruning removes the rest of this node's potential children
 			current.prune();
-			return true;
 			
 		}
-		return false;
 	}
 
 	/** Reports depth reached and number of nodes evaluated */

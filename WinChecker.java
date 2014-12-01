@@ -9,8 +9,7 @@ public class WinChecker {
 	LinkedList<EdgeAxiom> p2KB;
 	// this is a separate object so that new versions can quickly and easily be made
 	NegatedGoal goal;
-	
-	// TODO: testing
+	// these will change if a win is found
 	boolean winForPlayer1 = false;
 	boolean winForPlayer2 = false;
 
@@ -81,7 +80,7 @@ public class WinChecker {
 			player = 2;
 		}
 		
-		// TODO: still testing
+		// testing 
 		if (player == 1){
 			winForPlayer1 = true;
 		} else {
