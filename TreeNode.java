@@ -21,7 +21,7 @@ public class TreeNode {
 	TreeNode parent;
 	// comes from heuristic
 	// TODO: need a different default depending on the heuristic used!!!!
-	double value = -5;
+	double value = Integer.MIN_VALUE;
 	// initialized to values larger than the heuristic will ever return
 	double alpha = Integer.MIN_VALUE;
 	double beta = Integer.MAX_VALUE;

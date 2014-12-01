@@ -77,7 +77,7 @@ public class GameTree {
 			// changes value of parent if still at default (i.e. this is
 			// current's
 			// first child)
-			if (current.getParent().getValue() == -5) {
+			if (current.getParent().getValue() == -Integer.MIN_VALUE) {
 				current.getParent().setValue(current.getValue());
 				System.out.println("Parent's value changed to "
 						+ current.getValue());
