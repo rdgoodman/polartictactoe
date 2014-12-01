@@ -44,7 +44,7 @@ public class MinimaxTest {
 		// Question is: what is 1's best move?
 
 		// new tree with max depth of three
-		GameTree tree = new GameTree(gameNodes, player1.getPlayerNum(), player2.getPlayerNum(), 3, false);
+		GameTree tree = new GameTree(gameNodes, player1.getPlayerNum(), player2.getPlayerNum(), 4, false);
 
 		// checking that nothing untoward happened
 		// the gamestate should NOT have been actually changed.

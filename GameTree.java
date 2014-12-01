@@ -8,7 +8,7 @@ public class GameTree {
 	TreeNode root;
 	int depthReached;
 	int nodesEvaluated;
-	Node maximin;
+	TreeNode maximin;
 
 	// TODO: get heuristic
 
@@ -66,6 +66,7 @@ public class GameTree {
 			current.getParent().setValue(current.getValue());
 			System.out.println("Parent's value changed to "
 					+ current.getValue());
+			//maximin = current.getHypotheticalMove();
 		}
 
 		if (current.getParent().isMaxNode()) {
@@ -74,6 +75,7 @@ public class GameTree {
 				System.out.println("Parent's value changed to "
 						+ current.getValue());
 				current.getParent().setValue(current.getValue());
+				//maximin = current.getHypotheticalMove();
 
 			}
 		} else {
@@ -82,6 +84,7 @@ public class GameTree {
 				System.out.println("Parent's value changed to "
 						+ current.getValue());
 				current.getParent().setValue(current.getValue());
+				//maximin = current.getHypotheticalMove();
 
 			}
 		}
@@ -100,7 +103,7 @@ public class GameTree {
 							+ current.getValue());
 					current.getParent().setValue(current.getValue());
 					// TODO: issue is here
-					maximin = current.getHypotheticalMove();
+					//maximin = current.getHypotheticalMove();
 
 				}
 			} else {
@@ -110,7 +113,7 @@ public class GameTree {
 							+ current.getValue());
 					current.getParent().setValue(current.getValue());
 					// TODO: issue is here
-					maximin = current.getHypotheticalMove();
+					//maximin = current.getHypotheticalMove();
 
 				}
 			}
@@ -119,18 +122,20 @@ public class GameTree {
 			// at root - do nothing
 			System.out.println("ROOT");
 			System.out.println("Value is " + current.getValue());
+			System.out.println("CHILDREN: " + current.getChildren().size());
 			
 			
-			//TODO: get maximin
-//			for(TreeNode i : current.getChildren()){
-//				if (i.getValue() == current.getValue()){
-//					maximin = i.getHypotheticalMove();
-//				}
-//			}
+			// after iterating values up tree, chooses move with greatest payoff for max player
+			maximin = current.getChildren().get(0);
 			
+			for (TreeNode t : current.getChildren()){
+				if (t.getValue() > maximin.getValue()){
+					maximin = t;
+				}
+			}
 			
-			
-			System.out.println("Maximin is " + maximin.toString());
+
+			System.out.println("Maximin is " + maximin.getHypotheticalMove().toString());
 		}
 
 	}
@@ -183,7 +188,7 @@ public class GameTree {
 					System.out.println("Grandparent's alpha changed to "
 							+ current.getBeta());
 					current.getParent().setAlpha(current.getBeta());
-					maximin = current.getHypotheticalMove();
+				//	maximin = current.getHypotheticalMove();
 				}
 			} else {
 				// change beta
@@ -191,7 +196,7 @@ public class GameTree {
 					System.out.println("Grandparent's beta changed to "
 							+ current.getAlpha());
 					current.getParent().setBeta(current.getAlpha());
-					maximin = current.getHypotheticalMove();
+				//	maximin = current.getHypotheticalMove();
 				}
 			}
 			System.out.println();

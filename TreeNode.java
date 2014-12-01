@@ -143,6 +143,10 @@ public class TreeNode {
 							.getY()]);
 
 		}
+		
+		// TODO: adds childNode to Children
+		
+		children.add(childNode);
 		return childNode;
 	}
 
