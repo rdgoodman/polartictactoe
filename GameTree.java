@@ -133,7 +133,7 @@ public class GameTree {
 			while (current.hasNextChild()) {
 				TreeNode next = current.createNextChild();
 
-				// TODO: pass on values
+				//pass on values
 				if (current.isMaxNode()) {
 					next.setAlpha(current.getAlpha());
 					//System.out.println("     Set alpha");
@@ -223,14 +223,10 @@ public class GameTree {
 
 			System.out.println("Maximin is "
 					+ maximin.getHypotheticalMove().toString());
-			
-			// TODO: this is so we don't try to prune after finding maximin
-			return;
 
 		}
 		
 		System.out.println();
-		current.printAB();
 	}
 	
 	/** Checks if we should prune below this node */

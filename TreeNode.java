@@ -159,6 +159,17 @@ public class TreeNode {
 	// TODO: work in progress
 	protected void prune(){
 		System.out.println("Parent's current list of children: " + parent.getChildren().toString());
+		System.out.println("Parent's current list of potential moves: " + parent.getPotentialMoves().toString());
+		
+		
+//		// int numCurrentChildren = parent.getChildren().size();
+//		int lastChildBeforePruning = parent.getChildren().indexOf(this);
+//		for (int i = lastChildBeforePruning; i < parent.getPotentialMoves().size(); i++){
+//			System.out.println("Supposedly removed a potential move");
+//			parent.getPotentialMoves().remove(i);
+//		}
+
+			parent.getPotentialMoves().clear();
 	}
 
 	/**
