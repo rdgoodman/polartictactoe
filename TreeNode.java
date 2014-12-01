@@ -28,25 +28,35 @@ public class TreeNode {
 	int depth;
 	Node hypotheticalMoveAttribute;
 
-	/** 
+	/**
 	 * For root only
+	 * 
 	 * @param currentState
 	 * @param maxPlayer
 	 * @param minPlayer
 	 * @param parent
 	 * @param depth
 	 */
-	public TreeNode(GameState currentState, int maxPlayer, int minPlayer, int player1,
-			TreeNode parent, int depth) {
+	public TreeNode(GameState currentState, int maxPlayer, int minPlayer,
+			int player1, TreeNode parent, int depth) {
 
 		// sets game state nodes to a copy of current game state's nodes
 		gameState = new GameState(currentState.getNodes());
-		// TODO: clone both KBs here as well - this only works because
-		// resolution does not change the KB!!!
-		gameState.getWinChecker().setP1KB(
-				currentState.getWinChecker().getP1KB());
-		gameState.getWinChecker().setP2KB(
-				currentState.getWinChecker().getP2KB());
+
+		// TODO: clone both KBs
+		LinkedList<EdgeAxiom> newP1KB = new LinkedList<EdgeAxiom>();
+		LinkedList<EdgeAxiom> newP2KB = new LinkedList<EdgeAxiom>();
+
+		for (EdgeAxiom e : currentState.getWinChecker().getP1KB()) {
+			newP1KB.add(e);
+		}
+
+		for (EdgeAxiom e : currentState.getWinChecker().getP2KB()) {
+			newP2KB.add(e);
+		}
+
+		gameState.getWinChecker().setP1KB(newP1KB);
+		gameState.getWinChecker().setP2KB(newP2KB);
 
 		this.currentPlayer = maxPlayer;
 		this.nextPlayer = minPlayer;
@@ -141,9 +151,6 @@ public class TreeNode {
 			childState.getNodes()[nextMove.getX()][nextMove.getY()]
 					.setPlayer(player);
 
-
-
-
 			childNode = new TreeNode(childState, currentPlayer, nextPlayer,
 					!maxNode, this, this.depth + 1);
 			// removes that potential move from the list
@@ -154,18 +161,18 @@ public class TreeNode {
 							.getY()]);
 
 			addAxiomsToKB(childState.getNodes()[nextMove.getX()][nextMove
-			                                                     .getY()]);
+					.getY()]);
 			// TODO: testing,remove
-//			System.out.println("\n\nT E S T I N G KB BUILDING: "
-//					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
-//							.getNeighbors().toString());
-//			System.out.println(" P1 Knowledge Base: ");
-//			childState.getWinChecker().printp1KB();
-//			System.out.println("\n");
-//
-//			System.out.println(" P2 Knowledge Base: ");
-//			childState.getWinChecker().printp2KB();
-//			System.out.println("\n");
+			// System.out.println("\n\nT E S T I N G KB BUILDING: "
+			// + childState.getNodes()[nextMove.getX()][nextMove.getY()]
+			// .getNeighbors().toString());
+			// System.out.println(" P1 Knowledge Base: ");
+			// childState.getWinChecker().printp1KB();
+			// System.out.println("\n");
+			//
+			// System.out.println(" P2 Knowledge Base: ");
+			// childState.getWinChecker().printp2KB();
+			// System.out.println("\n");
 
 			// TODO: testing, remove
 			@SuppressWarnings("unused")
@@ -175,11 +182,11 @@ public class TreeNode {
 			} else {
 				max = "MIN";
 			}
-			 System.out.println("\nChild State: "
-			 + max
-			 + " "
-			 + childState.getNodes()[nextMove.getX()][nextMove.getY()]
-			 .toString() + " at depth " + childNode.getDepth());
+			System.out.println("\nChild State: "
+					+ max
+					+ " "
+					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
+							.toString() + " at depth " + childNode.getDepth());
 
 		}
 
@@ -191,16 +198,18 @@ public class TreeNode {
 
 	private void addAxiomsToKB(Node node) {
 		int numY = gameState.getNodes()[0].length;
-		
+
 		// adds new things to KB, but does not create edges
 		for (Node i : node.getNeighbors()) {
-			if (i.getPlayer() == node.getPlayer()){
-				
+			if (i.getPlayer() == node.getPlayer()) {
+
 				// add to knowledge base
 				// TODO: get player numbers!!!
-				// also, create entirely new edge axiom, instead of relying on the edge
-				Edge possibleNewEdge = new Edge(node, i, node.getPlayer(), numY-1);
-				
+				// also, create entirely new edge axiom, instead of relying on
+				// the edge
+				Edge possibleNewEdge = new Edge(node, i, node.getPlayer(),
+						numY - 1);
+
 				if (node.getPlayer() == player1) {
 					gameState.addToP1KB(possibleNewEdge.getEdgeAxiom());
 				} else {
@@ -302,8 +311,8 @@ public class TreeNode {
 	public void setValue(double value) {
 		this.value = value;
 	}
-	
-	private void setPlayer1(int player1){
+
+	private void setPlayer1(int player1) {
 		this.player1 = player1;
 	}
 
