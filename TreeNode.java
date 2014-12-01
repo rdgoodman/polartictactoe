@@ -126,21 +126,21 @@ public class TreeNode {
 			// removes that potential move from the list
 			potentialMoves.removeFirst();
 
+			childNode
+			.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove
+			                                                            .getY()]);
 			// TODO: testing, remove
 			String max = "";
 			if (childNode.isMaxNode()) {
 				max = "MAX";
 			} else {
 				max = "MIN";
-			}
-			System.out.println("\nChild State: "
-					+ max
-					+ " "
-					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
-							.toString() + " at depth " + childNode.getDepth());
-			childNode
-					.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove
-							.getY()]);
+			} 
+//			System.out.println("\nChild State: "
+//					+ max
+//					+ " "
+//					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
+//							.toString() + " at depth " + childNode.getDepth());
 
 		}
 		
@@ -154,6 +154,11 @@ public class TreeNode {
 	public void evaluate() {
 		value = (int) (Math.random() * 100);
 		System.out.println("Set value of this node to " + value);
+	}
+	
+	// TODO: work in progress
+	protected void prune(){
+		System.out.println("Parent's current list of children: " + parent.getChildren().toString());
 	}
 
 	/**
@@ -253,6 +258,21 @@ public class TreeNode {
 			return (max + " " + this.hypotheticalMoveAttribute.toString()
 					+ " at depth " + depth);
 		}
+	}
+	
+	public void printAB(){
+		String alph = String.valueOf(alpha);
+		String bet = String.valueOf(beta);
+		
+		if (alpha == Integer.MIN_VALUE){
+			alph = "-inf";
+		} 
+		if (beta == Integer.MAX_VALUE){
+			bet = "inf";
+		}
+		
+		
+		System.out.println("    " + this.toString() + " Alpha: " + alph + " Beta: " + bet);
 	}
 
 }
