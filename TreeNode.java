@@ -161,18 +161,18 @@ public class TreeNode {
 							.getY()]);
 
 			// TODO: testing, remove
-			@SuppressWarnings("unused")
-			String max = "";
-			if (childNode.isMaxNode()) {
-				max = "MAX";
-			} else {
-				max = "MIN";
-			}
-			System.out.println("\nChild State: "
-					+ max
-					+ " "
-					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
-							.toString() + " at depth " + childNode.getDepth());
+//			@SuppressWarnings("unused")
+//			String max = "";
+//			if (childNode.isMaxNode()) {
+//				max = "MAX";
+//			} else {
+//				max = "MIN";
+//			}
+//			System.out.println("\nChild State: "
+//					+ max
+//					+ " "
+//					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
+//							.toString() + " at depth " + childNode.getDepth());
 
 			// adds axioms to child node's KBs
 			childNode
@@ -203,15 +203,15 @@ public class TreeNode {
 
 				if (node.getPlayer() == player1) {
 					gameState.addToP1KB(possibleNewEdge.getEdgeAxiom());
-					System.out.println("    added new edge to P1KB, size "
-							+ gameState.getWinChecker().getP1KB().size());
-					//gameState.getWinChecker().printp1KB();
+//					System.out.println("    added new edge to P1KB, size "
+//							+ gameState.getWinChecker().getP1KB().size());
+//					//gameState.getWinChecker().printp1KB();
 					// System.out.println("New axiom: " +
 					// possibleNewEdge.getEdgeAxiom().toString());
 				} else {
 					gameState.addToP2KB(possibleNewEdge.getEdgeAxiom());
-					System.out.println("    added new edge to P2KB, size "
-							+ gameState.getWinChecker().getP2KB().size());
+//					System.out.println("    added new edge to P2KB, size "
+//							+ gameState.getWinChecker().getP2KB().size());
 					//gameState.getWinChecker().printp2KB();
 					// System.out.println("    New axiom: " +
 					// possibleNewEdge.getEdgeAxiom().toString());
@@ -225,6 +225,7 @@ public class TreeNode {
 					.println("!!!!!!!!!!!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!!!!!!!!!!! at " + node.toString());
 			// TODO: this branch clears when a win is found
 			getPotentialMoves().clear();
+			evaluate();
 		}
 
 	}

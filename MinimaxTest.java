@@ -162,27 +162,43 @@ public class MinimaxTest {
 //		
 //	}
 
+//	 @Test
+//	 public void testMinimaxWithWinForMax(){
+//	 Player player1 = new HumanPlayer(1);
+//	 Player player2 = new HumanPlayer(2);
+//	
+//	 Game game = new Game(4, 4, player1, player2);
+//	 Node[][] gameNodes = game.getGameNodes();
+//	 
+//	 game.move(gameNodes[3][1], player1);
+//	 game.move(gameNodes[3][3], player2);
+//	 game.move(gameNodes[2][2], player1);
+//	 game.move(gameNodes[2][1], player2);
+//	
+//	 game.move(gameNodes[0][0], player1);
+//	 game.move(gameNodes[1][2], player2);
+//	 game.move(gameNodes[0][3], player1);
+//	 game.move(gameNodes[3][2], player2);
+//	
+//	 game.move(gameNodes[3][0], player1);
+//	 game.move(gameNodes[1][3], player2);
+//	 game.move(gameNodes[2][0], player1);
+//	 game.move(gameNodes[0][2], player2);
+//	 
+//		// maximizing for p1
+//		GameTree tree = new GameTree(game.getGameState(),
+//		player1.getPlayerNum(), player2.getPlayerNum(),
+//		player1.getPlayerNum(), 3, false);
+//	
+//	 }
+	
 	 @Test
-	 public void testMinimaxWithWinForMin(){
+	 public void testABWithWinForMax(){
 	 Player player1 = new HumanPlayer(1);
 	 Player player2 = new HumanPlayer(2);
 	
 	 Game game = new Game(4, 4, player1, player2);
 	 Node[][] gameNodes = game.getGameNodes();
-	
-//	 game.move(gameNodes[1][3], player1);
-//	 game.move(gameNodes[2][3], player2);
-//	 game.move(gameNodes[2][2], player1);
-//	 game.move(gameNodes[2][1], player2);
-//	
-//	 game.move(gameNodes[1][2], player1);
-//	 game.move(gameNodes[1][0], player2);
-//	 game.move(gameNodes[2][0], player1);
-//	 game.move(gameNodes[0][0], player2);
-//	
-//	 game.move(gameNodes[1][0], player1);
-//	 game.move(gameNodes[2][0], player2);
-//	 game.move(gameNodes[0][0], player1);
 	 
 	 game.move(gameNodes[3][1], player1);
 	 game.move(gameNodes[3][3], player2);
@@ -202,9 +218,7 @@ public class MinimaxTest {
 		// maximizing for p1
 		GameTree tree = new GameTree(game.getGameState(),
 		player1.getPlayerNum(), player2.getPlayerNum(),
-		player1.getPlayerNum(), 3, false);
-	
-	
+		player1.getPlayerNum(), 3, true);
 	
 	 }
 
