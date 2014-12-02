@@ -27,6 +27,8 @@ public class TreeNode {
 	double beta = Integer.MAX_VALUE;
 	int depth;
 	Node hypotheticalMoveAttribute;
+	//TODO: this uses win checker
+	boolean isTerminal;
 
 	/**
 	 * For root only
@@ -43,7 +45,7 @@ public class TreeNode {
 		// sets game state nodes to a copy of current game state's nodes
 		gameState = new GameState(currentState.getNodes());
 
-		// TODO: clone both KBs
+		// clones both KBs from the game state - for other nodes, separate method for this
 		LinkedList<EdgeAxiom> newP1KB = new LinkedList<EdgeAxiom>();
 		LinkedList<EdgeAxiom> newP2KB = new LinkedList<EdgeAxiom>();
 
@@ -57,6 +59,11 @@ public class TreeNode {
 
 		gameState.getWinChecker().setP1KB(newP1KB);
 		gameState.getWinChecker().setP2KB(newP2KB);
+		
+		System.out.println("Starting KB: ");
+		gameState.getWinChecker().printp1KB();
+		gameState.getWinChecker().printp2KB();
+		
 
 		this.currentPlayer = maxPlayer;
 		this.nextPlayer = minPlayer;
@@ -77,7 +84,7 @@ public class TreeNode {
 	}
 
 	/** For rest of game nodes - takes a game state rather than an array */
-	public TreeNode(GameState parentState, int currentPlayer, int nextPlayer,
+	public TreeNode(GameState parentState, int currentPlayer, int nextPlayer, int player1,
 			boolean maxNode, TreeNode parent, int depth) {
 		gameState = parentState;
 		this.currentPlayer = currentPlayer;
@@ -86,7 +93,14 @@ public class TreeNode {
 		this.maxNode = maxNode;
 		this.parent = parent;
 		this.depth = depth;
-
+		this.player1 = player1;
+		
+		cloneParentsKB();
+		// TODO: this check needs to happen later, after createChildNode makes the actual move change
+//		if (gameState.getWinChecker().getWinForPlayer1() || gameState.getWinChecker().getWinForPlayer2()){
+//			System.out.println("!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!");
+//			isTerminal = true;
+//		}
 		countChildren();
 	}
 
@@ -128,20 +142,13 @@ public class TreeNode {
 		// identical gamestate at first
 		GameState childState = new GameState(gameState.getNodes());
 
-		// TODO: clone both KBs here as well - this only works because
-		// resolution does not change the KB!!!
-		childState.getWinChecker().setP1KB(gameState.getWinChecker().getP1KB());
-		childState.getWinChecker().setP2KB(gameState.getWinChecker().getP2KB());
-
 		int player = nextPlayer;
 		if (maxNode) {
 			player = currentPlayer;
 		}
 
 		if (potentialMoves.isEmpty()) {
-			// need a more sophisticated way to check for missing child nodes
-			// this might not even be necessary given the way we did the tree
-			// building
+			// TODO: remove?
 			childNode = null;
 
 		} else {
@@ -151,7 +158,7 @@ public class TreeNode {
 			childState.getNodes()[nextMove.getX()][nextMove.getY()]
 					.setPlayer(player);
 
-			childNode = new TreeNode(childState, currentPlayer, nextPlayer,
+			childNode = new TreeNode(childState, currentPlayer, nextPlayer, player1,
 					!maxNode, this, this.depth + 1);
 			// removes that potential move from the list
 			potentialMoves.removeFirst();
@@ -160,19 +167,8 @@ public class TreeNode {
 					.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove
 							.getY()]);
 
-			addAxiomsToKB(childState.getNodes()[nextMove.getX()][nextMove
-					.getY()]);
-			// TODO: testing,remove
-			// System.out.println("\n\nT E S T I N G KB BUILDING: "
-			// + childState.getNodes()[nextMove.getX()][nextMove.getY()]
-			// .getNeighbors().toString());
-			// System.out.println(" P1 Knowledge Base: ");
-			// childState.getWinChecker().printp1KB();
-			// System.out.println("\n");
-			//
-			// System.out.println(" P2 Knowledge Base: ");
-			// childState.getWinChecker().printp2KB();
-			// System.out.println("\n");
+			// adds axioms to child node's KBs
+			childNode.addAxiomsToKB(childState.getNodes()[nextMove.getX()][nextMove.getY()]);
 
 			// TODO: testing, remove
 			@SuppressWarnings("unused")
@@ -187,6 +183,11 @@ public class TreeNode {
 					+ " "
 					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
 							.toString() + " at depth " + childNode.getDepth());
+			
+//			if (gameState.getWinChecker().getWinForPlayer1() || gameState.getWinChecker().getWinForPlayer2()){
+//				System.out.println("!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!");
+//				isTerminal = true;
+//			}
 
 		}
 
@@ -210,14 +211,38 @@ public class TreeNode {
 				Edge possibleNewEdge = new Edge(node, i, node.getPlayer(),
 						numY - 1);
 
+				System.out.println("node's player: " + node.getPlayer() + "   " + node.toString());
+				System.out.println("player1: " + player1);
 				if (node.getPlayer() == player1) {
 					gameState.addToP1KB(possibleNewEdge.getEdgeAxiom());
+					System.out.println("added new edge to P1KB, size " + gameState.getWinChecker().getP1KB().size());
+					// TODO: WHERE is this going?
+					System.out.println("New axiom: " + possibleNewEdge.getEdgeAxiom().toString());
 				} else {
 					gameState.addToP2KB(possibleNewEdge.getEdgeAxiom());
+					System.out.println("    added new edge to P2KB, size " + gameState.getWinChecker().getP2KB().size());
+					System.out.println("    New axiom: " + possibleNewEdge.getEdgeAxiom().toString());
 				}
 			}
 		}
 
+	}
+	
+	private void cloneParentsKB(){
+
+		LinkedList<EdgeAxiom> newP1KB = new LinkedList<EdgeAxiom>();
+		LinkedList<EdgeAxiom> newP2KB = new LinkedList<EdgeAxiom>();
+
+		for (EdgeAxiom e : parent.getGameState().getWinChecker().getP1KB()) {
+			newP1KB.add(e);
+		}
+
+		for (EdgeAxiom e : parent.getGameState().getWinChecker().getP2KB()) {
+			newP2KB.add(e);
+		}
+
+		gameState.getWinChecker().setP1KB(newP1KB);
+		gameState.getWinChecker().setP2KB(newP2KB);
 	}
 
 	/** TODO: MUST USE HEURISTIC */
@@ -248,8 +273,12 @@ public class TreeNode {
 	 * 
 	 * */
 
-	public Node[][] getGameState() {
+	public Node[][] getGameNodes() {
 		return gameState.getNodes();
+	}
+	
+	private GameState getGameState(){
+		return gameState;
 	}
 
 	public int getNumChildren() {

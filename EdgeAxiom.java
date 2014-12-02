@@ -51,7 +51,7 @@ public class EdgeAxiom {
 
 	/** Helper function for unification */
 	public void unify(LinkedList<EdgeAxiom> LL){
-		System.out.println("Unifying " + LL.toString() + " and " + this.toString());
+		//System.out.println("Unifying " + LL.toString() + " and " + this.toString());
 
 		for (EdgeAxiom e: LL){
 			// finds the first place where substitutions can be made and then calls unifier

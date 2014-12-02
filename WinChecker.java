@@ -87,7 +87,7 @@ public class WinChecker {
 			winForPlayer2 = true;
 		}
 		
-		System.out.println("\n\n**********WIN FOR PLAYER " + player + "**********\n\n");
+		//System.out.println("\n\n**********WIN FOR PLAYER " + player + "**********\n\n");
 		return player;
 	}
 

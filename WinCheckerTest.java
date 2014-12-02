@@ -330,4 +330,9 @@ public class WinCheckerTest {
 
 	}
 	
+//	@Test
+//	public void testProblemResolution3(){
+//		
+//	}
+	
 }
