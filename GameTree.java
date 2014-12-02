@@ -1,6 +1,5 @@
 package polartictactoe;
 
-
 public class GameTree {
 
 	int evaluationDepth;
@@ -9,7 +8,6 @@ public class GameTree {
 	int nodesEvaluated;
 	TreeNode maximin;
 	int maxEvalDepth;
-
 
 	/**
 	 * Builds a game tree to evaluate max player's best move
@@ -22,25 +20,28 @@ public class GameTree {
 	 *            rewards.
 	 * @param MINPlayer
 	 *            the opposing player.
-	 *            
-	 * @param player1 the player who moved first in this game - important for KB building
-	 *            
+	 * 
+	 * @param player1
+	 *            the player who moved first in this game - important for KB
+	 *            building
+	 * 
 	 * @param evaluationDepth
 	 *            the depth at which the tree will be cut off for heuristic
 	 *            evaluation.
 	 * @param AB
 	 *            boolean - true if the tree will be using alpha-beta pruning
 	 */
-	public GameTree(GameState currentGameState, int MAXPlayer, int MINPlayer, int player1, 
-			int evaluationDepth, boolean AB) {
+	public GameTree(GameState currentGameState, int MAXPlayer, int MINPlayer,
+			int player1, int evaluationDepth, boolean AB) {
 
 		// root has a null parent
-		root = new TreeNode(currentGameState, MAXPlayer, MINPlayer, player1, null, 1);
+		root = new TreeNode(currentGameState, MAXPlayer, MINPlayer, player1,
+				null, 1);
 		// TODO: set depthReached
 		depthReached = 0;
 		nodesEvaluated = 0;
 		maxEvalDepth = evaluationDepth;
-		
+
 		if (AB) {
 			buildABTree(root, evaluationDepth);
 		} else {
@@ -134,21 +135,20 @@ public class GameTree {
 			while (current.hasNextChild()) {
 				TreeNode next = current.createNextChild();
 
-				//pass on values
+				// pass on values
 				if (current.isMaxNode()) {
 					next.setAlpha(current.getAlpha());
-					//System.out.println("     Set alpha");
+					// System.out.println("     Set alpha");
 					next.printAB();
 				} else {
 					next.setBeta(current.getBeta());
-					//System.out.println("     Set beta");
+					// System.out.println("     Set beta");
 					next.printAB();
 				}
 
 				nodesEvaluated++;
 				buildABTree(next, maxDepth);
 			}
-			// updateABToRoot(current);
 			updateABFromHeuristicEvaluatedLevel(current);
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		}
@@ -156,8 +156,8 @@ public class GameTree {
 
 	/** Takes values from max-depth level and populates them back up the tree */
 	private void updateABFromHeuristicEvaluatedLevel(TreeNode current) {
-	if (current.getDepth() == maxEvalDepth) { // TODO: this "if" should also
-													// cover wins, etc
+
+		if (current.getDepth() == maxEvalDepth || current.isTerminal()) {
 			if (current.getParent().isMaxNode()) {
 				// change alpha
 				if (current.getValue() > current.getParent().getAlpha()) {
@@ -181,7 +181,7 @@ public class GameTree {
 				// change alpha
 				if (current.getBeta() > current.getParent().getAlpha()) {
 					System.out.println("Parent's alpha changed to "
-							+ current.getValue());
+							+ current.getBeta());
 					current.getParent().setAlpha(current.getBeta());
 				}
 				checkIfPrune(current);
@@ -189,7 +189,7 @@ public class GameTree {
 				// change beta
 				if (current.getAlpha() < current.getParent().getBeta()) {
 					System.out.println("Parent's beta changed to "
-							+ current.getValue());
+							+ current.getAlpha());
 					current.getParent().setBeta(current.getAlpha());
 				}
 				checkIfPrune(current);
@@ -204,7 +204,7 @@ public class GameTree {
 			maximin = current.getChildren().get(0);
 
 			for (TreeNode t : current.getChildren()) {
-				if (t.getBeta() > maximin.getBeta()) {
+				if ((t.getBeta() > maximin.getBeta()) && (t.getBeta() != Integer.MAX_VALUE)) {
 					maximin = t;
 				}
 			}
@@ -213,19 +213,20 @@ public class GameTree {
 					+ maximin.getHypotheticalMove().toString());
 
 		}
-		
+
 		System.out.println();
 	}
-	
+
 	/** Checks if we should prune below this node */
-	public void checkIfPrune(TreeNode current){
-		if (current.getParent().getBeta() < current.getParent().getAlpha()){
+	public void checkIfPrune(TreeNode current) {
+		if (current.getParent().getBeta() < current.getParent().getAlpha()) {
 			System.out.println("########PRUNE HERE: ########");
-			System.out.println("THE NODE TO PRUNE BELOW IS " + current.toString());
-			
+			System.out.println("THE NODE TO PRUNE BELOW IS "
+					+ current.getParent().toString());
+
 			// pruning removes the rest of this node's potential children
 			current.prune();
-			
+
 		}
 	}
 

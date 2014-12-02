@@ -27,6 +27,7 @@ public class TreeNode {
 	double beta = Integer.MAX_VALUE;
 	int depth;
 	Node hypotheticalMoveAttribute;
+	boolean isTerminal = false;
 
 	/**
 	 * For root only
@@ -225,6 +226,7 @@ public class TreeNode {
 					.println("!!!!!!!!!!!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!!!!!!!!!!! at " + node.toString());
 			// TODO: this branch clears when a win is found
 			getPotentialMoves().clear();
+			isTerminal = true;
 			evaluate();
 		}
 
@@ -345,6 +347,10 @@ public class TreeNode {
 
 	private void setPlayer1(int player1) {
 		this.player1 = player1;
+	}
+	
+	public boolean isTerminal(){
+		return isTerminal;
 	}
 
 	public String toString() {
