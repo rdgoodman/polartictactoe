@@ -106,6 +106,19 @@ public class WinCheckerTest {
 	//
 	//
 	// }
+	
+//	@Test
+//	public void testIsAllConstants(){
+//		 EdgeAxiom allVars = new EdgeAxiom("n1", "n2", "a", "e1");
+//		 EdgeAxiom allConst = new EdgeAxiom("11", "12", "A", "11-12");
+//		 EdgeAxiom oneConst1 = new EdgeAxiom("n1", "12", "a", "e1");
+//		 EdgeAxiom oneConst2 = new EdgeAxiom("11", "23", "a", "e1");
+//		 
+//		 assertEquals(true, allConst.isAllConstants());
+//		 assertEquals(false, allVars.isAllConstants());
+//		 assertEquals(false, oneConst1.isAllConstants());
+//		 assertEquals(false, oneConst2.isAllConstants());
+//	}
 
 	@Test
 	public void testResolutionWithWin1() {

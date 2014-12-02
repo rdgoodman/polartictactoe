@@ -26,7 +26,7 @@ public class WinChecker {
 
 		// resolves once there are three or more edges per player
 		if (p1KB.size() >= 3) {
-			// resolve(p1KB);
+			resolve(p1KB);
 		}
 	}
 
@@ -36,7 +36,7 @@ public class WinChecker {
 
 		// resolves once there are three or more edges per player
 		if (p2KB.size() >= 3) {
-			//resolve(p2KB);
+			resolve(p2KB);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class WinChecker {
 			winForPlayer2 = true;
 		}
 		
-		//System.out.println("\n\n**********WIN FOR PLAYER " + player + "**********\n\n");
+		System.out.println("\n\n**********WIN FOR PLAYER " + player + "**********\n\n");
 		return player;
 	}
 

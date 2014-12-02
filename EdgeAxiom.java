@@ -116,6 +116,27 @@ public class EdgeAxiom {
 		
 		LL.remove(e);
 		
+		// TODO: this is where I am changing things.
+		if ((LL.size()) == 1 && (LL.getFirst().isAllConstants())){
+			unify(LL);
+		}
+		
+	}
+
+	public boolean isAllConstants() {
+		if ((startNodeName.contains((CharSequence) "n"))) {
+			// startNodeNames are both constants and do not match
+			return false;
+		} else if ((endNodeName.contains((CharSequence) "n")))  {
+			// endNodeNames are both constants and do not match
+			return false;
+		} else if ((type.contains((CharSequence) "a"))) {
+			// types are both constants and do not match
+			return false;
+		} else if ((edgeName.contains((CharSequence) "e"))) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
