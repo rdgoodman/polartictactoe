@@ -27,8 +27,6 @@ public class TreeNode {
 	double beta = Integer.MAX_VALUE;
 	int depth;
 	Node hypotheticalMoveAttribute;
-	// TODO: this uses win checker
-	boolean isTerminal;
 
 	/**
 	 * For root only
@@ -181,11 +179,6 @@ public class TreeNode {
 					.addAxiomsToKB(childState.getNodes()[nextMove.getX()][nextMove
 							.getY()]);
 
-			// if (gameState.getWinChecker().getWinForPlayer1() ||
-			// gameState.getWinChecker().getWinForPlayer2()){
-			// System.out.println("!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!");
-			// isTerminal = true;
-			// }
 
 		}
 
@@ -212,14 +205,14 @@ public class TreeNode {
 					gameState.addToP1KB(possibleNewEdge.getEdgeAxiom());
 					System.out.println("    added new edge to P1KB, size "
 							+ gameState.getWinChecker().getP1KB().size());
-					gameState.getWinChecker().printp1KB();
+					//gameState.getWinChecker().printp1KB();
 					// System.out.println("New axiom: " +
 					// possibleNewEdge.getEdgeAxiom().toString());
 				} else {
 					gameState.addToP2KB(possibleNewEdge.getEdgeAxiom());
 					System.out.println("    added new edge to P2KB, size "
 							+ gameState.getWinChecker().getP2KB().size());
-					gameState.getWinChecker().printp2KB();
+					//gameState.getWinChecker().printp2KB();
 					// System.out.println("    New axiom: " +
 					// possibleNewEdge.getEdgeAxiom().toString());
 				}
@@ -229,8 +222,9 @@ public class TreeNode {
 		if (gameState.getWinChecker().getWinForPlayer1()
 				|| gameState.getWinChecker().getWinForPlayer2()) {
 			System.out
-					.println("!!!!!!!!!!!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!!!!!!!!!!!");
-			isTerminal = true;
+					.println("!!!!!!!!!!!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!!!!!!!!!!! at " + node.toString());
+			// TODO: this branch clears when a win is found
+			getPotentialMoves().clear();
 		}
 
 	}
