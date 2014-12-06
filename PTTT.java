@@ -1,4 +1,4 @@
-package polartictactoe;
+package rolliepolartictactoe;
 
 import java.util.Scanner;
 
@@ -12,19 +12,19 @@ public class PTTT {
 	Player pb;
 	static PTTT thisGame;
 
-	public static void main(String[] args) {
-		
-		thisGame = new PTTT();
-
-
-		JFrame frame = new JFrame("Polar Tic-Tac-Toe");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(new PolarTTTPanel());
-
-		// shows panel
-		frame.pack();
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		
+//		thisGame = new PTTT();
+//
+//
+//		JFrame frame = new JFrame("Polar Tic-Tac-Toe");
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.getContentPane().add(new PolarTTTPanel());
+//
+//		// shows panel
+//		frame.pack();
+//		frame.setVisible(true);
+//	}
 	
 	public PTTT(){
 		Scanner commandLineScanner = new Scanner(System.in);

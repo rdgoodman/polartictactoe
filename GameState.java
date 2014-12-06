@@ -1,5 +1,5 @@
 
-package polartictactoe;
+package rolliepolartictactoe;
 
 public class GameState {
 	// nodes in the current game state
