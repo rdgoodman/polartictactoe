@@ -22,7 +22,7 @@ public class TreeNode {
 	// comes from heuristic
 	// TODO: need a different default depending on the heuristic used!!!!
 	double value = Integer.MIN_VALUE;
-	// initialized to values larger than the heuristic will ever return
+	// initialized to values larger/smaller than the heuristic will ever return
 	double alpha = Integer.MIN_VALUE;
 	double beta = Integer.MAX_VALUE;
 	int depth;
@@ -227,7 +227,7 @@ public class TreeNode {
 			// TODO: this branch clears when a win is found
 			getPotentialMoves().clear();
 			isTerminal = true;
-			evaluate();
+			heuristicEvaluate();
 		}
 
 	}
@@ -250,9 +250,14 @@ public class TreeNode {
 	}
 
 	/** TODO: MUST USE HEURISTIC */
-	public void evaluate() {
+	public void heuristicEvaluate() {
 		value = (int) (Math.random() * 100);
 		System.out.println("Set value of this node to " + value);
+	}
+	
+	/** TODO: must use classifier */
+	public void classifierEvaluate(){
+		// TODO: yet to be implemented
 	}
 
 	/** Prunes the game tree below this node */

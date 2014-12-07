@@ -30,9 +30,11 @@ public class GameTree {
 	 *            evaluation.
 	 * @param AB
 	 *            boolean - true if the tree will be using alpha-beta pruning
+	 * @param heuristic
+	 * 			boolean - true if the tree will be evaluating using a heuristic - otherwise, the classifier is the default
 	 */
 	public GameTree(GameState currentGameState, int MAXPlayer, int MINPlayer,
-			int player1, int evaluationDepth, boolean AB) {
+			int player1, int evaluationDepth, boolean AB, boolean heuristic) {
 
 		// root has a null parent
 		root = new TreeNode(currentGameState, MAXPlayer, MINPlayer, player1,
@@ -55,7 +57,7 @@ public class GameTree {
 	private void buildMinimaxTree(TreeNode current, int maxDepth) {
 		// base case
 		if (current.getDepth() == maxDepth) {
-			current.evaluate();
+			current.heuristicEvaluate();
 
 			updateFromHeuristicEvaluatedLevel(current);
 
@@ -127,7 +129,7 @@ public class GameTree {
 	private void buildABTree(TreeNode current, int maxDepth) {
 		// base case
 		if (current.getDepth() == maxDepth) {
-			current.evaluate();
+			current.heuristicEvaluate();
 			updateABFromHeuristicEvaluatedLevel(current);
 
 		} else {

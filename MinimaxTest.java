@@ -93,7 +93,7 @@ public class MinimaxTest {
 	 // new tree with max depth of three
 	 @SuppressWarnings("unused")
 	 GameTree tree = new GameTree(game.getGameState(), player1.getPlayerNum(),
-	 player2.getPlayerNum(), player1.getPlayerNum(), 4, true);
+	 player2.getPlayerNum(), player1.getPlayerNum(), 4, true, true);
 	
 	 // checking that nothing untoward happened
 	 // the gamestate should NOT have been actually changed.
