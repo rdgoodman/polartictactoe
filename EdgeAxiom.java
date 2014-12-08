@@ -51,6 +51,7 @@ public class EdgeAxiom {
 
 	/** Helper function for unification */
 	public void unify(LinkedList<EdgeAxiom> LL){
+		// TODO: for testing/demonstration
 		//System.out.println("Unifying " + LL.toString() + " and " + this.toString());
 
 		for (EdgeAxiom e: LL){

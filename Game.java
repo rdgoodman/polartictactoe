@@ -48,12 +48,12 @@ public class Game {
 			currentPlayer.chooseMove();
 			if (gameState.getWinChecker().getWinForPlayer1()) {
 				System.out
-						.println("****************************************WIN FOR 1****************************************");
+						.println("****************************************WIN FOR X****************************************");
 				gameState.printGameState();
 				break;
 			} else if (gameState.getWinChecker().getWinForPlayer2()) {
 				System.out
-						.println("****************************************WIN FOR 2****************************************");
+						.println("****************************************WIN FOR O****************************************");
 				gameState.printGameState();
 				break;
 			}
@@ -175,4 +175,11 @@ public class Game {
 		return maxSearchDepth;
 	}
 
+	public Player getPX(){
+		return pX;
+	}
+	
+	public Player getPO(){
+		return pO;
+	}
 }

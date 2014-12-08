@@ -19,8 +19,7 @@ public class TreeNode {
 	ArrayList<TreeNode> children = new ArrayList<TreeNode>();
 	// doubly linked
 	TreeNode parent;
-	// comes from heuristic
-	// TODO: need a different default depending on the heuristic used!!!!
+	// comes from heuristic - initialized to -infinity
 	double value = Integer.MIN_VALUE;
 	// initialized to values larger/smaller than the heuristic will ever return
 	double alpha = Integer.MIN_VALUE;
@@ -76,7 +75,7 @@ public class TreeNode {
 
 		// root has no hypothetical move
 		setHypotheticalMove(null);
-		System.out.println(this.toString());
+		//System.out.println(this.toString());
 
 		countChildren();
 
@@ -142,7 +141,6 @@ public class TreeNode {
 		}
 
 		if (potentialMoves.isEmpty()) {
-			// TODO: remove?
 			childNode = null;
 
 		} else {
@@ -161,19 +159,18 @@ public class TreeNode {
 					.setHypotheticalMove(childState.getNodes()[nextMove.getX()][nextMove
 							.getY()]);
 
-			// TODO: testing, remove
-//			@SuppressWarnings("unused")
-//			String max = "";
-//			if (childNode.isMaxNode()) {
-//				max = "MAX";
-//			} else {
-//				max = "MIN";
-//			}
-//			System.out.println("\nChild State: "
-//					+ max
-//					+ " "
-//					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
-//							.toString() + " at depth " + childNode.getDepth());
+			// TODO: for testing/demo
+			String max = "";
+			if (childNode.isMaxNode()) {
+				max = "MAX";
+			} else {
+				max = "MIN";
+			}
+			System.out.println("\nChild State: "
+					+ max
+					+ " "
+					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
+							.toString() + " at depth " + childNode.getDepth());
 
 			// adds axioms to child node's KBs
 			childNode
@@ -184,7 +181,6 @@ public class TreeNode {
 		}
 
 		// adds childNode to Children
-		// TODO: this might cause a bug - should probably move up
 		children.add(childNode);
 		return childNode;
 	}
@@ -204,27 +200,14 @@ public class TreeNode {
 
 				if (node.getPlayer() == player1) {
 					gameState.addToP1KB(possibleNewEdge.getEdgeAxiom());
-//					System.out.println("    added new edge to P1KB, size "
-//							+ gameState.getWinChecker().getP1KB().size());
-//					//gameState.getWinChecker().printp1KB();
-					// System.out.println("New axiom: " +
-					// possibleNewEdge.getEdgeAxiom().toString());
 				} else {
 					gameState.addToP2KB(possibleNewEdge.getEdgeAxiom());
-//					System.out.println("    added new edge to P2KB, size "
-//							+ gameState.getWinChecker().getP2KB().size());
-					//gameState.getWinChecker().printp2KB();
-					// System.out.println("    New axiom: " +
-					// possibleNewEdge.getEdgeAxiom().toString());
 				}
 			}
 		}
 
-		if (gameState.getWinChecker().getWinForPlayer1()
-				|| gameState.getWinChecker().getWinForPlayer2()) {
-//			System.out
-//					.println("!!!!!!!!!!!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!!!!!!!!!!! at " + node.toString());
-			// this branch clears when a win is found
+		// sets as a terminal node if this game state has a win/loss, and evaluates
+		if (gameState.hasWin()){
 			getPotentialMoves().clear();
 			isTerminal = true;
 			heuristicEvaluate();
@@ -252,12 +235,13 @@ public class TreeNode {
 	/** TODO: MUST USE HEURISTIC */
 	public void heuristicEvaluate() {
 		value = (int) (Math.random() * 100);
-		//System.out.println("Set value of this node to " + value);
+		// TODO: for testing/demo
+		System.out.println("***********Set value of this node to " + value);
 	}
 	
-	/** TODO: must use classifier */
+	/** must use classifier */
 	public void classifierEvaluate(){
-		// TODO: yet to be implemented
+		//  yet to be implemented
 	}
 
 	/** Prunes the game tree below this node */

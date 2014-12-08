@@ -17,13 +17,15 @@ public class HumanPlayer implements Player {
 
 	@Override
 	public void chooseMove() {
+		// user is prompted to give a move by the UI
+		
 		Scanner getMoveScanner = new Scanner(System.in);
 		System.out.println("> Please input the x (circle) coordinate of the intersection you wish to play");
 		int x = getMoveScanner.nextInt();
 		System.out.println("> Please input the y (line) coordinate of the intersection you wish to play");
 		int y = getMoveScanner.nextInt();
 		
-		// TODO: expand this
+		
 		if ((x > game.getNumX() - 1) || (y > game.getNumY() - 1)){
 			System.out.println("> ERROR: not a valid move, please try again");
 			chooseMove();
@@ -31,10 +33,14 @@ public class HumanPlayer implements Player {
 		
 		
 		Node tryMove = game.getGameNodes()[x][y];
+		
+		// chosen move is run through isValidMove
 		if(!game.isValidMove(tryMove)){
+			// if not a valid move, user is prompted to try again
 			System.out.println("> ERROR: not a valid move, please try again");
 			chooseMove();
 		} else {
+			// if a valid move, the move is sent to the Game, which updated the GameState
 			game.move(tryMove, this);
 			reportMove(null);
 		}

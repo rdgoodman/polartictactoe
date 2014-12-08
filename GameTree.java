@@ -10,6 +10,7 @@ public class GameTree {
 	int maxEvalDepth;
 	long time;
 	
+	
 	private long startWall; //what time the search starts
 	private long endWall; //what time the search ends
 

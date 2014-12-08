@@ -8,6 +8,7 @@ public class GameState {
 	Diagonal[][] diagonals;
 	// win-checker for this game
 	WinChecker winchecker;
+	boolean win;
 
 	int numX;
 	int numY;
@@ -21,7 +22,7 @@ public class GameState {
 
 		createNodesAndNeighbors();
 		createDiagonals();
-		winchecker = new WinChecker();
+		winchecker = new WinChecker(this);
 
 	}
 
@@ -50,7 +51,7 @@ public class GameState {
 		}
 		
 		createDiagonals();
-		winchecker = new WinChecker();
+		winchecker = new WinChecker(this);
 		
 
 	}
@@ -207,6 +208,14 @@ public class GameState {
 	
 	public WinChecker getWinChecker(){
 		return winchecker;
+	}
+	
+	public void setToHaveWin(){
+		this.win = true;
+	}
+	
+	public boolean hasWin(){
+		return win;
 	}
 	
 	public void printGameState(){

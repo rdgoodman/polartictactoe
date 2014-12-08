@@ -6,10 +6,8 @@ import java.util.Random;
 public class AIPlayerMinimax implements Player {
 
 	int maxSearchDepth;
-	// TODO:the next two should be parameters reported by reportMove() and its
-	// delegates (minimax, etc)?
 	int numNodesEvaluated;
-	int timeToSelect;
+	long timeToSelect;
 	int playerNum;
 	LinkedList<Edge> edges;
 	Game game;
@@ -32,7 +30,7 @@ public class AIPlayerMinimax implements Player {
 	@Override
 	public void chooseMove() {
 		if (game.isFirstMove()) {
-			// TODO: makes a random move
+			// makes a random move
 			Random randomMoveGenerator = new Random();
 			int x = randomMoveGenerator.nextInt(game.getNumX());
 			int y = randomMoveGenerator.nextInt(game.getNumY());
@@ -65,12 +63,13 @@ public class AIPlayerMinimax implements Player {
 		// TODO: send stuff to file
 
 		// 2) print results
-		int nodes = (int) results[3];
-		int depth = (int) results[4];
+		timeToSelect = results[2];
+		numNodesEvaluated = (int) results[3];
+		maxSearchDepth = (int) results[4];
 		System.out
-				.println("Result produced in " + results[2] + " milliseconds");
-		System.out.println("There were " + nodes + " nodes evaluated");
-		System.out.println("Ply " + depth + " was reached in the game tree");
+				.println("Result produced in " + timeToSelect + " milliseconds");
+		System.out.println("There were " + numNodesEvaluated + " nodes evaluated");
+		System.out.println("Ply " + maxSearchDepth + " was reached in the game tree");
 
 	}
 

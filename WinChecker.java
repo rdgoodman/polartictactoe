@@ -12,12 +12,14 @@ public class WinChecker {
 	// these will change if a win is found
 	boolean winForPlayer1 = false;
 	boolean winForPlayer2 = false;
+	GameState state;
 
 	/** Note: the negated goal is hard-coded in for this game */
-	public WinChecker() {
+	public WinChecker(GameState state) {
 		p1KB = new LinkedList<EdgeAxiom>();
 		p2KB = new LinkedList<EdgeAxiom>();
 		goal = new NegatedGoal();
+		this.state = state;
 	}
 
 	/** Adds this EdgeAxiom to player 1's KB */
@@ -75,6 +77,8 @@ public class WinChecker {
 
 	/** If a win was found, reports which player it belongs to */
 	private int reportWin(LinkedList<EdgeAxiom> KB) {
+		state.setToHaveWin();
+		
 		int player = 1;
 		if (KB.equals(p2KB)){
 			player = 2;
@@ -87,7 +91,7 @@ public class WinChecker {
 			winForPlayer2 = true;
 		}
 		
-		//System.out.println("\n\n**********WIN FOR PLAYER " + player + "**********\n\n");
+		System.out.println("\n\n**********WIN FOR PLAYER " + player + "**********\n\n");
 		return player;
 	}
 

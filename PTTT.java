@@ -16,14 +16,6 @@ public class PTTT {
 
 		thisGame = new PTTT();
 
-		//
-		// JFrame frame = new JFrame("Polar Tic-Tac-Toe");
-		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// frame.getContentPane().add(new PolarTTTPanel());
-		//
-		// // shows panel
-		// frame.pack();
-		// frame.setVisible(true);
 	}
 
 	public PTTT() {
@@ -82,7 +74,7 @@ public class PTTT {
 
 		// step 6: get max search depth
 		System.out
-				.println("> Please enter the maximum search depth desired (>=10 recommended)");
+				.println("> Please enter the maximum search depth desired (>=4 recommended to avoid running out of heap space)");
 		int input4 = 1;
 		boolean correctInput = false;
 		while (!correctInput) {
