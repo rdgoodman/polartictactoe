@@ -1,11 +1,13 @@
-package rolliepolartictactoe;
+package polartictactoe;
 
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class HumanPlayer implements Player {
 
 	int playerNum;
 	LinkedList<Edge> edges;
+	Game game;
 
 	public HumanPlayer(int playerNum){
 		this.playerNum = playerNum;
@@ -15,13 +17,33 @@ public class HumanPlayer implements Player {
 
 	@Override
 	public void chooseMove() {
-		// TODO This should mostly be graphics-driven, I'd imagine
+		Scanner getMoveScanner = new Scanner(System.in);
+		System.out.println("> Please input the x (circle) coordinate of the intersection you wish to play");
+		int x = getMoveScanner.nextInt();
+		System.out.println("> Please input the y (line) coordinate of the intersection you wish to play");
+		int y = getMoveScanner.nextInt();
+		
+		// TODO: expand this
+		if ((x > game.getNumX() - 1) || (y > game.getNumY() - 1)){
+			System.out.println("> ERROR: not a valid move, please try again");
+			chooseMove();
+		}
+		
+		
+		Node tryMove = game.getGameNodes()[x][y];
+		if(!game.isValidMove(tryMove)){
+			System.out.println("> ERROR: not a valid move, please try again");
+			chooseMove();
+		} else {
+			game.move(tryMove, this);
+			reportMove(null);
+		}
 
 	}
 
 	@Override
-	public void reportMove() {
-		// TODO Just displaying what move was made
+	public void reportMove(long[] results) {
+		System.out.println("> Your move was recorded ");
 		
 	}
 
@@ -53,5 +75,12 @@ public class HumanPlayer implements Player {
 			return true;
 		}
 		return false;
+	}
+
+
+	@Override
+	public void setGame(Game game) {
+		this.game = game;
+		
 	}
 }

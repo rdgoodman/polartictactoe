@@ -1,4 +1,4 @@
-package rolliepolartictactoe;
+package polartictactoe;
 
 import java.util.Scanner;
 
@@ -12,74 +12,93 @@ public class PTTT {
 	Player pb;
 	static PTTT thisGame;
 
-//	public static void main(String[] args) {
-//		
-//		thisGame = new PTTT();
-//
-//
-//		JFrame frame = new JFrame("Polar Tic-Tac-Toe");
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.getContentPane().add(new PolarTTTPanel());
-//
-//		// shows panel
-//		frame.pack();
-//		frame.setVisible(true);
-//	}
-	
-	public PTTT(){
+	public static void main(String[] args) {
+
+		thisGame = new PTTT();
+
+		//
+		// JFrame frame = new JFrame("Polar Tic-Tac-Toe");
+		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// frame.getContentPane().add(new PolarTTTPanel());
+		//
+		// // shows panel
+		// frame.pack();
+		// frame.setVisible(true);
+	}
+
+	public PTTT() {
 		Scanner commandLineScanner = new Scanner(System.in);
 
-		// step 1: get desired number of lines and circles
-		// TODO: we will need to do better idiot-proofing or exception throwing
-		// on the scanner stuff
-		System.out
-				.println("Please input the desired dimensions of the board in the form");
-		System.out.println("a,b");
-		System.out
-				.println("Where a is the desired number of circles and b is the desired number of radial lines");
-		System.out
-				.println("Or, please input d if you would like the default dimensions of 4 x 12");
+		circles = 4;
+		lines = 12;
 
-		String input1 = commandLineScanner.next();
-		System.out.println(input1);
-		if (input1.contains((CharSequence) ",")) {
-			String[] dimensions = input1.split(",");
-			circles = Integer.parseInt(dimensions[0]);
-			lines = Integer.parseInt(dimensions[1]);
-		} else {
-			circles = 4;
-			lines = 12;
-		}
-
-		// step 2: get types of players
+		// step 2: get general types of players
 		int input2 = 3;
 		while ((input2 > 2) || (input2 < 0)) {
-			System.out.println("Please enter 0 if both players are humans,");
+			System.out.println("> Please enter 0 if both players are humans,");
 			System.out
-					.println("1 if one player is human and the other is an AI,");
-			System.out.println("or 2 if both players are AIs.");
+					.println("> 1 if one player is human and the other is an AI,");
+			System.out.println("> or 2 if both players are AIs.");
 			input2 = commandLineScanner.nextInt();
 		}
-		
-		// randomizes player numbers
-		double playerNum = Math.random();
-		if (playerNum > .5) playerNum = 1;
-		else playerNum = 0;
-		
-		// creates players
-		if (input2 == 0){
-			pa = new HumanPlayer((int) playerNum);
-			pb = new HumanPlayer((int) (1-playerNum));
-		} else if (input2 == 1){
-			pa = new HumanPlayer((int) playerNum);
-			pb = new AIPlayer((int) (1-playerNum));
-		} else {
-			pa = new AIPlayer((int) playerNum);
-			pb = new AIPlayer((int) (1-playerNum));
+
+		String input3 = "";
+		// step 3: get specific types of players
+		if (input2 > 0) {
+			System.out
+					.println("> Please enter y if you want the AI player to use alpha-beta pruning");
+			System.out.println("> Or n otherwise ");
+			input3 = commandLineScanner.next();
 		}
-		
-		game = new Game(circles, lines, pa, pb);
-		
+
+		// step 4: randomize player numbers
+		double playerNum = Math.random();
+		if (playerNum > .5) {
+			playerNum = 1;
+		} else {
+			playerNum = 0;
+		}
+
+		// step 5: create players
+		if (input2 == 0) {
+			pa = new HumanPlayer((int) playerNum);
+			pb = new HumanPlayer((int) (1 - playerNum));
+		} else if (input2 == 1) {
+			pa = new HumanPlayer((int) playerNum);
+			if (input3 == "y") {
+				pb = new AIPlayerMinimaxAB((int) (1 - playerNum));
+			} else {
+				pb = new AIPlayerMinimax((int) (1 - playerNum));
+			}
+		} else {
+			if (input3 == "y") {
+				pa = new AIPlayerMinimaxAB((int) playerNum);
+				pb = new AIPlayerMinimaxAB((int) (1 - playerNum));
+			} else {
+				pa = new AIPlayerMinimax((int) playerNum);
+				pb = new AIPlayerMinimax((int) (1 - playerNum));
+			}
+		}
+
+		// step 6: get max search depth
+		System.out
+				.println("> Please enter the maximum search depth desired (>=10 recommended)");
+		int input4 = 1;
+		boolean correctInput = false;
+		while (!correctInput) {
+			input4 = commandLineScanner.nextInt();
+			if (input4 > 0){
+				correctInput = true;
+			}
+		}
+
+		// TODO: normalize the pa, pb things
+		if (pa.getPlayerNum() == 0) {
+			game = new Game(circles, lines, pa, pb, input4);
+		} else {
+			game = new Game(circles, lines, pb, pa, input4);
+		}
+
 		commandLineScanner.close();
 	}
 

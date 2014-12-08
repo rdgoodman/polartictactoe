@@ -1,4 +1,4 @@
-package rolliepolartictactoe;
+package polartictactoe;
 
 public class Edge {
 	private static final int RADIAL = 0;

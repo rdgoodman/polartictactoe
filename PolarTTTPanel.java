@@ -1,4 +1,4 @@
-package rolliepolartictactoe;
+package polartictactoe;
 
 import java.awt.*;
 

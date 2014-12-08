@@ -1,5 +1,5 @@
 
-package rolliepolartictactoe;
+package polartictactoe;
 
 public class GameState {
 	// nodes in the current game state
@@ -207,6 +207,17 @@ public class GameState {
 	
 	public WinChecker getWinChecker(){
 		return winchecker;
+	}
+	
+	public void printGameState(){
+		System.out.println("Current Game State:");
+		for (int i = 0; i < numX; i++) {
+			for (int j = 0; j < numY; j++) {
+				System.out.print(nodes[i][j].toString() + "   ");
+			}
+			System.out.println("");
+		}
+		System.out.println("");
 	}
 
 }

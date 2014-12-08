@@ -1,4 +1,4 @@
-package rolliepolartictactoe;
+package polartictactoe;
 import java.util.LinkedList;
 
 public interface Player {
@@ -10,8 +10,9 @@ public interface Player {
 	int getPlayerNum();
 	// places Node
 	void chooseMove();
-	void reportMove();
+	void reportMove(long[] results);
 	void addEdge(Edge newEdge);
 	boolean hasEdge(Edge seeking);
+	void setGame(Game game);
 
 }

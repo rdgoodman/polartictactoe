@@ -1,4 +1,4 @@
-package rolliepolartictactoe;
+package polartictactoe;
 
 import java.util.LinkedList;
 
@@ -8,9 +8,9 @@ public class AIPlayer implements Player {
 	//TODO:the next two should be parameters reported by reportMove() and its delegates (minimax, etc)?
 	int numNodesEvaluated;
 	int timeToSelect;
-	
 	int playerNum;
 	LinkedList<Edge> edges;
+	Game game;
 	
 	public AIPlayer(int playerNum){
 		this.playerNum = playerNum;
@@ -20,35 +20,15 @@ public class AIPlayer implements Player {
 
 	@Override
 	public void chooseMove() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void reportMove() {
-		reportNumEvaluated();
-		reportTimetoSelect();
-		reportDepthReached();
-		// TODO: also report which move was selected here
+	public void reportMove(long[] results) {
+
 		
 	}
 
-	private int reportTimetoSelect() {
-		// TODO stub
-		return -1;
-		
-	}
-
-	private int reportNumEvaluated() {
-		// TODO stub
-		return -1;
-		
-	}
-	
-	private int reportDepthReached(){
-		//TODO stub
-		return -1;
-	}
 	
 	@Override
 	public int getPlayerNum() {
@@ -76,5 +56,12 @@ public class AIPlayer implements Player {
 			return true;
 		}
 		return false;
+	}
+
+
+	@Override
+	public void setGame(Game game) {
+		this.game = game;
+		
 	}
 }

@@ -1,4 +1,4 @@
-package rolliepolartictactoe;
+package polartictactoe;
 
 import static org.junit.Assert.*;
 
@@ -124,7 +124,7 @@ public class WinCheckerTest {
 	public void testResolutionWithWin1() {
 		Player player1 = new HumanPlayer(1);
 		Player player2 = new HumanPlayer(2);
-		Game game = new Game(5, 5, player1, player2);
+		Game game = new Game(5, 5, player1, player2, 3);
 
 		Node[][] gameNodes = game.getGameNodes();
 
@@ -145,7 +145,7 @@ public class WinCheckerTest {
 	public void testResolutionWithoutWin1() {
 		Player player1 = new HumanPlayer(1);
 		Player player2 = new HumanPlayer(2);
-		Game game = new Game(5, 5, player1, player2);
+		Game game = new Game(5, 5, player1, player2, 3);
 
 		Node[][] gameNodes = game.getGameNodes();
 
@@ -166,7 +166,7 @@ public class WinCheckerTest {
 	public void testResolutionWithWin2() {
 		Player player1 = new HumanPlayer(1);
 		Player player2 = new HumanPlayer(2);
-		Game game = new Game(5, 5, player1, player2);
+		Game game = new Game(5, 5, player1, player2, 3);
 
 		Node[][] gameNodes = game.getGameNodes();
 
@@ -192,7 +192,7 @@ public class WinCheckerTest {
 	public void testResolutionWithWin3() {
 		Player player1 = new HumanPlayer(1);
 		Player player2 = new HumanPlayer(2);
-		Game game = new Game(5, 5, player1, player2);
+		Game game = new Game(5, 5, player1, player2, 3);
 
 		Node[][] gameNodes = game.getGameNodes();
 
@@ -220,7 +220,7 @@ public class WinCheckerTest {
 	public void testResolutionWithWin4() {
 		Player player1 = new HumanPlayer(1);
 		Player player2 = new HumanPlayer(2);
-		Game game = new Game(5, 5, player1, player2);
+		Game game = new Game(5, 5, player1, player2, 3);
 
 		Node[][] gameNodes = game.getGameNodes();
 
@@ -251,7 +251,7 @@ public class WinCheckerTest {
 	public void testResolutionWithoutWin3() {
 		Player player1 = new HumanPlayer(1);
 		Player player2 = new HumanPlayer(2);
-		Game game = new Game(5, 5, player1, player2);
+		Game game = new Game(5, 5, player1, player2, 3);
 
 		Node[][] gameNodes = game.getGameNodes();
 
@@ -283,7 +283,7 @@ public class WinCheckerTest {
 	public void testProblemResolution1() {
 		Player player1 = new HumanPlayer(1);
 		Player player2 = new HumanPlayer(2);
-		Game game = new Game(4, 12, player1, player2);
+		Game game = new Game(4, 12, player1, player2, 3);
 
 		Node[][] gameNodes = game.getGameNodes();
 
@@ -314,7 +314,7 @@ public class WinCheckerTest {
 	public void testProblemResolution2() {
 		Player player1 = new HumanPlayer(1);
 		Player player2 = new HumanPlayer(2);
-		Game game = new Game(4, 12, player1, player2);
+		Game game = new Game(4, 12, player1, player2, 3);
 
 		Node[][] gameNodes = game.getGameNodes();
 

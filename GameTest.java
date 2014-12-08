@@ -1,4 +1,4 @@
-package rolliepolartictactoe;
+package polartictactoe;
 
 import static org.junit.Assert.*;
 
@@ -14,8 +14,8 @@ public class GameTest {
 	Player player3 = new HumanPlayer(3);
 	Player player4 = new HumanPlayer(4);
 
-	Game game = new Game(3, 4, player1, player2);
-	Game game2 = new Game(3, 4, player3, player4);
+	Game game = new Game(3, 4, player1, player2, 2);
+	Game game2 = new Game(3, 4, player3, player4, 2);
 	Node[][] gameNodes = game.getGameNodes();
 	Node[][] gameNodes2 = game2.getGameNodes();
 
