@@ -60,9 +60,9 @@ public class TreeNode {
 		gameState.getWinChecker().setP1KB(newP1KB);
 		gameState.getWinChecker().setP2KB(newP2KB);
 
-		System.out.println("Starting KB: ");
-		gameState.getWinChecker().printp1KB();
-		gameState.getWinChecker().printp2KB();
+//		System.out.println("Starting KB: ");
+//		gameState.getWinChecker().printp1KB();
+//		gameState.getWinChecker().printp2KB();
 
 		this.currentPlayer = maxPlayer;
 		this.nextPlayer = minPlayer;
@@ -252,7 +252,7 @@ public class TreeNode {
 	/** TODO: MUST USE HEURISTIC */
 	public void heuristicEvaluate() {
 		value = (int) (Math.random() * 100);
-		System.out.println("Set value of this node to " + value);
+		//System.out.println("Set value of this node to " + value);
 	}
 	
 	/** TODO: must use classifier */

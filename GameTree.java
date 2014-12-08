@@ -70,7 +70,7 @@ public class GameTree {
 			updateFromHeuristicEvaluatedLevel(current);
 
 		} else {
-			System.out.println("-------------------------------------");
+			//System.out.println("-------------------------------------");
 			while (current.hasNextChild()) {
 				depthReached = current.getDepth();
 				
@@ -91,32 +91,32 @@ public class GameTree {
 			// first child)
 			if (current.getParent().getValue() == -Integer.MIN_VALUE) {
 				current.getParent().setValue(current.getValue());
-				System.out.println("Parent's value changed to "
-						+ current.getValue());
+//				System.out.println("Parent's value changed to "
+//						+ current.getValue());
 			}
 
 			if (current.getParent().isMaxNode()) {
 				// change value of max parent
 				if (current.getValue() > current.getParent().getValue()) {
-					System.out.println("Parent's value changed to "
-							+ current.getValue());
+//					System.out.println("Parent's value changed to "
+//							+ current.getValue());
 					current.getParent().setValue(current.getValue());
 
 				}
 			} else {
 				// change value of min parent
 				if (current.getValue() < current.getParent().getValue()) {
-					System.out.println("Parent's value changed to "
-							+ current.getValue());
+//					System.out.println("Parent's value changed to "
+//							+ current.getValue());
 					current.getParent().setValue(current.getValue());
 
 				}
 			}
 		} else {
 			// at root - do nothing
-			System.out.println("ROOT");
-			System.out.println("Value is " + current.getValue());
-			System.out.println("CHILDREN: " + current.getChildren().size());
+//			System.out.println("ROOT");
+//			System.out.println("Value is " + current.getValue());
+//			System.out.println("CHILDREN: " + current.getChildren().size());
 
 			// after iterating values up tree, chooses move with greatest payoff
 			// for max player
@@ -128,8 +128,8 @@ public class GameTree {
 				}
 			}
 
-			System.out.println("Maximin is "
-					+ maximin.getHypotheticalMove().toString());
+//			System.out.println("Maximin is "
+//					+ maximin.getHypotheticalMove().toString());
 		}
 
 	}
@@ -144,7 +144,7 @@ public class GameTree {
 			updateABFromHeuristicEvaluatedLevel(current);
 
 		} else {
-			System.out.println("-------------------------------------");
+			//System.out.println("-------------------------------------");
 			while (current.hasNextChild()) {
 				depthReached = current.getDepth();
 				TreeNode next = current.createNextChild();
@@ -164,7 +164,7 @@ public class GameTree {
 				buildABTree(next, maxDepth);
 			}
 			updateABFromHeuristicEvaluatedLevel(current);
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		}
 	}
 
@@ -175,16 +175,16 @@ public class GameTree {
 			if (current.getParent().isMaxNode()) {
 				// change alpha
 				if (current.getValue() > current.getParent().getAlpha()) {
-					System.out.println("Parent's alpha changed to "
-							+ current.getValue());
+//					System.out.println("Parent's alpha changed to "
+//							+ current.getValue());
 					current.getParent().setAlpha(current.getValue());
 				}
 				checkIfPrune(current);
 			} else {
 				// change beta
 				if (current.getValue() < current.getParent().getBeta()) {
-					System.out.println("Parent's beta changed to "
-							+ current.getValue());
+//					System.out.println("Parent's beta changed to "
+//							+ current.getValue());
 					current.getParent().setBeta(current.getValue());
 				}
 				checkIfPrune(current);
@@ -194,24 +194,24 @@ public class GameTree {
 			if (current.getParent().isMaxNode()) {
 				// change alpha
 				if (current.getBeta() > current.getParent().getAlpha()) {
-					System.out.println("Parent's alpha changed to "
-							+ current.getBeta());
+//					System.out.println("Parent's alpha changed to "
+//							+ current.getBeta());
 					current.getParent().setAlpha(current.getBeta());
 				}
 				checkIfPrune(current);
 			} else {
 				// change beta
 				if (current.getAlpha() < current.getParent().getBeta()) {
-					System.out.println("Parent's beta changed to "
-							+ current.getAlpha());
+//					System.out.println("Parent's beta changed to "
+//							+ current.getAlpha());
 					current.getParent().setBeta(current.getAlpha());
 				}
 				checkIfPrune(current);
 			}
 		} else {
 			// at root - do nothing
-			System.out.println("ROOT");
-			System.out.println("Alpha is " + current.getAlpha());
+//			System.out.println("ROOT");
+//			System.out.println("Alpha is " + current.getAlpha());
 
 			// after iterating values up tree, chooses move with greatest payoff
 			// for max player
@@ -222,9 +222,9 @@ public class GameTree {
 					maximin = t;
 				}
 			}
-
-			System.out.println("Maximin is "
-					+ maximin.getHypotheticalMove().toString());
+//
+//			System.out.println("Maximin is "
+//					+ maximin.getHypotheticalMove().toString());
 
 		}
 
@@ -234,9 +234,9 @@ public class GameTree {
 	/** Checks if we should prune below this node */
 	public void checkIfPrune(TreeNode current) {
 		if (current.getParent().getBeta() < current.getParent().getAlpha()) {
-			System.out.println("########PRUNE HERE: ########");
-			System.out.println("THE NODE TO PRUNE BELOW IS "
-					+ current.getParent().toString());
+//			System.out.println("########PRUNE HERE: ########");
+//			System.out.println("THE NODE TO PRUNE BELOW IS "
+//					+ current.getParent().toString());
 
 			// pruning removes the rest of this node's potential children
 			current.prune();
@@ -246,9 +246,9 @@ public class GameTree {
 
 	/** Reports depth reached and number of nodes evaluated */
 	private void reportDepthAndNodes() {
-		System.out
-				.println("\n\n\n\n\nNot sure of depth yet [given maxdepth], but that'll be easy to check");
-		System.out.println("Nodes evaluated: " + nodesEvaluated);
+//		System.out
+//				.println("\n\n\n\n\nNot sure of depth yet [given maxdepth], but that'll be easy to check");
+//		System.out.println("Nodes evaluated: " + nodesEvaluated);
 
 	}
 
