@@ -116,10 +116,6 @@ public class EdgeAxiom {
 		
 		LL.remove(e);
 		
-		// TODO: this is where I am changing things.
-		if ((LL.size()) == 1 && (LL.getFirst().isAllConstants())){
-			unify(LL);
-		}
 		
 	}
 

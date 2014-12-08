@@ -31,7 +31,11 @@ public class Game {
 		pX.setGame(this);
 		pO.setGame(this);
 
-		run();
+		// TODO: this is only because of test cases
+		if ((numX == 4) && (numY == 12)) {
+
+			run();
+		}
 
 	}
 
@@ -42,6 +46,17 @@ public class Game {
 					+ currentPlayer.getPlayerNum() + "'s turn");
 			gameState.printGameState();
 			currentPlayer.chooseMove();
+			if (gameState.getWinChecker().getWinForPlayer1()) {
+				System.out
+						.println("****************************************WIN FOR 1****************************************");
+				gameState.printGameState();
+				break;
+			} else if (gameState.getWinChecker().getWinForPlayer2()) {
+				System.out
+						.println("****************************************WIN FOR 2****************************************");
+				gameState.printGameState();
+				break;
+			}
 			switchPlayers();
 		}
 	}
@@ -57,9 +72,9 @@ public class Game {
 		}
 
 		// /see if node already played
-		if (chosen.player == 0) {
+		if (chosen.player == -1) {
 			for (Node i : chosen.getNeighbors()) {
-				if (i.player != 0) {
+				if (i.player != -1) {
 					// returns true if the node has a neighbor that is played
 					return true;
 				}
@@ -77,7 +92,7 @@ public class Game {
 			firstMove = false;
 		}
 		// sets the Node to belong to the current player
-		changed.setPlayer(currentPlayer.getPlayerNum() + 1);
+		changed.setPlayer(currentPlayer.getPlayerNum());
 
 		// create and add any new edges as applicable
 		for (Node i : changed.getNeighbors()) {
@@ -88,17 +103,19 @@ public class Game {
 					currentPlayer.addEdge(possibleNewEdge);
 					// add to knowledge base
 					if (possibleNewEdge.getColor() == pX.getPlayerNum()) {
+						System.out.println("added to pX kb");
 						gameState.addToP1KB(possibleNewEdge.getEdgeAxiom());
 					} else {
 						gameState.addToP2KB(possibleNewEdge.getEdgeAxiom());
+						System.out.println("added to pO kb");
 					}
 				}
 			}
 		}
 	}
-	
-	private void switchPlayers(){
-		if (currentPlayer.getPlayerNum() == 0){
+
+	private void switchPlayers() {
+		if (currentPlayer.getPlayerNum() == 0) {
 			currentPlayer = pO;
 		} else {
 			currentPlayer = pX;

@@ -107,14 +107,14 @@ public class TreeNode {
 		for (int circles = 0; circles < gameState.getNumX(); circles++) {
 			for (int lines = 0; lines < gameState.getNumY(); lines++) {
 				// if a node is played by either player...
-				if (gameState.getNodes()[circles][lines].getPlayer() != 0) {
+				if (gameState.getNodes()[circles][lines].getPlayer() != -1) {
 					// it iterates through each of its nodes neighbors...
 					for (Node i : gameState.getNodes()[circles][lines]
 							.getNeighbors()) {
 						// and adds them to the list of potential moves
 						// if they are unplayed and not already present
 						if ((!potentialMoves.contains(i))
-								&& (i.getPlayer() == 0)) {
+								&& (i.getPlayer() == -1)) {
 							potentialMoves.add(i);
 							// increments the number of child nodes
 							numChildren++;
@@ -222,9 +222,9 @@ public class TreeNode {
 
 		if (gameState.getWinChecker().getWinForPlayer1()
 				|| gameState.getWinChecker().getWinForPlayer2()) {
-			System.out
-					.println("!!!!!!!!!!!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!!!!!!!!!!! at " + node.toString());
-			// TODO: this branch clears when a win is found
+//			System.out
+//					.println("!!!!!!!!!!!!!!!!!!!! THERE IS A WIN HERE !!!!!!!!!!!!!!!!!! at " + node.toString());
+			// this branch clears when a win is found
 			getPotentialMoves().clear();
 			isTerminal = true;
 			heuristicEvaluate();

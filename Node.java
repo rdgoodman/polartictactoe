@@ -18,7 +18,7 @@ public class Node {
 	 */
 	public Node(int x, int y) {
 		// node initialized to "open/no player"
-		player = 0;
+		player = -1;
 		this.x = x;
 		this.y = y;
 		// starts out with empty list of neighbors
@@ -43,7 +43,13 @@ public class Node {
 
 	@Override
 	public String toString() {
-		return ("(" + x + "," + y + "; " + player + ")");
+		String playerNumber = " ";
+		if (player == 0){
+			playerNumber = "X";
+		} else if (player == 1){
+			playerNumber = "O";
+		}
+		return ("(" + x + "," + y + "; " + playerNumber + ")");
 	}
 
 	public boolean equals(Object o) {
