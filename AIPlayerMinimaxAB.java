@@ -1,5 +1,8 @@
 package polartictactoe;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -11,10 +14,37 @@ public class AIPlayerMinimaxAB implements Player {
 	int playerNum;
 	LinkedList<Edge> edges;
 	Game game;
+	File timeOutput;
+	File nodeOutput;
+	FileWriter timeWriter;
+	FileWriter nodeWriter;
 
 	public AIPlayerMinimaxAB(int playerNum) {
 		this.playerNum = playerNum;
 		edges = new LinkedList<Edge>();
+
+		// creates output files
+		timeOutput = new File("src" + File.separator + "polartictactoe"
+				+ File.separator + "abtimeOutput.txt");
+		if (!timeOutput.exists()) {
+			try {
+				timeOutput.createNewFile();
+			} catch (IOException e) {
+				// Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		nodeOutput = new File("src" + File.separator + "polartictactoe"
+				+ File.separator + "abnodeOutput.txt");
+		if (!nodeOutput.exists()) {
+			try {
+				nodeOutput.createNewFile();
+			} catch (IOException e) {
+				// Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -60,16 +90,32 @@ public class AIPlayerMinimaxAB implements Player {
 		Node move = game.getGameNodes()[x][y];
 		game.move(move, this);
 
-		// TODO: send stuff to file
-
 		// 2) print results
 		timeToSelect = results[2];
 		numNodesEvaluated = (int) results[3];
 		maxSearchDepth = (int) results[4];
-		System.out
-				.println("Result produced in " + timeToSelect + " milliseconds");
-		System.out.println("There were " + numNodesEvaluated + " nodes evaluated");
-		System.out.println("Ply " + maxSearchDepth + " was reached in the game tree");
+		System.out.println("Result produced in " + timeToSelect
+				+ " milliseconds");
+		System.out.println("There were " + numNodesEvaluated
+				+ " nodes evaluated");
+		System.out.println("Ply " + maxSearchDepth
+				+ " was reached in the game tree");
+
+		// TODO: send stuff to file
+		try {
+			timeWriter = new FileWriter(timeOutput, true);
+			nodeWriter = new FileWriter(nodeOutput, true);
+
+			timeWriter.write(String.valueOf(timeToSelect) + "   ");
+			nodeWriter.write(String.valueOf(numNodesEvaluated) + "   ");
+
+			timeWriter.close();
+			nodeWriter.close();
+
+		} catch (IOException e) {
+			// Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

@@ -57,13 +57,13 @@ public class PTTT {
 			pb = new HumanPlayer((int) (1 - playerNum));
 		} else if (input2 == 1) {
 			pa = new HumanPlayer((int) playerNum);
-			if (input3 == "y") {
+			if (input3.equals("y")) {
 				pb = new AIPlayerMinimaxAB((int) (1 - playerNum));
 			} else {
 				pb = new AIPlayerMinimax((int) (1 - playerNum));
 			}
 		} else {
-			if (input3 == "y") {
+			if (input3.equals("y")) {
 				pa = new AIPlayerMinimaxAB((int) playerNum);
 				pb = new AIPlayerMinimaxAB((int) (1 - playerNum));
 			} else {
@@ -84,7 +84,7 @@ public class PTTT {
 			}
 		}
 
-		// TODO: normalize the pa, pb things
+		// the player with playernum = 0 always moves first (is player X)
 		if (pa.getPlayerNum() == 0) {
 			game = new Game(circles, lines, pa, pb, input4);
 		} else {

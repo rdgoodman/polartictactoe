@@ -154,11 +154,11 @@ public class GameTree {
 				if (current.isMaxNode()) {
 					next.setAlpha(current.getAlpha());
 					// System.out.println("     Set alpha");
-					next.printAB();
+					//next.printAB();
 				} else {
 					next.setBeta(current.getBeta());
 					// System.out.println("     Set beta");
-					next.printAB();
+					//next.printAB();
 				}
 
 				nodesEvaluated++;
@@ -229,7 +229,7 @@ public class GameTree {
 
 		}
 
-		System.out.println();
+		//System.out.println();
 	}
 
 	/** Checks if we should prune below this node */

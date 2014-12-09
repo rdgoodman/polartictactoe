@@ -160,17 +160,17 @@ public class TreeNode {
 							.getY()]);
 
 			// TODO: for testing/demo
-			String max = "";
-			if (childNode.isMaxNode()) {
-				max = "MAX";
-			} else {
-				max = "MIN";
-			}
-			System.out.println("\nChild State: "
-					+ max
-					+ " "
-					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
-							.toString() + " at depth " + childNode.getDepth());
+//			String max = "";
+//			if (childNode.isMaxNode()) {
+//				max = "MAX";
+//			} else {
+//				max = "MIN";
+//			}
+//			System.out.println("\nChild State: "
+//					+ max
+//					+ " "
+//					+ childState.getNodes()[nextMove.getX()][nextMove.getY()]
+//							.toString() + " at depth " + childNode.getDepth());
 
 			// adds axioms to child node's KBs
 			childNode
@@ -207,6 +207,7 @@ public class TreeNode {
 		}
 
 		// sets as a terminal node if this game state has a win/loss, and evaluates
+		// TODO: why does this only work for minimax...?
 		if (gameState.hasWin()){
 			getPotentialMoves().clear();
 			isTerminal = true;
@@ -236,7 +237,7 @@ public class TreeNode {
 	public void heuristicEvaluate() {
 		value = (int) (Math.random() * 100);
 		// TODO: for testing/demo
-		System.out.println("***********Set value of this node to " + value);
+		//System.out.println("***********Set value of this node to " + value);
 	}
 	
 	/** must use classifier */
