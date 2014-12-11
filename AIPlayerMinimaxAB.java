@@ -18,6 +18,7 @@ public class AIPlayerMinimaxAB implements Player {
 	File nodeOutput;
 	FileWriter timeWriter;
 	FileWriter nodeWriter;
+	Player opponent;
 
 	public AIPlayerMinimaxAB(int playerNum) {
 		this.playerNum = playerNum;
@@ -69,14 +70,15 @@ public class AIPlayerMinimaxAB implements Player {
 
 		} else {
 
-			int opponentPlayerNum = 0;
 			if (playerNum == 0) {
-				opponentPlayerNum = 1;
+				opponent = game.getPO();
+			} else {
+				opponent = game.getPX();
 			}
 
 			// creates a game tree that uses the heuristic and alpha-beta
-			GameTree tree = new GameTree(game.getGameState(), playerNum,
-					opponentPlayerNum, 0, game.getMaxSearchDepth(), true, true);
+			GameTree tree = new GameTree(game.getGameState(), this,
+					opponent, game.getPX(), game.getMaxSearchDepth(), true, true);
 			reportMove(tree.getOutputs());
 		}
 

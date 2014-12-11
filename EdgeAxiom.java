@@ -7,6 +7,7 @@ public class EdgeAxiom {
 	String endNodeName;
 	String type;
 	String edgeName;
+	boolean print;
 
 	Boolean isTrue = true;
 
@@ -50,13 +51,16 @@ public class EdgeAxiom {
 	}
 
 	/** Helper function for unification */
-	public void unify(LinkedList<EdgeAxiom> LL){
-		// TODO: for testing/demonstration
-		//System.out.println("Unifying " + LL.toString() + " and " + this.toString());
+	public void unify(LinkedList<EdgeAxiom> LL) {
+		if (print) {
+			System.out.println("Unifying " + LL.toString() + " and "
+					+ this.toString());
+		}
 
-		for (EdgeAxiom e: LL){
-			// finds the first place where substitutions can be made and then calls unifier
-			if (this.canBeUnified(e)){
+		for (EdgeAxiom e : LL) {
+			// finds the first place where substitutions can be made and then
+			// calls unifier
+			if (this.canBeUnified(e)) {
 				unifyAxioms(e, LL);
 				break;
 			}
@@ -64,13 +68,13 @@ public class EdgeAxiom {
 	}
 
 	/** Actually performs the unification */
-	public void unifyAxioms(EdgeAxiom e, LinkedList<EdgeAxiom> LL){
+	public void unifyAxioms(EdgeAxiom e, LinkedList<EdgeAxiom> LL) {
 		// holders for forward substitution
 		String goalStart = "";
 		String goalEnd = "";
 		String goalType = "";
 		String goalName = "";
-		
+
 		if ((e.startNodeName.contains((CharSequence) "n"))) {
 			// the start node name is a variable - sub in
 			goalStart = e.startNodeName;
@@ -80,51 +84,49 @@ public class EdgeAxiom {
 			// the end node name is a variable - sub in
 			goalEnd = e.endNodeName;
 			e.endNodeName = this.endNodeName;
-		} 
+		}
 		if ((e.type.contains((CharSequence) "a"))) {
 			// the start node name is a variable - sub in
 			goalType = e.type;
 			e.type = this.type;
-		} 
+		}
 		if ((e.edgeName.contains((CharSequence) "e"))) {
 			// the start node name is a variable - sub in
 			goalName = e.edgeName;
 			e.edgeName = this.edgeName;
 		}
-		
-		
-		//carry substitutions forward (and back)
-		for (EdgeAxiom currentGoalAxiom : LL){
-			if (currentGoalAxiom.startNodeName.equals(goalEnd)){
+
+		// carry substitutions forward (and back)
+		for (EdgeAxiom currentGoalAxiom : LL) {
+			if (currentGoalAxiom.startNodeName.equals(goalEnd)) {
 				currentGoalAxiom.startNodeName = e.endNodeName;
 			}
-			if (currentGoalAxiom.endNodeName.equals(goalStart)){
+			if (currentGoalAxiom.endNodeName.equals(goalStart)) {
 				currentGoalAxiom.endNodeName = e.startNodeName;
 			}
-			if (currentGoalAxiom.startNodeName.equals(goalStart)){
+			if (currentGoalAxiom.startNodeName.equals(goalStart)) {
 				currentGoalAxiom.startNodeName = e.startNodeName;
 			}
-			if (currentGoalAxiom.endNodeName.equals(goalEnd)){
+			if (currentGoalAxiom.endNodeName.equals(goalEnd)) {
 				currentGoalAxiom.endNodeName = e.endNodeName;
 			}
-			if (currentGoalAxiom.type.equals(goalType)){
+			if (currentGoalAxiom.type.equals(goalType)) {
 				currentGoalAxiom.type = e.type;
 			}
-			if (currentGoalAxiom.edgeName.equals(goalName)){
+			if (currentGoalAxiom.edgeName.equals(goalName)) {
 				currentGoalAxiom.edgeName = e.edgeName;
 			}
 		}
-		
+
 		LL.remove(e);
-		
-		
+
 	}
 
 	public boolean isAllConstants() {
 		if ((startNodeName.contains((CharSequence) "n"))) {
 			// startNodeNames are both constants and do not match
 			return false;
-		} else if ((endNodeName.contains((CharSequence) "n")))  {
+		} else if ((endNodeName.contains((CharSequence) "n"))) {
 			// endNodeNames are both constants and do not match
 			return false;
 		} else if ((type.contains((CharSequence) "a"))) {
@@ -165,6 +167,10 @@ public class EdgeAxiom {
 
 		return not + "Edge(" + startNodeName + ", " + endNodeName + ", " + type
 				+ ", " + edgeName + ")";
+	}
+
+	public void setPrint() {
+		print = true;
 	}
 
 }

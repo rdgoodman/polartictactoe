@@ -9,10 +9,10 @@ public class GameTree {
 	TreeNode maximin;
 	int maxEvalDepth;
 	long time;
-	
-	
-	private long startWall; //what time the search starts
-	private long endWall; //what time the search ends
+	boolean print = false;
+
+	private long startWall; // what time the search starts
+	private long endWall; // what time the search ends
 
 	/**
 	 * Builds a game tree to evaluate max player's best move
@@ -36,18 +36,23 @@ public class GameTree {
 	 * @param AB
 	 *            boolean - true if the tree will be using alpha-beta pruning
 	 * @param heuristic
-	 * 			boolean - true if the tree will be evaluating using a heuristic - otherwise, the classifier is the default
+	 *            boolean - true if the tree will be evaluating using a
+	 *            heuristic - otherwise, the classifier is the default
 	 */
-	public GameTree(GameState currentGameState, int MAXPlayer, int MINPlayer,
-			int player1, int evaluationDepth, boolean AB, boolean heuristic) {
+	public GameTree(GameState currentGameState, Player MAXPlayer,
+			Player MINPlayer, Player player1, int evaluationDepth, boolean AB,
+			boolean heuristic) {
+
+		// TODO: uncomment for test
+		//setToPrint();
 
 		// root has a null parent
 		root = new TreeNode(currentGameState, MAXPlayer, MINPlayer, player1,
-				null, 1);
+				null, 1, print);
 		depthReached = 0;
 		nodesEvaluated = 0;
 		maxEvalDepth = evaluationDepth;
-		
+
 		startWall = System.currentTimeMillis();
 
 		if (AB) {
@@ -55,7 +60,7 @@ public class GameTree {
 		} else {
 			buildMinimaxTree(root, evaluationDepth);
 		}
-		
+
 		endWall = System.currentTimeMillis();
 		time = endWall - startWall;
 		reportDepthAndNodes();
@@ -71,11 +76,14 @@ public class GameTree {
 			updateFromHeuristicEvaluatedLevel(current);
 
 		} else {
-			//System.out.println("-------------------------------------");
+			// System.out.println("-------------------------------------");
 			while (current.hasNextChild()) {
 				depthReached = current.getDepth();
-				
+
 				TreeNode next = current.createNextChild();
+
+				// System.out.println(next.toString());
+
 				nodesEvaluated++;
 				buildMinimaxTree(next, maxDepth);
 			}
@@ -92,32 +100,40 @@ public class GameTree {
 			// first child)
 			if (current.getParent().getValue() == -Integer.MIN_VALUE) {
 				current.getParent().setValue(current.getValue());
-//				System.out.println("Parent's value changed to "
-//						+ current.getValue());
+				if (print) {
+					System.out.println("Parent's value changed to "
+							+ current.getValue());
+				}
 			}
 
 			if (current.getParent().isMaxNode()) {
 				// change value of max parent
 				if (current.getValue() > current.getParent().getValue()) {
-//					System.out.println("Parent's value changed to "
-//							+ current.getValue());
+					if (print) {
+						System.out.println("Parent's value changed to "
+								+ current.getValue());
+					}
 					current.getParent().setValue(current.getValue());
 
 				}
 			} else {
 				// change value of min parent
 				if (current.getValue() < current.getParent().getValue()) {
-//					System.out.println("Parent's value changed to "
-//							+ current.getValue());
+					if (print) {
+						System.out.println("Parent's value changed to "
+								+ current.getValue());
+					}
 					current.getParent().setValue(current.getValue());
 
 				}
 			}
 		} else {
 			// at root - do nothing
-//			System.out.println("ROOT");
-//			System.out.println("Value is " + current.getValue());
-//			System.out.println("CHILDREN: " + current.getChildren().size());
+			if (print) {
+				System.out.println("ROOT");
+				System.out.println("Value is " + current.getValue());
+				System.out.println("CHILDREN: " + current.getChildren().size());
+			}
 
 			// after iterating values up tree, chooses move with greatest payoff
 			// for max player
@@ -128,9 +144,10 @@ public class GameTree {
 					maximin = t;
 				}
 			}
-
-//			System.out.println("Maximin is "
-//					+ maximin.getHypotheticalMove().toString());
+			if (print) {
+				System.out.println("Maximin is "
+						+ maximin.getHypotheticalMove().toString());
+			}
 		}
 
 	}
@@ -141,11 +158,13 @@ public class GameTree {
 		if (current.getDepth() == maxDepth) {
 			current.heuristicEvaluate();
 			depthReached = maxDepth;
-			
+
 			updateABFromHeuristicEvaluatedLevel(current);
 
 		} else {
-			//System.out.println("-------------------------------------");
+			if (print) {
+				System.out.println("-------------------------------------");
+			}
 			while (current.hasNextChild()) {
 				depthReached = current.getDepth();
 				TreeNode next = current.createNextChild();
@@ -153,19 +172,25 @@ public class GameTree {
 				// pass on values
 				if (current.isMaxNode()) {
 					next.setAlpha(current.getAlpha());
-					// System.out.println("     Set alpha");
-					//next.printAB();
+					if (print) {
+						System.out.println("     Set alpha");
+						next.printAB();
+					}
 				} else {
 					next.setBeta(current.getBeta());
-					// System.out.println("     Set beta");
-					//next.printAB();
+					if (print) {
+						System.out.println("     Set beta");
+						next.printAB();
+					}
 				}
 
 				nodesEvaluated++;
 				buildABTree(next, maxDepth);
 			}
 			updateABFromHeuristicEvaluatedLevel(current);
-			//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			if (print) {
+				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			}
 		}
 	}
 
@@ -176,16 +201,20 @@ public class GameTree {
 			if (current.getParent().isMaxNode()) {
 				// change alpha
 				if (current.getValue() > current.getParent().getAlpha()) {
-//					System.out.println("Parent's alpha changed to "
-//							+ current.getValue());
+					if (print) {
+						System.out.println("Parent's alpha changed to "
+								+ current.getValue());
+					}
 					current.getParent().setAlpha(current.getValue());
 				}
 				checkIfPrune(current);
 			} else {
 				// change beta
 				if (current.getValue() < current.getParent().getBeta()) {
-//					System.out.println("Parent's beta changed to "
-//							+ current.getValue());
+					if (print) {
+						System.out.println("Parent's beta changed to "
+								+ current.getValue());
+					}
 					current.getParent().setBeta(current.getValue());
 				}
 				checkIfPrune(current);
@@ -195,49 +224,68 @@ public class GameTree {
 			if (current.getParent().isMaxNode()) {
 				// change alpha
 				if (current.getBeta() > current.getParent().getAlpha()) {
-//					System.out.println("Parent's alpha changed to "
-//							+ current.getBeta());
+					if (print) {
+						System.out.println("Parent's alpha changed to "
+								+ current.getBeta());
+					}
 					current.getParent().setAlpha(current.getBeta());
 				}
 				checkIfPrune(current);
 			} else {
 				// change beta
 				if (current.getAlpha() < current.getParent().getBeta()) {
-//					System.out.println("Parent's beta changed to "
-//							+ current.getAlpha());
+					if (print) {
+						System.out.println("Parent's beta changed to "
+								+ current.getAlpha());
+					}
 					current.getParent().setBeta(current.getAlpha());
 				}
 				checkIfPrune(current);
 			}
 		} else {
 			// at root - do nothing
-//			System.out.println("ROOT");
-//			System.out.println("Alpha is " + current.getAlpha());
+			if (print) {
+				System.out.println("ROOT");
+				System.out.println("Alpha is " + current.getAlpha());
+			}
 
 			// after iterating values up tree, chooses move with greatest payoff
 			// for max player
+			if (current.getChildren().isEmpty()) {
+				System.out.println("Failed to detect a win");
+				maximin = null;
+				System.exit(0);
+			}
 			maximin = current.getChildren().get(0);
 
 			for (TreeNode t : current.getChildren()) {
-				if ((t.getBeta() > maximin.getBeta()) && (t.getBeta() != Integer.MAX_VALUE)) {
+				if ((t.getValue() > maximin.getValue())
+				/* && (*t.getBeta() != Integer.MAX_VALUE) */) {
 					maximin = t;
 				}
 			}
-//
-//			System.out.println("Maximin is "
-//					+ maximin.getHypotheticalMove().toString());
-
+			if (print) {
+				System.out.println("Maximin is "
+						+ maximin.getHypotheticalMove().toString());
+			}
 		}
 
-		//System.out.println();
+		if (print) {
+			System.out.println();
+		}
 	}
 
 	/** Checks if we should prune below this node */
 	public void checkIfPrune(TreeNode current) {
+		if (print) {
+			System.out.println("Checking if pruning");
+		}
 		if (current.getParent().getBeta() < current.getParent().getAlpha()) {
-//			System.out.println("########PRUNE HERE: ########");
-//			System.out.println("THE NODE TO PRUNE BELOW IS "
-//					+ current.getParent().toString());
+			if (print) {
+				System.out.println("########PRUNE HERE: ########");
+				System.out.println("THE NODE TO PRUNE BELOW IS "
+						+ current.getParent().toString());
+			}
 
 			// pruning removes the rest of this node's potential children
 			current.prune();
@@ -247,9 +295,9 @@ public class GameTree {
 
 	/** Reports depth reached and number of nodes evaluated */
 	private void reportDepthAndNodes() {
-//		System.out
-//				.println("\n\n\n\n\nNot sure of depth yet [given maxdepth], but that'll be easy to check");
-//		System.out.println("Nodes evaluated: " + nodesEvaluated);
+		// System.out
+		// .println("\n\n\n\n\nNot sure of depth yet [given maxdepth], but that'll be easy to check");
+		// System.out.println("Nodes evaluated: " + nodesEvaluated);
 
 	}
 
@@ -264,35 +312,39 @@ public class GameTree {
 	public int getNodesEvaluated() {
 		return nodesEvaluated;
 	}
-	
+
 	/**
-	 *
-	 * @return returns an array of (0: maximin x), (1: maximin y), (2: time), (3: nodes evaluated), and (4: depth reached)
+	 * 
+	 * @return returns an array of (0: maximin x), (1: maximin y), (2: time),
+	 *         (3: nodes evaluated), and (4: depth reached)
 	 */
-	public long[]getOutputs(){
+	public long[] getOutputs() {
 		long[] results = new long[5];
 		results[0] = maximin.getHypotheticalMove().getX();
 		results[1] = maximin.getHypotheticalMove().getY();
 		results[2] = time;
 		results[3] = nodesEvaluated;
 		results[4] = depthReached;
-		
-		
-		
+
 		return results;
-		
+
 	}
 
 	/** Returns the plan generated by this tree */
 	public String toString() {
 		return maximin.toString();
 	}
-	
-	public void startTimeSet(long start){
+
+	public void startTimeSet(long start) {
 		this.startWall = start;
 	}
-	public void endTimeSet(long end){
+
+	public void endTimeSet(long end) {
 		this.endWall = end;
+	}
+
+	public void setToPrint() {
+		print = true;
 	}
 
 }

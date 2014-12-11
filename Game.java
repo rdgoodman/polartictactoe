@@ -16,6 +16,14 @@ public class Game {
 	int maxSearchDepth;
 	Player currentPlayer;
 
+	/**
+	 * Creates a new Game object
+	 * @param numX	number of circles
+	 * @param numY  number of lines
+	 * @param pX  first player
+	 * @param pO  second player
+	 * @param maxSearchDepth  maximum desired search depth
+	 */
 	public Game(int numX, int numY, Player pX, Player pO, int maxSearchDepth) {
 
 		this.numX = numX;
@@ -40,18 +48,18 @@ public class Game {
 	}
 
 	private void run() {
-		while (!gameState.getWinChecker().getWinForPlayer1()
-				&& !gameState.getWinChecker().getWinForPlayer1()) {
+		while (!gameState.getWinChecker().getWinForPlayerX()
+				&& !gameState.getWinChecker().getWinForPlayerX()) {
 			System.out.println("\n > It is player "
 					+ currentPlayer.getPlayerNum() + "'s turn");
 			gameState.printGameState();
 			currentPlayer.chooseMove();
-			if (gameState.getWinChecker().getWinForPlayer1()) {
+			if (gameState.getWinChecker().getWinForPlayerX()) {
 				System.out
 						.println("****************************************WIN FOR X****************************************");
 				gameState.printGameState();
 				break;
-			} else if (gameState.getWinChecker().getWinForPlayer2()) {
+			} else if (gameState.getWinChecker().getWinForPlayerO()) {
 				System.out
 						.println("****************************************WIN FOR O****************************************");
 				gameState.printGameState();
@@ -67,7 +75,7 @@ public class Game {
 	 */
 	public boolean isValidMove(Node chosen) {
 		if (firstMove == true) {
-			System.out.println("It's the first move");
+			//System.out.println("It's the first move");
 			return true;
 		}
 
@@ -162,10 +170,6 @@ public class Game {
 		return firstMove;
 	}
 
-	public Diagonal[][] getDiagonals() {
-		return gameState.getDiagonals();
-	}
-
 	public WinChecker getWinChecker() {
 		return gameState.getWinChecker();
 
@@ -181,5 +185,9 @@ public class Game {
 	
 	public Player getPO(){
 		return pO;
+	}
+
+	public Player getFirstPlayer() {
+		return pX;
 	}
 }
